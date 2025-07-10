@@ -14,7 +14,7 @@ public class DB {
         dmds.setDriverClassName("com.mysql.cj.jdbc.Driver");
         dmds.setUrl("jdbc:mysql://localhost:3306/baza");
         dmds.setUsername("root");
-        dmds.setPassword("");
+        dmds.setPassword("passw0rd");
 
         return dmds;
     }
