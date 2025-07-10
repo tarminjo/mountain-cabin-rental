@@ -7,6 +7,6 @@ The application features secure login, profile management, filtering/searching c
 The system is built using:
 - **Frontend**: Angular
 - **Backend**: Spring Boot
-- **Database**: MySQL / PostgreSQL
+- **Database**: MySQL
 
 This project was developed as part of the Internet Application Programming course at the School of Electrical Engineering, University of Belgrade.
