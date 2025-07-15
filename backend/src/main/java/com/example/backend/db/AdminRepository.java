@@ -19,7 +19,7 @@ public class AdminRepository implements AdminRepositoryInterface {
         
         try(Connection conn = DB.source().getConnection();
             PreparedStatement stmt = conn.prepareStatement(
-                "SELECT * FROM users WHERE username = ? AND type = ?")) {
+                "SELECT * FROM admin WHERE username = ? AND type = ?")) {
 
             stmt.setString(1, username);
             stmt.setString(2, "admin");
@@ -42,32 +42,4 @@ public class AdminRepository implements AdminRepositoryInterface {
 
         return null;
     }
-
-    // temporary method for admin registration
-    // TODO: Delete this method when admin registration is implemented
-    @Override
-    public Admin register(Admin admin) {
-
-        try(Connection conn = DB.source().getConnection();
-            PreparedStatement stmt = conn.prepareStatement(
-                "INSERT INTO users (username, password) VALUES (?, ?)")) {
-
-            stmt.setString(1, admin.getUsername());
-
-            String hashedPassword = passwordEncoder.encode(admin.getPassword());
-            stmt.setString(2, hashedPassword);
-
-            int rows = stmt.executeUpdate();
-            if (rows > 0) {
-                admin.setPassword(hashedPassword);
-                return admin;
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-    
 }

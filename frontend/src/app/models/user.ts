@@ -10,5 +10,4 @@ export class User{
     mail!: string
     profilePic!: string
     cardNumber!: string
-    company!: string
 }

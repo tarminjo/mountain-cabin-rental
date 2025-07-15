@@ -25,17 +25,18 @@ export class UserService {
       password: password
     }
 
-    return this.http.post(`${this.url}/users/login-admin`, data)
+    return this.http.post(`${this.url}/admin/login`, data)
   }
 
-  register(username: any, password: any, firstname: any, lastname: any, sex: any, 
-    address: any, phoneNumber: any, mail: any, profilePic: any, cardNumber: any){
+  register(username: any, password: any, firstname: any, lastname: any, type: any, 
+    sex: any, address: any, phoneNumber: any, mail: any, profilePic: any, cardNumber: any){
     
     const data = {
       username: username,
       password: password,
       firstname: firstname,
       lastname: lastname,
+      type: type,
       sex: sex,
       address: address,
       phoneNumber: phoneNumber,
