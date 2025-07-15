@@ -1,0 +1,94 @@
+package com.example.backend.db;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.example.backend.models.User;
+
+public class UserRepository implements UserRepositoryInterface {
+
+    PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+    @Override
+    public User login(String username, String password, String type) {
+        try(Connection conn = DB.source().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(
+                "SELECT * FROM users WHERE username = ? AND type != ?")) {
+
+            stmt.setString(1, username);
+            stmt.setString(2, "admin");
+
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                String storedPassword = rs.getString("password");
+
+                if (passwordEncoder.matches(password, storedPassword)) {
+                    return new User(
+                        rs.getString("username"),
+                        storedPassword,
+                        rs.getString("firstname"),
+                        rs.getString("lastname"),
+                        rs.getString("type"),
+                        rs.getString("sex"),
+                        rs.getString("address"),
+                        rs.getString("phoneNumber"),
+                        rs.getString("mail"),
+                        rs.getString("profilePic"),
+                        rs.getString("cardNumber")
+                    );
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    @Override
+    public User register(User user) {
+
+        try(Connection conn = DB.source().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(
+                "INSERT INTO users (username, password, firstname, lastname, type," + 
+                    " sex, address, phoneNumber, mail, profilePic, cardNumber) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
+
+            stmt.setString(1, user.getUsername());
+
+            String hashedPassword = passwordEncoder.encode(user.getPassword());
+            stmt.setString(2, hashedPassword);
+
+            stmt.setString(3, user.getFirstname());
+            stmt.setString(4, user.getLastname());
+            stmt.setString(5, user.getType());
+            stmt.setString(6, user.getSex());
+            stmt.setString(7, user.getAddress());
+            stmt.setString(8, user.getPhoneNumber());
+            stmt.setString(9, user.getMail());
+            stmt.setString(10, user.getProfilePic());
+            stmt.setString(11, user.getCardNumber());
+
+            int rows = stmt.executeUpdate();
+            if (rows > 0) {
+                // Optionally return the user with hashed password
+                user.setPassword(hashedPassword);
+                return user;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+
+
+}
