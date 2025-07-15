@@ -1,0 +1,76 @@
+<div class="container-fluid">
+    <header class="row">
+        <ul>
+            <li><b>REGISTRACIJA VLASNIKA</b></li>
+            <li style="float:right"><a routerLink="/login">Nazad na login</a></li>
+        </ul>
+        <br/><br/><br/>
+    </header>
+    <div class="row">
+        <table>
+            <tr>
+                <td>Korisnicko ime:</td>
+                <input type="text" name="username" [(ngModel)]="username">
+            </tr>
+            <tr>
+                <td>Lozinka:</td>
+                <input type="password" name="password" [(ngModel)]="password">
+            </tr>
+            <tr>
+                <td>Ime:</td>
+                <input type="text" name="firstname" [(ngModel)]="firstname">
+            </tr>
+            <tr>
+                <td>Prezime:</td>
+                <input type="text" name="lastname" [(ngModel)]="lastname">
+            </tr>
+            <tr>
+                <td>Pol:</td>
+                <input type="radio" name="sex" value="M" [(ngModel)]="sex">Muskarac
+                <input type="radio" name="sex" value="Z" [(ngModel)]="sex">Zena
+            </tr>
+            <tr>
+                <td>Adresa:</td>
+                <input type="text" name="type" [(ngModel)]="address">
+            </tr>
+            <tr>
+                <td>Broj telefona:</td>
+                <input type="text" name="type" [(ngModel)]="phoneNumber">
+            </tr>
+            <tr>
+                <td>Mail:</td>
+                <input type="text" name="type" [(ngModel)]="mail">
+            </tr>
+            <tr>
+                <td>Profilna slika:</td>
+                <input type="file" (change)="onFileSelected($event)" accept="image/png, image/jpg">
+            </tr>
+            <tr>
+                <td>Broj kartice:</td>
+                <input type="text" name="type" [(ngModel)]="cardNumber" (input)="cardNumberCheck()">
+            </tr>
+            <tr>
+                <td style="align-items: center">
+                    <div *ngIf="cardType === 'diners'">
+                        <img src="assets/dinersCard.png" width="25" height="15" />
+                    </div>
+                    <div *ngIf="cardType === 'master'">
+                        <img src="assets/masterCard.png" width="25" height="15" />
+                    </div>
+                    <div *ngIf="cardType === 'visa'">
+                        <img src="assets/visaCard.png" width="25" height="15" />
+                    </div>
+                    <div *ngIf="cardType === ''">
+                        <img src="assets/white.jpg" width="25" height="15" />
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button (click)="register()">Registruj se</button>
+                </td>
+                <td style="color: red;">{{errorMessage}}</td>
+            </tr>
+        </table>
+    </div>
+</div>
