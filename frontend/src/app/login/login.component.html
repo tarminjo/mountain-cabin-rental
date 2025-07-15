@@ -1,1 +1,33 @@
-<p>login works!</p>
+<div class="container-fluid">
+    <header class="row">
+        <ul>
+            <li><b>LOGIN KORISNIKA</b></li>
+            <li style="float:right"><a routerLink="/">Početna</a></li>
+        </ul>
+        <br/><br/><br/>
+    </header>
+    <div class="row">
+        <table>
+            <tr>
+                <td>Korisnicko ime:</td>
+                <td>
+                    <input type="text" [(ngModel)]="username">
+                </td>
+            </tr>
+            <tr>
+                <td>Lozinka:</td>
+                <td>
+                    <input type="password" [(ngModel)]="password">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button (click)="login()">Login</button>
+                </td>
+                <td style="color: red">{{message}}</td>
+            </tr>
+        </table>
+        <br/>
+        Kliknite <a routerLink="/register">ovde</a> da se registrujete kao vlasnik.
+    </div>
+</div>
