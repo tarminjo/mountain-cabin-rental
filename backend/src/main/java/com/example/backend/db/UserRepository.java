@@ -36,9 +36,9 @@ public class UserRepository implements UserRepositoryInterface {
                     return new User(
                         rs.getString("username"),
                         storedPassword,
+                        rs.getString("type"),
                         rs.getString("firstname"),
                         rs.getString("lastname"),
-                        rs.getString("type"),
                         rs.getString("sex"),
                         rs.getString("address"),
                         rs.getString("phoneNumber"),

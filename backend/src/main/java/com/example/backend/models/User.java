@@ -3,9 +3,9 @@ package com.example.backend.models;
 public class User {
     private String username;
     private String password;
+    private String type;
     private String firstname;
     private String lastname;
-    private String type;
     private String sex;
     private String address;
     private String phoneNumber;
