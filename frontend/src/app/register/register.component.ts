@@ -196,7 +196,7 @@ export class RegisterComponent implements OnInit {
     }
 
     this.userService.register(this.username, this.password, this.type, this.firstname, this.lastname, 
-      this.sex, this.address, this.phoneNumber, this.mail, this.profilePic, this.cardNumber).subscribe(resp=>{
+      this.sex, this.address, this.phoneNumber, this.mail, this.profilePic, this.cardNumber, 0).subscribe(resp=>{
         // if(resp['message'] == 'ok'){
         //   alert('Dodat zahtev za registraciju!')
         //   this.refresh()

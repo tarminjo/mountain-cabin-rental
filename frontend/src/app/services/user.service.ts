@@ -28,8 +28,8 @@ export class UserService {
     return this.http.post(`${this.url}/admin/login`, data)
   }
 
-  register(username: any, password: any, firstname: any, lastname: any, type: any, 
-    sex: any, address: any, phoneNumber: any, mail: any, profilePic: any, cardNumber: any){
+  register(username: any, password: any, type: any, firstname: any, lastname: any, sex: any, 
+    address: any, phoneNumber: any, mail: any, profilePic: any, cardNumber: any, status: any){
     
     const data = {
       username: username,
@@ -42,7 +42,8 @@ export class UserService {
       phoneNumber: phoneNumber,
       mail: mail,
       profilePic: profilePic,
-      cardNumber: cardNumber
+      cardNumber: cardNumber,
+      status: status
     }
 
     return this.http.post(`${this.url}/users/register`, data)
