@@ -10,5 +10,5 @@ export class User{
     mail!: string
     profilePic!: string
     cardNumber!: string
-    status!: string
+    status!: number
 }

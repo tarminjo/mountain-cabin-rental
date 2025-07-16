@@ -198,12 +198,12 @@ export class RegisterComponent implements OnInit {
 
     this.userService.register(this.username, this.password, this.type, this.firstname, this.lastname, 
       this.sex, this.address, this.phoneNumber, this.mail, this.profilePic, this.cardNumber, 0).subscribe((resp: any)=>{
-        if(resp.msg == 'ok'){
+        if(resp.message == 'ok'){
           alert('Registration request sent')
           this.refresh()
         }
-        else if(resp.msg == 'error'){
-          alert('Postoji vec korisnik sa istim username-om ili mejlom!')
+        else if(resp.message == 'error'){
+          alert("Registration failed. Username or email already exists.")
         }
         else{
           alert('Error')
