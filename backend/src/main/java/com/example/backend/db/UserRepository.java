@@ -57,7 +57,7 @@ public class UserRepository implements UserRepositoryInterface {
     }
 
     @Override
-    public User register(User user) {
+    public int register(User user) {
 
         try(Connection conn = DB.source().getConnection();
             PreparedStatement stmt = conn.prepareStatement(
@@ -83,16 +83,14 @@ public class UserRepository implements UserRepositoryInterface {
 
             int rows = stmt.executeUpdate();
             if (rows > 0) {
-                // Optionally return the user with hashed password
-                user.setPassword(hashedPassword);
-                return user;
+                return 1;
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return null;
+        return 0;
     }
 
 

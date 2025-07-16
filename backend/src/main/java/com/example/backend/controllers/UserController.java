@@ -27,10 +27,10 @@ public class UserController {
     @PostMapping("/register")
     public Map<String, String> register(@RequestBody User user) {
 
-        User result = new UserRepository().register(user);
+        int result = new UserRepository().register(user);
 
         Map<String, String> response = new HashMap<>();
-        if (result != null) {
+        if (result == 1) {
             response.put("message", "ok");
         } else {
             response.put("message", "error");
