@@ -10,24 +10,29 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.example.backend.models.User;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class UserRepository implements UserRepositoryInterface {
 
     PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Override
-    public User login(String username, String password, String type) {
+    public User login(String username, String password) {
+        log.info("Entering login method with username: {}", username);
         try(Connection conn = DB.source().getConnection();
             PreparedStatement stmt = conn.prepareStatement(
-                "SELECT * FROM users WHERE username = ? AND type != ?")) {
+                "SELECT * FROM users WHERE username = ?")) {
 
+            log.info("Entered try block");
             stmt.setString(1, username);
-            stmt.setString(2, "admin");
 
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 String storedPassword = rs.getString("password");
 
                 if (passwordEncoder.matches(password, storedPassword)) {
+                    log.info("User is retrieved");
                     return new User(
                         rs.getString("username"),
                         storedPassword,
@@ -45,9 +50,11 @@ public class UserRepository implements UserRepositoryInterface {
             }
 
         } catch (SQLException e) {
+            log.info("SQL Exception in login method");
             e.printStackTrace();
         }
 
+        log.info("User not found or password mismatch");
         return null;
     }
 

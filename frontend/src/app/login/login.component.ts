@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { UserService } from '../services/user.service';
-import { FormsModule} from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -10,42 +9,46 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [FormsModule, RouterModule, CommonModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
 })
 export class LoginComponent implements OnInit {
-  constructor(private router: Router, private userService: UserService) { }
+  constructor(private router: Router, private userService: UserService) {}
 
   ngOnInit(): void {
-    localStorage.removeItem("logged")
+    this.error = false;
+    localStorage.removeItem('logged');
   }
 
-  username: string = ""
-  password: string = ""
-  message: string = ""
-  noDataError: boolean = false;
+  username: string = '';
+  password: string = '';
+  message: string = '';
+  error: boolean = false;
 
-  login(){
-    if(this.username=="" || this.password==""){
-      this.message="Niste uneli sve podatke!"
-      this.noDataError = true;
-      return
+  login() {
+    if (this.username == '' || this.password == '') {
+      this.message = "You didn't enter all the information";
+      this.error = true;
+      return;
     }
 
-    this.message=""
+    this.message = '';
+    this.error = false;
 
-    this.userService.login(this.username, this.password).subscribe((user: any)=>{
-      if(user){
-        localStorage.setItem("logged", user.username)
-        this.router.navigate(["profile"])
-      }
-      else{
-        this.message="Losi podaci!"
-        return
-      }
-    })
+    this.userService
+      .login(this.username, this.password)
+      .subscribe((user: any) => {
+        if (user != null) {
+          localStorage.setItem('logged', user.username);
+          //this.router.navigate(["profile"])
+        } else {
+          this.message = 'Wrong username or password';
+          this.error = true;
+          return;
+        }
+      });
   }
 
-  backToHomePage(){
-    this.router.navigate([''])
+  backToHomePage() {
+    this.router.navigate(['']);
   }
 }
