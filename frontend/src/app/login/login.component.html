@@ -1,33 +1,81 @@
-<div class="container-fluid">
-    <header class="row">
-        <ul>
-            <li><b>LOGIN KORISNIKA</b></li>
-            <li style="float:right"><a routerLink="/">Početna</a></li>
-        </ul>
-        <br/><br/><br/>
-    </header>
-    <div class="row">
-        <table>
-            <tr>
-                <td>Korisnicko ime:</td>
-                <td>
-                    <input type="text" [(ngModel)]="username">
-                </td>
-            </tr>
-            <tr>
-                <td>Lozinka:</td>
-                <td>
-                    <input type="password" [(ngModel)]="password">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <button (click)="login()">Login</button>
-                </td>
-                <td style="color: red">{{message}}</td>
-            </tr>
-        </table>
-        <br/>
-        Kliknite <a routerLink="/register">ovde</a> da se registrujete kao vlasnik.
+<body class="bg-light">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand mb-0 h1">Mountain Cabin Rental</a>
+      <a routerLink="/"
+        class="btn btn-outline-light custom-dashboard-button">Dashboard</a>
     </div>
-</div>
+  </nav>
+
+  <div class="container">
+    <div
+      class="d-flex align-items-center justify-content-center w-100"
+      style="min-height: 90vh">
+      <div class="row justify-content-center w-100">
+        <div class="col-md-4 col-lg-4">
+          <div class="card shadow rounded-4 p-4">
+            <div class="card-header text-center mb-4">
+              <h2 class="fw-bold">Login</h2>
+              <p class="text-muted mb-0">Sign in to your account</p>
+            </div>
+
+            <div *ngIf="noDataError" class="alert alert-danger" role="alert">
+              <span>{{message}}</span>
+            </div>
+            <!-- <div
+              *ngIf="noDataError"
+              class="alert alert-success"
+              role="alert">
+              <span th:text="#{login.success.logout}">You have been logged
+                out.</span>
+            </div>
+            <div
+              th:if="${profileCreated}"
+              class="alert alert-success"
+              role="alert">
+              <span th:text="#{login.success.profile-created}">Profile created
+                successfully.</span>
+            </div> -->
+
+            <form (ngSubmit)="login()">
+              <div class="mb-3">
+                <label for="username" class="form-label">Email address</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  [(ngModel)]="username"
+                  name="username"
+                  placeholder="Enter your email" />
+              </div>
+
+              <div class="mb-4">
+                <label for="password" class="form-label">Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  [(ngModel)]="password"
+                  name="password"
+                  placeholder="Enter your password" />
+              </div>
+
+              <div class="d-grid mb-3">
+                <button type="submit" class="btn btn-primary btn-lg">
+                  Login
+                </button>
+              </div>
+
+              <div class="text-center mt-3">
+                <span class="text-muted">Don't have an account?</span>
+                <a
+                  [routerLink]="['/register']"
+                  class="link-primary align-baseline">
+                  Register
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
