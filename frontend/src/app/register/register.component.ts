@@ -18,6 +18,7 @@ export class RegisterComponent implements OnInit {
 
   username: string = ""
   password: string = ""
+  type: string = ""
   firstname: string = ""
   lastname: string = ""
   sex: string = ""
@@ -106,7 +107,7 @@ export class RegisterComponent implements OnInit {
 
   register(){
     //provera da li su uneti svi podaci
-    if(this.username=="" || this.password=="" || this.firstname=="" || this.lastname=="" || 
+    if(this.username=="" || this.password=="" || this.type=="" || this.firstname=="" || this.lastname=="" || 
         this.sex=="" || this.address=="" || this.phoneNumber=="" || this.mail=="" || this.cardNumber==""){
       this.error = true
       this.message = "Enter all fields"
@@ -194,18 +195,18 @@ export class RegisterComponent implements OnInit {
         "J8+hEAAAAASUVORK5CYII="
     }
 
-    // this.userService.register(this.username, this.password, this.firstname, this.lastname, 
-    //   this.sex, this.address, this.phoneNumber, this.mail, this.profilePic, this.cardNumber).subscribe(resp=>{
-    //     if(resp['message'] == 'ok'){
-    //       alert('Dodat zahtev za registraciju!')
-    //       this.refresh()
-    //     }
-    //     else if(resp['message'] == 'greska'){
-    //       alert('Postoji vec korisnik sa istim username-om ili mejlom!')
-    //     }
-    //     else{
-    //       alert('Error')
-    //     }
-    //   })
+    this.userService.register(this.username, this.password, this.type, this.firstname, this.lastname, 
+      this.sex, this.address, this.phoneNumber, this.mail, this.profilePic, this.cardNumber).subscribe(resp=>{
+        // if(resp['message'] == 'ok'){
+        //   alert('Dodat zahtev za registraciju!')
+        //   this.refresh()
+        // }
+        // else if(resp['message'] == 'greska'){
+        //   alert('Postoji vec korisnik sa istim username-om ili mejlom!')
+        // }
+        // else{
+        //   alert('Error')
+        // }
+      })
     }
 }

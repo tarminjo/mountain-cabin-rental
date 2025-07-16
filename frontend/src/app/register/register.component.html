@@ -36,6 +36,20 @@
                             </div>
 
                             <div class="mb-1 row align-items-center">
+                                <label class="form-label col-sm-4">User Type:</label>
+                                <div class="col-sm-8">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="type" id="owner" value="owner" [(ngModel)]="type">
+                                        <label class="form-check-label" for="owner">Owner</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="sex" id="tourist" value="tourist" [(ngModel)]="type">
+                                        <label class="form-check-label" for="tourist">Tourist</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-1 row align-items-center">
                                 <label for="firstname" class="form-label col-sm-4">Firstname:</label>
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" [(ngModel)]="firstname" name="firstname"/>
