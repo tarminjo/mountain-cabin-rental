@@ -93,6 +93,7 @@ export class RegisterComponent implements OnInit {
   refresh(){
     this.username= ""
     this.password = ""
+    this.type = ""
     this.firstname = ""
     this.lastname = ""
     this.sex = ""
@@ -196,17 +197,17 @@ export class RegisterComponent implements OnInit {
     }
 
     this.userService.register(this.username, this.password, this.type, this.firstname, this.lastname, 
-      this.sex, this.address, this.phoneNumber, this.mail, this.profilePic, this.cardNumber, 0).subscribe(resp=>{
-        // if(resp['message'] == 'ok'){
-        //   alert('Dodat zahtev za registraciju!')
-        //   this.refresh()
-        // }
-        // else if(resp['message'] == 'greska'){
-        //   alert('Postoji vec korisnik sa istim username-om ili mejlom!')
-        // }
-        // else{
-        //   alert('Error')
-        // }
+      this.sex, this.address, this.phoneNumber, this.mail, this.profilePic, this.cardNumber, 0).subscribe((resp: any)=>{
+        if(resp.msg == 'ok'){
+          alert('Registration request sent')
+          this.refresh()
+        }
+        else if(resp.msg == 'error'){
+          alert('Postoji vec korisnik sa istim username-om ili mejlom!')
+        }
+        else{
+          alert('Error')
+        }
       })
     }
 }
