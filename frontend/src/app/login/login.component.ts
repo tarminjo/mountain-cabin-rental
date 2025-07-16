@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     if (this.username == '' || this.password == '') {
-      this.message = "You didn't enter all the information";
+      this.message = "Enter all fields";
       this.error = true;
       return;
     }

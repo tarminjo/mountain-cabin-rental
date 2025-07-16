@@ -29,10 +29,12 @@ export class RegisterComponent implements OnInit {
   cardNumber: string = ""
 
   cardType: string = ""
-  errorMessage: string = ""
+
+  message: string = ""
+  error: boolean = false
 
   onFileSelected(event: any){
-    this.errorMessage = ""
+    this.message = ""
     this.profilePic = ""
     this.profilePicFile = null
     const file = event.target.files[0]
@@ -40,7 +42,8 @@ export class RegisterComponent implements OnInit {
     if(file){
       const isValidType = file.type == 'image/jpeg' || file.type == 'image/png'
       if(!isValidType){
-        this.errorMessage = "Greska! Dozvoljeni su samo png i jpg fajlovi."
+        this.error = true
+        this.message = "Only png and jpg files are allowed"
         return
       }
 
@@ -56,7 +59,8 @@ export class RegisterComponent implements OnInit {
           const height = img.height
 
           if(width < 100 || width > 300 || height < 100 || height > 300){
-            this.errorMessage = "Greska! Dimenzije slike moraju biti izmedju 100x100px i 300x300px."
+            this.error = true
+            this.message = "Dimesions of the image must be between 100x100px and 300x300px"
             return
           }
           else{
@@ -104,65 +108,76 @@ export class RegisterComponent implements OnInit {
     //provera da li su uneti svi podaci
     if(this.username=="" || this.password=="" || this.firstname=="" || this.lastname=="" || 
         this.sex=="" || this.address=="" || this.phoneNumber=="" || this.mail=="" || this.cardNumber==""){
-      this.errorMessage = "Nisu uneti svi podaci"
+      this.error = true
+      this.message = "Enter all fields"
       return
     }
 
-    //proveru za lozinku iz vise koraka
+    //check for password with several regexes
     let passwordRegex1 = /^.{6,10}$/
     if(!passwordRegex1.test(this.password)){
-      this.errorMessage = "Greska! Lozinka mora sadrzati izmedju 6 i 10 karaktera."
+      this.error = true
+      this.message = "Password must be between 6 and 10 characters."
       return
     }
     let passwordRegex2 = /[A-Z]{1,}/
     if(!passwordRegex2.test(this.password)){
-      this.errorMessage = "Greska! Lozinka mora sadrzati bar jedno veliko slovo."
+      this.error = true
+      this.message = "Password must contain at least one uppercase letter."
       return
     }
     let passwordRegex3 = /[a-z]{3,}/
     if(!passwordRegex3.test(this.password)){
-      this.errorMessage = "Greska! Lozinka mora sadrzati bar tri mala slova."
+      this.error = true
+      this.message = "Password must contain at least three lowercase letters."
       return
     }
     let passwordRegex4 = /\W{1,}/
     if(!passwordRegex4.test(this.password)){
-      this.errorMessage = "Greska! Lozinka mora sadrzati bar jedan specijalan karakter."
+      this.error = true
+      this.message = "Password must contain at least one special character."
       return
     }
     let passwordRegex5 = /\d{1,}/
     if(!passwordRegex5.test(this.password)){
-      this.errorMessage = "Greska! Lozinka mora sadrzati bar jedan broj."
+      this.error = true
+      this.message = "Password must contain at least one number."
       return
     }
     let passwordRegex6 = /^[a-z]|^[A-Z]/
     if(!passwordRegex6.test(this.password)){
-      this.errorMessage = "Greska! Lozinka mora pocinjati slovom."
+      this.error = true
+      this.message = "Password must start with a letter."
       return
     }
 
-    //provera za broj telefona
+    // check for phone number with regex
     let numberRegex = /^(06)\d{7,8}$|^0\d{8,9}$/
     if(!numberRegex.test(this.phoneNumber)){
-      this.errorMessage = "Greska! Neispravan broj telefona."
+      this.error = true
+      this.message = "Wrong phone number format"
       return
     }
 
-    //provera za mail
+    // This regex checks for a valid email format
     let mailRegex = /^\w{1,}@\w{1,}\.\w{2,3}$/
     if(!mailRegex.test(this.mail)){
-      this.errorMessage = "Greska! Neispravan mejl."
+      this.error = true
+      this.message = "Wrong email format"
       return
     }
 
-    //provera za broj kartice
+    // This regex checks for valid card numbers
     let dinersRegex = /^(300|301|302|303)\d{12}$|^(36|38)\d{13}$/
     let masterCardRegex = /^(51|52|53|54|55)\d{14}$/
     let visaRegex = /^(4539|4556|4916|4532|4929|4485|4716)\d{12}$/
     if(!dinersRegex.test(this.cardNumber) && !masterCardRegex.test(this.cardNumber) && !visaRegex.test(this.cardNumber)){
-      this.errorMessage = "Greska! Neispravan broj kartice."
+      this.error = true
+      this.message = "Wrong card number format"
       return
     }
 
+    // Check if a profile picture is selected, if not, set a default profile picture
     if(this.profilePicFile == null){
       this.profilePic = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAAD1BMVEXk5ueutLfc3+C2u77KztDI56RRAAAE"+
         "HElEQVR42u2dAW4iQQwEGdv/f/MxBJFbAshDUNT2VCkvKHX3DhvYPQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAyGFnwsImJ3huKcLdxw13j0D"+
