@@ -1,5 +1,8 @@
 package com.example.backend.controllers;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,8 +25,17 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public User register(@RequestBody User user) {
-        return new UserRepository().register(user);
+    public Map<String, String> register(@RequestBody User user) {
+
+        User result = new UserRepository().register(user);
+
+        Map<String, String> response = new HashMap<>();
+        if (result != null) {
+            response.put("message", "ok");
+        } else {
+            response.put("message", "error");
+        }
+        return response;
     }
     
 }

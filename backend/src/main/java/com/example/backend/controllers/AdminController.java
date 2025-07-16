@@ -18,4 +18,8 @@ public class AdminController {
     public Admin login(@RequestBody Admin admin) {
         return new AdminRepository().login(admin.getUsername(), admin.getPassword());
     }
+
+    //TODO: add end-point for accept/decline user registration
+
+    
 }
