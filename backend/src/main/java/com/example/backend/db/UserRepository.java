@@ -19,19 +19,18 @@ public class UserRepository implements UserRepositoryInterface {
 
     @Override
     public User login(String username, String password) {
-        log.info("Entering login method with username: {}", username);
         try(Connection conn = DB.source().getConnection();
             PreparedStatement stmt = conn.prepareStatement(
                 "SELECT * FROM users WHERE username = ?")) {
 
-            log.info("Entered try block");
             stmt.setString(1, username);
 
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 String storedPassword = rs.getString("password");
+                int type = rs.getInt("type");
 
-                if (passwordEncoder.matches(password, storedPassword)) {
+                if (passwordEncoder.matches(password, storedPassword) && type == 1) {
                     log.info("User is retrieved");
                     return new User(
                         rs.getString("username"),
@@ -44,17 +43,16 @@ public class UserRepository implements UserRepositoryInterface {
                         rs.getString("phoneNumber"),
                         rs.getString("mail"),
                         rs.getString("profilePic"),
-                        rs.getString("cardNumber")
+                        rs.getString("cardNumber"),
+                        rs.getInt("status")
                     );
                 }
             }
 
         } catch (SQLException e) {
-            log.info("SQL Exception in login method");
             e.printStackTrace();
         }
 
-        log.info("User not found or password mismatch");
         return null;
     }
 
@@ -64,8 +62,8 @@ public class UserRepository implements UserRepositoryInterface {
         try(Connection conn = DB.source().getConnection();
             PreparedStatement stmt = conn.prepareStatement(
                 "INSERT INTO users (username, password, firstname, lastname, type," + 
-                    " sex, address, phoneNumber, mail, profilePic, cardNumber) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
+                    " sex, address, phoneNumber, mail, profilePic, cardNumber, status) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
 
             stmt.setString(1, user.getUsername());
 
@@ -81,6 +79,7 @@ public class UserRepository implements UserRepositoryInterface {
             stmt.setString(9, user.getMail());
             stmt.setString(10, user.getProfilePic());
             stmt.setString(11, user.getCardNumber());
+            stmt.setInt(12, 0);
 
             int rows = stmt.executeUpdate();
             if (rows > 0) {

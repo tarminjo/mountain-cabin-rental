@@ -12,13 +12,14 @@ public class User {
     private String mail;
     private String profilePic;
     private String cardNumber;
+    private int status;
     //private String company;
 
     public User() {
     }
 
     public User(String username, String password, String firstname, String lastname, String type, String sex,
-                String address, String phoneNumber, String mail, String profilePic, String cardNumber/*, String company*/) {
+                String address, String phoneNumber, String mail, String profilePic, String cardNumber, int status/*, String company*/) {
         this.username = username;
         this.password = password;
         this.firstname = firstname;
@@ -30,6 +31,7 @@ public class User {
         this.mail = mail;
         this.profilePic = profilePic;
         this.cardNumber = cardNumber;
+        this.status = status;
         //this.company = company;
     }
 
@@ -119,6 +121,14 @@ public class User {
 
     public void setCardNumber(String cardNumber) {
         this.cardNumber = cardNumber;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     // public String getCompany() {

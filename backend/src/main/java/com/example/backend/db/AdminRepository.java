@@ -19,10 +19,9 @@ public class AdminRepository implements AdminRepositoryInterface {
         
         try(Connection conn = DB.source().getConnection();
             PreparedStatement stmt = conn.prepareStatement(
-                "SELECT * FROM admin WHERE username = ? AND type = ?")) {
+                "SELECT * FROM admin WHERE username = ?")) {
 
             stmt.setString(1, username);
-            stmt.setString(2, "admin");
 
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
@@ -41,5 +40,34 @@ public class AdminRepository implements AdminRepositoryInterface {
         }
 
         return null;
+    }
+
+    @Override
+    public void acceptRegistrationRequest(String username) {
+
+        try(Connection conn = DB.source().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(
+                "UPDATE users SET status = 1 WHERE username = ?")) {
+
+            stmt.setString(1, username);
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void declineRegistrationRequest(String username) {
+        try(Connection conn = DB.source().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(
+                "DELETE FROM users WHERE username = ?")) {
+
+            stmt.setString(1, username);
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
