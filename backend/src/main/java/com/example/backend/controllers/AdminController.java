@@ -1,8 +1,10 @@
 package com.example.backend.controllers;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,14 +22,32 @@ public class AdminController {
         return new AdminRepository().login(admin.getUsername(), admin.getPassword());
     }
 
+    // TODO: Implement response messages for success or failure
     @PostMapping("/accept-registration")
-    public void acceptRegistration(@RequestAttribute String username) {
-        new AdminRepository().acceptRegistrationRequest(username);
+    public Map<String, String> acceptRegistration(@RequestBody Map<String, String> payload) {
+        int result = new AdminRepository().acceptRegistrationRequest(payload.get("username"));
+
+        Map<String, String> response = new HashMap<>();
+        if (result == 1) {
+            response.put("message", "ok");
+        } else {
+            response.put("message", "error");
+        }
+        return response;
     }
 
+    // TODO: Implement response messages for success or failure
     @PostMapping("/decline-registration")
-    public void declineRegistration(@RequestAttribute String username) {
-        new AdminRepository().declineRegistrationRequest(username);
+    public Map<String, String> declineRegistration(@RequestBody Map<String, String> payload) {
+       int result = new AdminRepository().declineRegistrationRequest(payload.get("username"));
+
+       Map<String, String> response = new HashMap<>();
+        if (result == 1) {
+            response.put("message", "ok");
+        } else {
+            response.put("message", "error");
+        }
+        return response;
     }
     
 }

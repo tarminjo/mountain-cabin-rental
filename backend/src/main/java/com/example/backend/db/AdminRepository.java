@@ -43,7 +43,7 @@ public class AdminRepository implements AdminRepositoryInterface {
     }
 
     @Override
-    public void acceptRegistrationRequest(String username) {
+    public int acceptRegistrationRequest(String username) {
 
         try(Connection conn = DB.source().getConnection();
             PreparedStatement stmt = conn.prepareStatement(
@@ -54,11 +54,14 @@ public class AdminRepository implements AdminRepositoryInterface {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            return 0;
         }
+
+        return 1;
     }
 
     @Override
-    public void declineRegistrationRequest(String username) {
+    public int declineRegistrationRequest(String username) {
         try(Connection conn = DB.source().getConnection();
             PreparedStatement stmt = conn.prepareStatement(
                 "DELETE FROM users WHERE username = ?")) {
@@ -68,6 +71,9 @@ public class AdminRepository implements AdminRepositoryInterface {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            return 0;
         }
+
+        return 1;
     }
 }
