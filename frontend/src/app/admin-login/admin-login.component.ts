@@ -8,8 +8,8 @@ import { CommonModule } from '@angular/common';
   selector: 'app-login-admin',
   standalone: true,
   imports: [FormsModule, RouterModule, CommonModule],
-  templateUrl: './login-admin.component.html',
-  styleUrl: './login-admin.component.css'
+  templateUrl: './admin-login.component.html',
+  styleUrl: './admin-login.component.css'
 })
 export class LoginAdminComponent implements OnInit {
   constructor(private router: Router, private userService: UserService) { }

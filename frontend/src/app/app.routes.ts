@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { HomePageComponent } from './home-page/home-page.component';
-import { LoginAdminComponent } from './login-admin/login-admin.component';
+import { LoginAdminComponent } from './admin-login/admin-login.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { Admin } from './models/admin';
@@ -10,7 +10,7 @@ import { TouristComponent } from './tourist/tourist.component';
 
 export const routes: Routes = [
     {path: 'login', component: LoginComponent},
-    {path: 'login-admin', component: LoginAdminComponent},
+    {path: 'admin-login', component: LoginAdminComponent},
     {path: '', component: HomePageComponent},
     {path: 'register', component: RegisterComponent},
     {path: 'admin', component: AdminComponent},
