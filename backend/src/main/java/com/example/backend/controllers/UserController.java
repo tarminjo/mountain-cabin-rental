@@ -1,6 +1,7 @@
 package com.example.backend.controllers;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,6 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.backend.db.UserRepository;
 import com.example.backend.models.LoginDTO;
 import com.example.backend.models.User;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @RestController
@@ -37,5 +41,11 @@ public class UserController {
         }
         return response;
     }
+
+    @GetMapping("/requests")
+    public List<User> getRegisterRequests() {
+        return new UserRepository().getAllRequests();
+    }
+    
     
 }

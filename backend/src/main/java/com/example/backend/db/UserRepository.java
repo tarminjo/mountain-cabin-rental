@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -47,20 +49,6 @@ public class UserRepository implements UserRepositoryInterface {
                     user.setStatus(rs.getInt("status"));
 
                     return user;
-                    // return new User(
-                    //     rs.getString("username"),
-                    //     storedPassword,
-                    //     rs.getString("type"),
-                    //     rs.getString("firstname"),
-                    //     rs.getString("lastname"),
-                    //     rs.getString("sex"),
-                    //     rs.getString("address"),
-                    //     rs.getString("phoneNumber"),
-                    //     rs.getString("mail"),
-                    //     rs.getString("profilePic"),
-                    //     rs.getString("cardNumber"),
-                    //     rs.getInt("status")
-                    // );
                 }
             }
 
@@ -107,6 +95,40 @@ public class UserRepository implements UserRepositoryInterface {
         return 0;
     }
 
+    @Override
+    public List<User> getAllRequests() {
 
+        List<User> users = new ArrayList<>();
+        
+        try(Connection conn = DB.source().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(
+                "SELECT * FROM users WHERE status = 0")) {
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                User user = new User();
+
+                user.setUsername(rs.getString("username"));
+                user.setPassword(rs.getString("password"));
+                user.setType(rs.getString("type"));
+                user.setFirstname(rs.getString("firstname"));
+                user.setLastname(rs.getString("lastname"));
+                user.setSex(rs.getString("sex"));
+                user.setAddress(rs.getString("address"));
+                user.setPhoneNumber(rs.getString("phoneNumber"));   
+                user.setMail(rs.getString("mail"));
+                user.setProfilePic(rs.getString("profilePic"));
+                user.setCardNumber(rs.getString("cardNumber"));
+                user.setStatus(rs.getInt("status"));
+
+                users.add(user);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return users;
+    }
 
 }
