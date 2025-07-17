@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
       .subscribe((user: any) => {
         if (user != null) {
           localStorage.setItem('logged', user.username);
-          //this.router.navigate(["profile"])
+          this.router.navigate([user.type])
         } else {
           this.message = 'Wrong username or password';
           this.error = true;

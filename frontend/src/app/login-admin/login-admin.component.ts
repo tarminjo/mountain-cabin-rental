@@ -38,7 +38,7 @@ export class LoginAdminComponent implements OnInit {
     this.userService.loginAdmin(this.username, this.password).subscribe((user: any)=>{
       if(user){
         localStorage.setItem("logged", user.username)
-        //this.router.navigate(['admin'])
+        this.router.navigate(['admin'])
       }
       else{
         this.message = 'Wrong username or password';
