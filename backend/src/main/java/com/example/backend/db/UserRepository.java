@@ -28,24 +28,39 @@ public class UserRepository implements UserRepositoryInterface {
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 String storedPassword = rs.getString("password");
-                int type = rs.getInt("type");
+                int status = rs.getInt("status");
 
-                if (passwordEncoder.matches(password, storedPassword) && type == 1) {
-                    log.info("User is retrieved");
-                    return new User(
-                        rs.getString("username"),
-                        storedPassword,
-                        rs.getString("type"),
-                        rs.getString("firstname"),
-                        rs.getString("lastname"),
-                        rs.getString("sex"),
-                        rs.getString("address"),
-                        rs.getString("phoneNumber"),
-                        rs.getString("mail"),
-                        rs.getString("profilePic"),
-                        rs.getString("cardNumber"),
-                        rs.getInt("status")
-                    );
+                if (passwordEncoder.matches(password, storedPassword) && status == 1) {
+                    User user = new User();
+
+                    user.setUsername(rs.getString("username"));
+                    user.setPassword(storedPassword);
+                    user.setType(rs.getString("type"));
+                    user.setFirstname(rs.getString("firstname"));
+                    user.setLastname(rs.getString("lastname"));
+                    user.setSex(rs.getString("sex"));
+                    user.setAddress(rs.getString("address"));
+                    user.setPhoneNumber(rs.getString("phoneNumber"));   
+                    user.setMail(rs.getString("mail"));
+                    user.setProfilePic(rs.getString("profilePic"));
+                    user.setCardNumber(rs.getString("cardNumber"));
+                    user.setStatus(rs.getInt("status"));
+
+                    return user;
+                    // return new User(
+                    //     rs.getString("username"),
+                    //     storedPassword,
+                    //     rs.getString("type"),
+                    //     rs.getString("firstname"),
+                    //     rs.getString("lastname"),
+                    //     rs.getString("sex"),
+                    //     rs.getString("address"),
+                    //     rs.getString("phoneNumber"),
+                    //     rs.getString("mail"),
+                    //     rs.getString("profilePic"),
+                    //     rs.getString("cardNumber"),
+                    //     rs.getInt("status")
+                    // );
                 }
             }
 
@@ -61,7 +76,7 @@ public class UserRepository implements UserRepositoryInterface {
 
         try(Connection conn = DB.source().getConnection();
             PreparedStatement stmt = conn.prepareStatement(
-                "INSERT INTO users (username, password, firstname, lastname, type," + 
+                "INSERT INTO users (username, password, type, firstname, lastname," + 
                     " sex, address, phoneNumber, mail, profilePic, cardNumber, status) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
 
@@ -69,10 +84,9 @@ public class UserRepository implements UserRepositoryInterface {
 
             String hashedPassword = passwordEncoder.encode(user.getPassword());
             stmt.setString(2, hashedPassword);
-
-            stmt.setString(3, user.getFirstname());
-            stmt.setString(4, user.getLastname());
-            stmt.setString(5, user.getType());
+            stmt.setString(3, user.getType());
+            stmt.setString(4, user.getFirstname());
+            stmt.setString(5, user.getLastname());
             stmt.setString(6, user.getSex());
             stmt.setString(7, user.getAddress());
             stmt.setString(8, user.getPhoneNumber());

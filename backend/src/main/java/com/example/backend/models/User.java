@@ -18,13 +18,13 @@ public class User {
     public User() {
     }
 
-    public User(String username, String password, String firstname, String lastname, String type, String sex,
+    public User(String username, String password, String type, String firstname, String lastname, String sex,
                 String address, String phoneNumber, String mail, String profilePic, String cardNumber, int status/*, String company*/) {
         this.username = username;
         this.password = password;
+        this.type = type;
         this.firstname = firstname;
         this.lastname = lastname;
-        this.type = type;
         this.sex = sex;
         this.address = address;
         this.phoneNumber = phoneNumber;
