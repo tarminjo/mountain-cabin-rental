@@ -3,6 +3,7 @@ import { Router, RouterModule } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { User } from '../models/user';
 
 @Component({
   selector: 'app-login',
@@ -38,11 +39,11 @@ export class LoginComponent implements OnInit {
       .login(this.username, this.password)
       .subscribe((user: any) => {
         if (user != null) {
-          localStorage.setItem('logged', user.username);
+          localStorage.setItem('logged', user.username)
           this.router.navigate([user.type])
         } else {
-          this.message = 'Wrong username or password';
-          this.error = true;
+          this.message = 'Wrong username or password'
+          this.error = true
           return;
         }
       });

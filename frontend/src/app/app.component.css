@@ -1,4 +1,10 @@
-/* .app-container {
-    background-color: beige; 
-    min-height: 100vh; 
-} */
+.custom-dashboard-button:hover {
+  background-color: #f8f9fa;
+  color: #212529;
+  border-color: #f8f9fa;
+}
+
+.full-bg {
+  background-color: #f2f2f2;
+  min-height: 100vh;
+}

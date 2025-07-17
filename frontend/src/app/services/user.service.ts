@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +11,26 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   url = "http://localhost:8080/api";
+
+  getAllRequests():Observable<User[]>{
+    return this.http.get<User[]>(`${this.url}/users/requests`)
+  }
+
+  acceptRequest(username: any){
+    const data = {
+      username: username
+    }
+
+    return this.http.post(`${this.url}/admin/accept-registration`, data)
+  }
+
+  declineRequest(username: any){
+    const data = {
+      username: username
+    }
+    
+    return this.http.post(`${this.url}/admin/decline-registration`, data)
+  }
 
   login(username: any, password: any){
     const data = {

@@ -3,3 +3,7 @@
   color: #212529;
   border-color: #f8f9fa;
 }
+
+body {
+  background-color: #f8f9fa; /* same as .bg-light in Bootstrap */
+}
