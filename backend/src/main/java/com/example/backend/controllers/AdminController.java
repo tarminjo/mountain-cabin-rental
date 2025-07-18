@@ -63,4 +63,16 @@ public class AdminController {
         return new AdminRepository().getActiveUsers();
     }
     
+    @PostMapping("/deactivate-user")
+    public Map<String, String> deactivateUser(@RequestBody Map<String, String> payload) {
+        int result = new AdminRepository().deactivateUser(payload.get("username"));
+
+        Map<String, String> response = new HashMap<>();
+        if (result == 1) {
+            response.put("message", "ok");
+        } else {
+            response.put("message", "error");
+        }
+        return response;
+    }
 }

@@ -11,5 +11,5 @@ public interface AdminRepositoryInterface {
     public int acceptRegistrationRequest(String username);
     public int declineRegistrationRequest(String username);
     public List<User> getActiveUsers();
-
+    public int deactivateUser(String username);
 }

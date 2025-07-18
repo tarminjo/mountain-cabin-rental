@@ -113,6 +113,27 @@ public class AdminRepository implements AdminRepositoryInterface {
             e.printStackTrace();
         }
 
-        return null;
+        return users;
     }
+
+    @Override
+    public int deactivateUser(String username) {
+
+        try(Connection conn = DB.source().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(
+                "UPDATE users SET status = 2 WHERE username = ?")) {
+
+            stmt.setString(1, username);
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+
+        return 1;
+    }
+
+    
+
 }
