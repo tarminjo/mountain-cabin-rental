@@ -4,11 +4,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.example.backend.models.Admin;
+import com.example.backend.models.User;
 
 public class AdminRepository implements AdminRepositoryInterface {
 
@@ -75,5 +78,41 @@ public class AdminRepository implements AdminRepositoryInterface {
         }
 
         return 1;
+    }
+
+    @Override
+    public List<User> getActiveUsers() {
+        
+        List<User> users = new ArrayList<>();
+
+        try(Connection conn = DB.source().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(
+                "SELECT * FROM users WHERE status = 1")) {
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                User user = new User();
+
+                user.setUsername(rs.getString("username"));
+                user.setPassword(rs.getString("password"));
+                user.setType(rs.getString("type"));
+                user.setFirstname(rs.getString("firstname"));
+                user.setLastname(rs.getString("lastname"));
+                user.setSex(rs.getString("sex"));
+                user.setAddress(rs.getString("address"));
+                user.setPhoneNumber(rs.getString("phoneNumber"));   
+                user.setMail(rs.getString("mail"));
+                user.setProfilePic(rs.getString("profilePic"));
+                user.setCardNumber(rs.getString("cardNumber"));
+                user.setStatus(rs.getInt("status"));
+
+                users.add(user);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }

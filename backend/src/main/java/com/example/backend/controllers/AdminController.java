@@ -1,16 +1,21 @@
 package com.example.backend.controllers;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.backend.db.AdminRepository;
+import com.example.backend.db.UserRepository;
 import com.example.backend.models.Admin;
+import com.example.backend.models.User;
+
 
 @RestController
 @RequestMapping("/api/admin")
@@ -22,7 +27,11 @@ public class AdminController {
         return new AdminRepository().login(admin.getUsername(), admin.getPassword());
     }
 
-    // TODO: Implement response messages for success or failure
+    @GetMapping("/requests")
+    public List<User> getRegisterRequests() {
+        return new UserRepository().getAllRequests();
+    }
+
     @PostMapping("/accept-registration")
     public Map<String, String> acceptRegistration(@RequestBody Map<String, String> payload) {
         int result = new AdminRepository().acceptRegistrationRequest(payload.get("username"));
@@ -36,7 +45,6 @@ public class AdminController {
         return response;
     }
 
-    // TODO: Implement response messages for success or failure
     @PostMapping("/decline-registration")
     public Map<String, String> declineRegistration(@RequestBody Map<String, String> payload) {
        int result = new AdminRepository().declineRegistrationRequest(payload.get("username"));
@@ -48,6 +56,11 @@ public class AdminController {
             response.put("message", "error");
         }
         return response;
+    }
+    
+    @GetMapping("/active-users")
+    public List<User> getMethodName() {
+        return new AdminRepository().getActiveUsers();
     }
     
 }
