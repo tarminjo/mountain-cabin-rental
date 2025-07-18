@@ -12,8 +12,20 @@ export class UserService {
 
   url = "http://localhost:8080/api";
 
+  deactivateUser(username: string){
+    const data = {
+      username: username
+    }
+
+    return this.http.post(`${this.url}/admin/deactivate-user`, data);
+  }
+
+  getActiveUsers(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.url}/admin/active-users`);
+  }
+
   getAllRequests():Observable<User[]>{
-    return this.http.get<User[]>(`${this.url}/users/requests`)
+    return this.http.get<User[]>(`${this.url}/admin/requests`)
   }
 
   acceptRequest(username: any){

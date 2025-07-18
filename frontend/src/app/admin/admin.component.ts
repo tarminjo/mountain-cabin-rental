@@ -16,7 +16,6 @@ export class AdminComponent implements OnInit {
   constructor(private router: Router, private userService: UserService) { }
 
   ngOnInit(): void {
-    this.selectedRequestUsername = ""
 
     this.userService.getAllRequests().subscribe((requests: User[])=>{
       this.allRequests = requests
@@ -24,7 +23,6 @@ export class AdminComponent implements OnInit {
   }
 
   allRequests: User[] = []
-  selectedRequestUsername: string = ""
 
   acceptRequest(username: string){
     this.userService.acceptRequest(username).subscribe((resp: any)=>{
@@ -51,9 +49,4 @@ export class AdminComponent implements OnInit {
       this.ngOnInit()
     })
   }
-
-  backToSelect(){
-    this.selectedRequestUsername=""
-  }
-
 }

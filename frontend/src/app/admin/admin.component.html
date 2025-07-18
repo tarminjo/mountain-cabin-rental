@@ -3,13 +3,19 @@
     <div class="container-fluid">
       <a class="navbar-brand mb-0 h1">Mountain Cabin Rental</a>
       <a routerLink="/admin"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
           class="btn btn-outline-light custom-dashboard-button me-2">
           Registration Requests
       </a>
       <a routerLink="/admin-users-dashboard"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
           class="btn btn-outline-light custom-dashboard-button me-2">Users Dashboard
       </a>
-      <a routerLink="/login-cabins-dashboard"
+      <a routerLink="/admin-cabins-dashboard"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
           class="btn btn-outline-light custom-dashboard-button">Cabins Dashboard
       </a>
       <div class="ms-auto">

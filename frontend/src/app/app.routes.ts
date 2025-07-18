@@ -7,6 +7,8 @@ import { Admin } from './models/admin';
 import { AdminComponent } from './admin/admin.component';
 import { OwnerComponent } from './owner/owner.component';
 import { TouristComponent } from './tourist/tourist.component';
+import { AdminUsersDashboardComponent } from './admin-users-dashboard/admin-users-dashboard.component';
+import { AdminCabinsDashboardComponent } from './admin-cabins-dashboard/admin-cabins-dashboard.component';
 
 export const routes: Routes = [
     {path: 'login', component: LoginComponent},
@@ -15,5 +17,7 @@ export const routes: Routes = [
     {path: 'register', component: RegisterComponent},
     {path: 'admin', component: AdminComponent},
     {path: 'owner', component: OwnerComponent},
-    {path: 'tourist', component: TouristComponent}
+    {path: 'tourist', component: TouristComponent},
+    {path: 'admin-users-dashboard', component: AdminUsersDashboardComponent},
+    {path: 'admin-cabins-dashboard', component: AdminCabinsDashboardComponent}
 ];

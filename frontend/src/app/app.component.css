@@ -4,6 +4,12 @@
   border-color: #f8f9fa;
 }
 
+a.custom-dashboard-button.active {
+  background-color: #ffffff;
+  color: #000000;
+  border-color: #ffffff;
+}
+
 .full-bg {
   background-color: #f2f2f2;
   min-height: 100vh;
