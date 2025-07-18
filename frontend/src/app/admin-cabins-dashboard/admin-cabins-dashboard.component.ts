@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
@@ -10,6 +10,16 @@ import { RouterModule } from '@angular/router';
   templateUrl: './admin-cabins-dashboard.component.html',
   styleUrl: './admin-cabins-dashboard.component.css'
 })
-export class AdminCabinsDashboardComponent {
+export class AdminCabinsDashboardComponent implements OnInit {
 
+  ngOnInit() {
+    
+  }
+
+  cabins: any[] = []
+
+  cabin(username: string) {
+    // Logic to handle cabin operations
+
+  }
 }
