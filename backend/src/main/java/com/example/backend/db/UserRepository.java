@@ -131,6 +131,7 @@ public class UserRepository implements UserRepositoryInterface {
         return users;
     }
 
+    @Override
     public User getUserByUsername(String username) {
         try(Connection conn = DB.source().getConnection();
             PreparedStatement stmt = conn.prepareStatement(
@@ -154,6 +155,7 @@ public class UserRepository implements UserRepositoryInterface {
                 user.setCardNumber(rs.getString("cardNumber"));
                 user.setStatus(rs.getInt("status"));
                 
+                return user;
             }
 
         } catch (SQLException e) {

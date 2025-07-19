@@ -9,4 +9,5 @@ public interface UserRepositoryInterface {
     public User login(String username, String password);
     public int register(User user);
     public List<User> getAllRequests();
+    User getUserByUsername(String username);
 }
