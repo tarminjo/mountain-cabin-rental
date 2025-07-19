@@ -131,4 +131,36 @@ public class UserRepository implements UserRepositoryInterface {
         return users;
     }
 
+    public User getUserByUsername(String username) {
+        try(Connection conn = DB.source().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(
+                "SELECT * FROM users WHERE username = ?")) {
+
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                User user = new User();
+
+                user.setUsername(rs.getString("username"));
+                user.setPassword(rs.getString("password"));
+                user.setType(rs.getString("type"));
+                user.setFirstname(rs.getString("firstname"));
+                user.setLastname(rs.getString("lastname"));
+                user.setSex(rs.getString("sex"));
+                user.setAddress(rs.getString("address"));
+                user.setPhoneNumber(rs.getString("phoneNumber"));   
+                user.setMail(rs.getString("mail"));
+                user.setProfilePic(rs.getString("profilePic"));
+                user.setCardNumber(rs.getString("cardNumber"));
+                user.setStatus(rs.getInt("status"));
+                
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
 }
