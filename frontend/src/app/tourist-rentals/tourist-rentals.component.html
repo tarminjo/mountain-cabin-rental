@@ -1,1 +1,29 @@
-<p>tourist-rentals works!</p>
+<div class="full-bg">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand mb-0 h1">Mountain Cabin Rental</a>
+      <a routerLink="/tourist"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="btn btn-outline-light custom-dashboard-button me-2">
+          Profile
+      </a>
+      <a routerLink="/tourist-cabins"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="btn btn-outline-light custom-dashboard-button me-2">Cabins
+      </a>
+      <a routerLink="/tourist-rentals"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="btn btn-outline-light custom-dashboard-button me-2">Reservations
+      </a>
+      <div class="ms-auto">
+        <a routerLink="/login"
+          class="btn btn-outline-light custom-dashboard-button">Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  
+</div>

@@ -1,1 +1,34 @@
-<p>owner-cabins works!</p>
+<div class="full-bg">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand mb-0 h1">Mountain Cabin Rental</a>
+      <a routerLink="/owner"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="btn btn-outline-light custom-dashboard-button me-2">
+          Profile
+      </a>
+      <a routerLink="/owner-rentals"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="btn btn-outline-light custom-dashboard-button me-2">Reservations
+      </a>
+      <a routerLink="/owner-cabins"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="btn btn-outline-light custom-dashboard-button me-2">My Cabins
+      </a>
+      <a routerLink="/owner-statistics"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="btn btn-outline-light custom-dashboard-button">Statistics
+      </a>
+      <div class="ms-auto">
+        <a routerLink="/login"
+          class="btn btn-outline-light custom-dashboard-button">Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  
+</div>

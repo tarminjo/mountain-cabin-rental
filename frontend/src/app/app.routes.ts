@@ -29,5 +29,5 @@ export const routes: Routes = [
     {path: 'owner-cabins', component: OwnerCabinsComponent},
     {path: 'owner-statistics', component: OwnerStatisticsComponent},
     {path: 'tourist-cabins', component: TouristCabinsComponent},
-    {path: 'tourist-reservations', component: TouristRentalsComponent}
+    {path: 'tourist-rentals', component: TouristRentalsComponent}
 ];
