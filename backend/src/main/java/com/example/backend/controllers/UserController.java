@@ -12,19 +12,17 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.backend.db.UserRepository;
 import com.example.backend.models.LoginDTO;
 import com.example.backend.models.User;
-import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
 @RequestMapping("/api/users")
 @CrossOrigin("http://localhost:4200")
 public class UserController {
 
-    @GetMapping
+    @PostMapping
     public User getUser(@RequestBody Map<String, String> payload) {
         return new UserRepository().getUserByUsername(payload.get("username"));
     }
     
-
     @PostMapping(path = "/login")
     public User login(@RequestBody LoginDTO dto) {
         return new UserRepository().login(dto.getUsername(), dto.getPassword());
