@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user';
+import { Cabin } from '../models/cabin';
 
 @Component({
   selector: 'app-admin',
@@ -23,6 +24,10 @@ export class AdminComponent implements OnInit {
       this.userService.getAllRequests().subscribe((requests: User[])=>{
         this.registrationRequests = requests
       })
+
+      this.error = false
+      this.message = ""
+      this.selectedTab = "users"
     }
 
   logout() {
@@ -53,6 +58,8 @@ export class AdminComponent implements OnInit {
   editCardNumber: string = ""
   editProfilePic: string = ""
   editProfilePicFile: File | null = null
+
+  cabins: Cabin [] = []
   
   editUser(username: string) {
     this.selectedTab = 'edit';
@@ -117,7 +124,7 @@ export class AdminComponent implements OnInit {
       this.editMail, this.editCardNumber, this.editProfilePic).subscribe((resp: any)=>{
         if(resp.message == 'ok'){
           alert('Account details updated successfully')
-          this.ngOnInit()
+          this.ngOnInit();
         }
         else if(resp.message == 'error'){
           alert("Error updating account details")

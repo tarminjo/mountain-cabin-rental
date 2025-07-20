@@ -3,4 +3,6 @@ export class Cabin {
     name!: string
     location!: string
     phoneNumber!: string
+    services!: string
+    //map - dynamic
 }

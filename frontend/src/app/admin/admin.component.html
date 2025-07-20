@@ -174,6 +174,44 @@
               </div>
               <button (click)="updateProfile()" type="button" class="btn btn-success me-1">Save</button>
             </form>
+            <form *ngIf="selectedTab === 'cabins'">
+              <div *ngIf="cabins.length > 0; else noCabins">
+                <h3 class="card-title mb-4">List of All Cabins</h3>
+                <table class="table table-hover table-borderless shadow rounded-4 mt-2">
+                  <thead class="table-dark text-center">
+                    <tr>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody class="align-middle text-center">
+                    <tr *ngFor="let request of registrationRequests">
+                      <td>
+                        <img [src]="request.profilePic || 'default.jpg'" class="rounded-circle" style="width: 40px; height: 40px;">
+                      </td>
+                      <td>{{ request.firstname }} {{ request.lastname }}</td>
+                      <td>{{ request.username }}</td>
+                      <td>{{ request.mail }}</td>
+                      <td>{{ request.phoneNumber }}</td>
+                      <td style="white-space: nowrap; width: 1%;">
+                        <button class="btn btn-success btn-sm me-1"
+                          (click)="acceptRequest(request.username)">Approve</button>
+                        <button class="btn btn-danger btn-sm"
+                          (click)="declineRequest(request.username)">Reject</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <ng-template #noCabins>
+                <h4 class="text-center" style="color: red; font-style: italic;">
+                No cabins in system...</h4>
+              </ng-template>
+            </form>
           </div>
         </div>
       </div>
