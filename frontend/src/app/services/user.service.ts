@@ -27,6 +27,22 @@ export class UserService {
       return this.http.post(`${this.url}/users/update-account-details`, data)
   }
 
+  updateAccountDetailsAndPicture(username: string, firstname: string, lastname: string, 
+    address: string, phoneNumber: string, mail: string, cardNumber: string, profilePic: string) {
+    const data = {
+      username: username,
+      firstname: firstname,
+      lastname: lastname,
+      address: address,
+      phoneNumber: phoneNumber,
+      mail: mail,
+      cardNumber: cardNumber,
+      profilePic: profilePic
+    }
+
+      return this.http.post(`${this.url}/admin/update-account`, data)
+  }
+
   getUser(username: string): Observable<User> {
     return this.http.get<User>(`${this.url}/users/` + username);
   }

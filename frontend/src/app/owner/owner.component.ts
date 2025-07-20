@@ -83,7 +83,7 @@ export class OwnerComponent implements OnInit {
       return
     }
 
-    //provera da li su uneti svi podaci
+    // check if all fields are entered  
     if(this.firstname=="" || this.lastname=="" || 
         this.address=="" || this.phoneNumber=="" || this.mail=="" || this.cardNumber==""){
       this.error = true

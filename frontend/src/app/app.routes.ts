@@ -7,8 +7,6 @@ import { Admin } from './models/admin';
 import { AdminComponent } from './admin/admin.component';
 import { OwnerComponent } from './owner/owner.component';
 import { TouristComponent } from './tourist/tourist.component';
-import { AdminUsersDashboardComponent } from './admin-users-dashboard/admin-users-dashboard.component';
-import { AdminCabinsDashboardComponent } from './admin-cabins-dashboard/admin-cabins-dashboard.component';
 import { OwnerRentalsComponent } from './owner-rentals/owner-rentals.component';
 import { OwnerCabinsComponent } from './owner-cabins/owner-cabins.component';
 import { OwnerStatisticsComponent } from './owner-statistics/owner-statistics.component';
@@ -23,8 +21,6 @@ export const routes: Routes = [
     {path: 'admin', component: AdminComponent},
     {path: 'owner', component: OwnerComponent},
     {path: 'tourist', component: TouristComponent},
-    {path: 'admin-users-dashboard', component: AdminUsersDashboardComponent},
-    {path: 'admin-cabins-dashboard', component: AdminCabinsDashboardComponent},
     {path: 'owner-rentals', component: OwnerRentalsComponent},
     {path: 'owner-cabins', component: OwnerCabinsComponent},
     {path: 'owner-statistics', component: OwnerStatisticsComponent},
