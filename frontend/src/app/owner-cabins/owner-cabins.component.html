@@ -30,5 +30,127 @@
     </div>
   </nav>
 
-  
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-3 mb-4">
+        <div class="list-group">
+          <button
+            type="button"
+            class="list-group-item list-group-item-action"
+            [class.active]="selectedTab === 'cabins'"
+            (click)="selectTab('cabins')"
+          >
+            My Cabins
+          </button>
+          <button
+            type="button"
+            class="list-group-item list-group-item-action"
+            [class.active]="selectedTab === 'form'"
+            (click)="selectTab('form')"
+          >
+            Add Cabin - Form
+          </button>
+          <button
+            type="button"
+            class="list-group-item list-group-item-action"
+            [class.active]="selectedTab === 'json'"
+            (click)="selectTab('json')"
+          >
+            Add Cabin - JSON
+          </button>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <div class="card shadow rounded-4 p-2 mb-4">
+          <div class="card-body">
+            <form *ngIf="selectedTab === 'cabins'">
+              <div *ngIf="cabins.length > 0; else noCabins">
+                <h3 class="card-title mb-4">List of My Cabin</h3>
+                <table class="table table-hover table-borderless shadow rounded-4 mt-2">
+                  <thead class="table-dark text-center">
+                    <tr>
+                      <th>Name</th>
+                      <th>Location</th>
+                      <th>Phone Number</th>
+                      <th>Winter $</th>
+                      <th>Summer $</th>
+                    </tr>
+                  </thead>
+                  <tbody class="align-middle text-center">
+                    <tr *ngFor="let cabin of cabins">
+                      <td>{{cabin.name}}</td>
+                      <td>{{cabin.location}}</td>
+                      <td>{{cabin.phoneNumber}}</td>
+                      <td>{{cabin.winterPrice}}</td>
+                      <td>{{cabin.summerPrice}}</td>
+                      <td style="white-space: nowrap; width: 1%;">
+                        <button class="btn btn-primary btn-sm me-1"
+                          (click)="editCabin(cabin.id)">Edit</button>
+                        <button class="btn btn-danger btn-sm"
+                          (click)="deleteCabin(cabin.id)">Delete</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <ng-template #noCabins>
+                <h4 class="text-center" style="color: red; font-style: italic;">
+                No my cabins...</h4>
+              </ng-template>
+            </form>
+            
+            <form *ngIf="selectedTab === 'form'">
+              <h3 class="card-title mb-4">New Cabin with Form</h3>
+              <div *ngIf="error" class="alert alert-danger" role="alert">
+                <span>{{message}}</span>
+              </div>
+              <div class="mb-2">
+                <label class="form-label">Name</label>
+                <input type="text" class="form-control" [(ngModel)]="name" name="name">
+              </div>
+              <div class="mb-2">
+                <label class="form-label">Location</label>
+                <input type="text" class="form-control" [(ngModel)]="location" name="location">
+              </div>
+              <div class="mb-2">
+                <label class="form-label">Services</label>
+                  <textarea id="services" [(ngModel)]="services" class="form-control" rows="2"></textarea>
+              </div>
+              <div class=" row mb-2">
+                <div class="col-6">
+                  <label class="form-label">Winter Price</label>
+                  <input type="number" class="form-control" [(ngModel)]="winterPrice" name="winterPrice">
+                </div>
+                <div class="col-6">
+                  <label class="form-label">Summer Price</label>
+                  <input type="number" class="form-control" [(ngModel)]="summerPrice" name="summerPrice">
+                </div>
+              </div>
+              <div class="mb-2">
+                <label class="form-label">Phone Number</label>
+                <input type="text" class="form-control" [(ngModel)]="phoneNumber" name="phoneNumber">
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Coordinates</label>
+                <input type="text" class="form-control" [(ngModel)]="coordinates" name="coordinates">
+              </div>
+              <!-- <div class="mb-3">
+                <label class="form-label">Pictures</label>
+                <input type="text" class="form-control" [(ngModel)]="cardNumber" name="cardNumber">
+              </div> -->
+              <button (click)="createCabin()" type="button" class="btn btn-success">Create</button>
+            </form>
+
+            <form *ngIf="selectedTab === 'json'">
+              <h3 class="card-title mb-4">New Cabin with Json</h3>
+              <div *ngIf="error" class="alert alert-danger" role="alert">
+                <span>{{message}}</span>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
