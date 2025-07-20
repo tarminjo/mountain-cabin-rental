@@ -15,7 +15,6 @@ import com.example.backend.db.AdminRepository;
 import com.example.backend.db.UserRepository;
 import com.example.backend.models.Admin;
 import com.example.backend.models.User;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 
