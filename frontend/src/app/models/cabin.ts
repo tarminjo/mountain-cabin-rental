@@ -4,5 +4,7 @@ export class Cabin {
     location!: string
     phoneNumber!: string
     services!: string
+    winterPrice!: number
+    summerPrice!: number
     //map - dynamic
 }
