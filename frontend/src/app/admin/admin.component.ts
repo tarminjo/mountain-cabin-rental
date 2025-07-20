@@ -13,6 +13,7 @@ import { User } from '../models/user';
   styleUrl: './admin.component.css'
 })
 export class AdminComponent implements OnInit {
+
   constructor(private router: Router, private userService: UserService) { }
 
   ngOnInit(): void {
@@ -20,6 +21,11 @@ export class AdminComponent implements OnInit {
     this.userService.getAllRequests().subscribe((requests: User[])=>{
       this.allRequests = requests
     })
+  }
+
+  logout() {
+    localStorage.removeItem('logged');
+    this.router.navigate(['/admin-login']);
   }
 
   allRequests: User[] = []

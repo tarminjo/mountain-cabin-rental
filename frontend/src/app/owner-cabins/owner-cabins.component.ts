@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-owner-cabins',
@@ -10,6 +11,16 @@ import { RouterModule } from '@angular/router';
   templateUrl: './owner-cabins.component.html',
   styleUrl: './owner-cabins.component.css'
 })
-export class OwnerCabinsComponent {
-
+export class OwnerCabinsComponent implements OnInit {
+    
+  constructor(private router: Router, private userService: UserService) {}
+    
+  ngOnInit(): void {
+          
+  }
+    
+  logout() {
+    localStorage.removeItem('logged');
+    this.router.navigate(['/login']);
+  }
 }

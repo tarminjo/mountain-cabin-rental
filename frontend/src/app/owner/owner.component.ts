@@ -41,6 +41,11 @@ export class OwnerComponent implements OnInit {
     })
   }
 
+  logout() {
+    localStorage.removeItem('logged');
+    this.router.navigate(['/login']);
+  }
+
   selectedTab: string = 'details'
 
   firstname: string = ''

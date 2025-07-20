@@ -20,6 +20,11 @@ export class AdminUsersDashboardComponent {
         this.activeUsers = requests
       })
     }
+
+  logout() {
+    localStorage.removeItem('logged');
+    this.router.navigate(['/admin-login']);
+  }
   
     activeUsers: User[] = []
   

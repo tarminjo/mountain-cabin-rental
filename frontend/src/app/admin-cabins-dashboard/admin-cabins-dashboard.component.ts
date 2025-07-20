@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-admin-cabins-dashboard',
@@ -11,9 +12,16 @@ import { RouterModule } from '@angular/router';
   styleUrl: './admin-cabins-dashboard.component.css'
 })
 export class AdminCabinsDashboardComponent implements OnInit {
-
+  
+  constructor(private router: Router, private userService: UserService) {}
+  
   ngOnInit() {
     
+  }
+
+  logout() {
+    localStorage.removeItem('logged');
+    this.router.navigate(['/admin-login']);
   }
 
   cabins: any[] = []
