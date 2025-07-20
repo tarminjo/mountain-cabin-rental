@@ -66,6 +66,8 @@ public class UserController {
         Map<String, String> response = new HashMap<>();
         if (result == 1) {
             response.put("message", "ok");
+        } else if(result == 2) {
+            response.put("message", "exact");
         } else {
             response.put("message", "error");
         }

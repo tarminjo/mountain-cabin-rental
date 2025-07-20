@@ -206,7 +206,10 @@ public class UserRepository implements UserRepositoryInterface {
             if (rs.next()) {
                 String storedPassword = rs.getString("password");
                 if(!passwordEncoder.matches(payload.get("oldPassword"), storedPassword)){
-                    return 0;
+                    return 0; // Old password must match the stored password
+                }
+                if(passwordEncoder.matches(payload.get("newPassword"), storedPassword)){
+                    return 2; // New password must be different from the old one
                 }
             }
 

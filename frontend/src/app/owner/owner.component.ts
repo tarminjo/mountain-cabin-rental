@@ -189,9 +189,11 @@ export class OwnerComponent implements OnInit {
     this.userService.updatePassword(this.username, this.oldPassword, this.newPassword).subscribe((resp: any)=>{
       if(resp.message == 'ok'){
         alert('Password changed successfully')
-        this.ngOnInit()
-      }
-      else{
+        localStorage.removeItem('logged');
+        this.router.navigate(['/login']);
+      } else if(resp.message == 'exact'){
+        alert("Passwords cannot be the same")
+      } else{
         alert('Wrong current password')
       }
     })
