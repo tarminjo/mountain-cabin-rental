@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -132,6 +133,47 @@ public class AdminRepository implements AdminRepositoryInterface {
         }
 
         return 1;
+    }
+
+    @Override
+    public int updateUserAccount(Map<String, String> payload) {
+        
+        String query = "";
+        if(payload.get("profilePic").isEmpty()){
+            query = "UPDATE users SET firstname = ?, lastname = ?, address = ?, phoneNumber = ?, " +
+                "mail = ?, cardNumber = ? WHERE username = ?";
+        }
+        else{
+            query = "UPDATE users SET firstname = ?, lastname = ?, address = ?, phoneNumber = ?, " +
+                "mail = ?, cardNumber = ?, profilePic = ? WHERE username = ?";
+        }
+        try(Connection conn = DB.source().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, payload.get("firstname"));
+            stmt.setString(2, payload.get("lastname"));
+            stmt.setString(3, payload.get("address"));
+            stmt.setString(4, payload.get("phoneNumber"));
+            stmt.setString(5, payload.get("mail"));
+            stmt.setString(6, payload.get("cardNumber"));
+
+            if(payload.get("profilePic").isEmpty()){
+                stmt.setString(7, payload.get("username"));
+            } else{
+                stmt.setString(7, payload.get("profilePic"));
+                stmt.setString(8, payload.get("username"));
+            }
+
+            int rows = stmt.executeUpdate();
+            if (rows > 0) {
+                return 1;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
     }
 
     

@@ -76,4 +76,19 @@ public class AdminController {
         }
         return response;
     }
+
+    @PostMapping("/update-account")
+    public Map<String, String> updateUserAccount(@RequestBody Map<String, String> payload) {
+        
+        int result = new AdminRepository().updateUserAccount(payload);
+
+        Map<String, String> response = new HashMap<>();
+        if (result == 1) {
+            response.put("message", "ok");
+        } else {
+            response.put("message", "error");
+        }
+        return response;
+    }
+    
 }
