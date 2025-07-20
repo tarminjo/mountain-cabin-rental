@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -163,6 +164,97 @@ public class UserRepository implements UserRepositoryInterface {
         }
 
         return null;
+    }
+
+    @Override
+    public int updateUserAccountDetails(Map<String, String> payload) {
+    
+        try(Connection conn = DB.source().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(
+                "UPDATE users SET firstname = ?, lastname = ?, address = ?, phoneNumber = ?, " +
+                    "mail = ?, cardNumber = ? WHERE username = ?")) {
+
+            stmt.setString(1, payload.get("firstname"));
+            stmt.setString(2, payload.get("lastname"));
+            stmt.setString(3, payload.get("address"));
+            stmt.setString(4, payload.get("phoneNumber"));
+            stmt.setString(5, payload.get("mail"));
+            stmt.setString(6, payload.get("cardNumber"));
+            stmt.setString(7, payload.get("username"));
+
+            int rows = stmt.executeUpdate();
+            if (rows > 0) {
+                return 1;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
+    @Override
+    public int updateUserPassword(Map<String, String> payload) {
+        
+        try(Connection conn = DB.source().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(
+                "SELECT * FROM users WHERE username = ?")) {
+
+            stmt.setString(1, payload.get("username"));
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                String storedPassword = rs.getString("password");
+                if(!passwordEncoder.matches(payload.get("oldPassword"), storedPassword)){
+                    return 0;
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+
+
+        try(Connection conn = DB.source().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(
+                "UPDATE users SET password = ? WHERE username = ?")) {
+
+            stmt.setString(1, passwordEncoder.encode(payload.get("newPassword")));
+            stmt.setString(2, payload.get("username"));
+
+            int rows = stmt.executeUpdate();
+            if (rows > 0) {
+                return 1;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
+    @Override
+    public int updateProfilePicture(Map<String, String> payload) {
+        
+        try(Connection conn = DB.source().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(
+                "UPDATE users SET profilePic = ? WHERE username = ?")) {
+
+            stmt.setString(1, payload.get("profilePic"));
+            stmt.setString(2, payload.get("username"));
+
+            int rows = stmt.executeUpdate();
+            if (rows > 0) {
+                return 1;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
     }
 
 }

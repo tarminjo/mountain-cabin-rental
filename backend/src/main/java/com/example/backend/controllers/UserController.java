@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,9 +20,9 @@ import com.example.backend.models.User;
 @CrossOrigin("http://localhost:4200")
 public class UserController {
 
-    @PostMapping
-    public User getUser(@RequestBody Map<String, String> payload) {
-        return new UserRepository().getUserByUsername(payload.get("username"));
+    @GetMapping("/{username}")
+    public User getUser(@PathVariable String username) {
+        return new UserRepository().getUserByUsername(username);
     }
     
     @PostMapping(path = "/login")
@@ -41,4 +43,48 @@ public class UserController {
         }
         return response;
     }
+
+    @PostMapping("/update-account-details")
+    public Map<String, String> updateUserAccountDetails(@RequestBody Map<String, String> payload) {
+        
+        int result = new UserRepository().updateUserAccountDetails(payload);
+
+        Map<String, String> response = new HashMap<>();
+        if (result == 1) {
+            response.put("message", "ok");
+        } else {
+            response.put("message", "error");
+        }
+        return response;
+    }
+
+    @PostMapping("/update-password")
+    public Map<String, String> updateUserPassword(@RequestBody Map<String, String> payload) {
+        
+        int result = new UserRepository().updateUserPassword(payload);
+
+        Map<String, String> response = new HashMap<>();
+        if (result == 1) {
+            response.put("message", "ok");
+        } else {
+            response.put("message", "error");
+        }
+        return response;
+    }
+
+    @PostMapping("/update-profile-picture")
+    public Map<String, String> updateProfilePicture(@RequestBody Map<String, String> payload) {
+        
+        int result = new UserRepository().updateProfilePicture(payload);
+
+        Map<String, String> response = new HashMap<>();
+        if (result == 1) {
+            response.put("message", "ok");
+        } else {
+            response.put("message", "error");
+        }
+        return response;
+    }
+
+    
 }

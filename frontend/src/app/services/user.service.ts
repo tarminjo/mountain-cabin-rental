@@ -10,7 +10,26 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  url = "http://localhost:8080/api";
+  url = "http://localhost:8081/api"
+
+  updateAccountDetails(username: string, firstname: string, lastname: string, 
+    address: string, phoneNumber: string, mail: string, cardNumber: string) {
+    const data = {
+      username: username,
+      firstname: firstname,
+      lastname: lastname,
+      address: address,
+      phoneNumber: phoneNumber,
+      mail: mail,
+      cardNumber: cardNumber
+    }
+
+      return this.http.post(`${this.url}/users/update-account-details`, data)
+  }
+
+  getUser(username: string): Observable<User> {
+    return this.http.get<User>(`${this.url}/users/` + username);
+  }
 
   deactivateUser(username: string){
     const data = {
@@ -83,93 +102,22 @@ export class UserService {
     return this.http.post(`${this.url}/users/register`, data)
   }
 
-  checkPassword(username: any, password: any){
+  updatePassword(username: any, oldPassword: any, newPassword: any){
     const data = {
       username: username,
-      password: password
+      oldPassword: oldPassword,
+      newPassword: newPassword
     }
 
-    return this.http.post(`${this.url}/users/check-password`, data)
+    return this.http.post(`${this.url}/users/update-password`, data)
   }
 
-  changePassword(username: any, password: any){
-    const data = {
-      username: username,
-      password: password
-    }
-
-    return this.http.post(`${this.url}/users/change-password`, data)
-  }
-
-  getUser(username: any){
-    const data = {
-      username: username
-    }
-
-    return this.http.post(`${this.url}/users/get-user`, data)
-  }
-
-  updatePicture(username: any, profilePic: any){
+  updateProfilePicture(username: any, profilePic: any){
     const data = {
       username: username,
       profilePic: profilePic
     }
 
-    return this.http.post(`${this.url}/users/update-picture`, data)
+    return this.http.post(`${this.url}/users/update-profile-picture`, data)
   }
-
-  updateFirstname(username: any, firstname: any){
-    const data = {
-      username: username,
-      firstname: firstname
-    }
-
-    return this.http.post(`${this.url}/users/update-firstname`, data)
-  }
-
-  updateLastname(username: any, lastname: any){
-    const data = {
-      username: username,
-      lastname: lastname
-    }
-
-    return this.http.post(`${this.url}/users/update-lastname`, data)
-  }
-
-  updateAddress(username: any, address: any){
-    const data = {
-      username: username,
-      address: address
-    }
-
-    return this.http.post(`${this.url}/users/update-address`, data)
-  }
-
-  updateMail(username: any, mail: any){
-    const data = {
-      username: username,
-      mail: mail
-    }
-
-    return this.http.post(`${this.url}/users/update-mail`, data)
-  }
-
-  updatePhoneNumber(username: any, phoneNumber: any){
-    const data = {
-      username: username,
-      phoneNumber: phoneNumber
-    }
-
-    return this.http.post(`${this.url}/users/update-phone-number`, data)
-  }
-
-  updateCardNumber(username: any, cardNumber: any){
-    const data = {
-      username: username,
-      cardNumber: cardNumber
-    }
-
-    return this.http.post(`${this.url}/users/update-card-number`, data)
-  }
-
 }
