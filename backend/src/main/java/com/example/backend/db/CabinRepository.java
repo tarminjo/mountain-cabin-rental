@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.example.backend.models.Cabin;
 
@@ -42,6 +43,76 @@ public class CabinRepository implements CabinRepositoryInterface{
         }
 
         return response;
+    }
+
+    @Override
+    public int updateCabin(Map<String, String> payload) {
+        try(Connection conn = DB.source().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(
+                "UPDATE cabins SET name = ?, location = ?, services = ?, phoneNumber = ?, " +
+                    "winterPrice = ?, summerPrice = ? WHERE id = ?")) {
+
+            stmt.setString(1, payload.get("name"));
+            stmt.setString(2, payload.get("location"));
+            stmt.setString(3, payload.get("services"));
+            stmt.setString(4, payload.get("phoneNumber"));
+            stmt.setInt(5, Integer.parseInt(payload.get("winterPrice")));
+            stmt.setInt(6, Integer.parseInt(payload.get("summerPrice")));
+            stmt.setInt(7, Integer.parseInt(payload.get("id")));
+
+            int rows = stmt.executeUpdate();
+            if (rows > 0) {
+                return 1;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
+    public int deleteCabin(int id){
+        
+        try(Connection conn = DB.source().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(
+                "DELETE FROM cabins WHERE id = ?")) {
+
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+
+        return 1;
+    }
+
+    public int createCabin(Cabin cabin) {
+        
+        try(Connection conn = DB.source().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(
+                "INSERT INTO cabins (name, location, services, phoneNumber, winterPrice, summerPrice) " +
+                "VALUES (?, ?, ?, ?, ?, ?)")) {
+
+            stmt.setString(1, cabin.getName());
+            stmt.setString(2, cabin.getLocation());
+            stmt.setString(3, cabin.getServices());
+            stmt.setString(4, cabin.getPhoneNumber());
+            stmt.setInt(5, cabin.getWinterPrice());
+            stmt.setInt(6, cabin.getSummerPrice());
+
+            int rows = stmt.executeUpdate();
+            if (rows > 0) {
+                return 1;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
     }
     
 }
