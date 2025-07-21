@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.backend.db.CabinRepository;
 import com.example.backend.models.Cabin;
 
 
@@ -18,7 +19,7 @@ public class CabinController {
     
     @GetMapping("/{username}")
     public List<Cabin> getMyCabins(@PathVariable String username) {
-        return null;
+        return new CabinRepository().getCabinsByOwnerUsername(username);
     }
     
 }
