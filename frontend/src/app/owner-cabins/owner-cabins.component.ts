@@ -21,7 +21,7 @@ export class OwnerCabinsComponent implements OnInit {
   ) {}
     
   user: User = new User;
-  username: string = ""
+  username: string = localStorage.getItem("logged") || ""
   selectedTab: string = "cabins"
 
   ngOnInit(): void {
@@ -88,8 +88,8 @@ export class OwnerCabinsComponent implements OnInit {
     })
   }
 
-  createCabin(owner: string){
-    this.cabinService.createCabin(owner, this.name, this.location, this.services,
+  createCabin(){
+    this.cabinService.createCabin(this.username, this.name, this.location, this.services,
       this.phoneNumber, this.winterPrice, this.summerPrice).subscribe((resp: any) => {
       if (resp.message == 'ok') {
         alert("Cabin updated!")

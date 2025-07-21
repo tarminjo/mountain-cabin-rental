@@ -40,6 +40,7 @@ export class CabinService {
   createCabin(owner: string, name: string, location: string, services: string,
     phoneNumber: string, winterPrice: number, summerPrice: number){
     const data = {
+      owner: owner,
       name: name,
       location: location,
       services: services,
