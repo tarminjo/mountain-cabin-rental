@@ -10,6 +10,9 @@ import java.util.Map;
 
 import com.example.backend.models.Cabin;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class CabinRepository implements CabinRepositoryInterface{
 
     @Override
@@ -93,15 +96,16 @@ public class CabinRepository implements CabinRepositoryInterface{
         
         try(Connection conn = DB.source().getConnection();
             PreparedStatement stmt = conn.prepareStatement(
-                "INSERT INTO cabins (name, location, services, phoneNumber, winterPrice, summerPrice) " +
-                "VALUES (?, ?, ?, ?, ?, ?)")) {
-
-            stmt.setString(1, cabin.getName());
-            stmt.setString(2, cabin.getLocation());
-            stmt.setString(3, cabin.getServices());
-            stmt.setString(4, cabin.getPhoneNumber());
-            stmt.setInt(5, cabin.getWinterPrice());
-            stmt.setInt(6, cabin.getSummerPrice());
+                "INSERT INTO cabins (owner, name, location, services, phoneNumber, winterPrice, summerPrice) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)")) {
+            
+            stmt.setString(1, cabin.getOwner());
+            stmt.setString(2, cabin.getName());
+            stmt.setString(3, cabin.getLocation());
+            stmt.setString(4, cabin.getServices());
+            stmt.setString(5, cabin.getPhoneNumber());
+            stmt.setInt(6, cabin.getWinterPrice());
+            stmt.setInt(7, cabin.getSummerPrice());
 
             int rows = stmt.executeUpdate();
             if (rows > 0) {
