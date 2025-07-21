@@ -35,6 +35,10 @@ export class OwnerCabinsComponent implements OnInit {
     this.userService.getUser(this.username).subscribe((user: User)=>{
           this.user = user
     })
+
+    this.cabinService.getMyCabins(this.username).subscribe((myCabins: Cabin[])=>{
+      this.cabins = myCabins
+    })
   }
 
   error: boolean = false
@@ -62,14 +66,37 @@ export class OwnerCabinsComponent implements OnInit {
   coordinates: string = ""
 
   editCabin(id: number){
-
+    this.cabinService.updateCabin(id, this.name, this.location, this.services,
+      this.phoneNumber, this.winterPrice, this.summerPrice).subscribe((resp: any) => {
+      if (resp.message == 'ok') {
+        alert("Cabin updated!")
+      } else {
+        alert("ERROR!")
+      }
+      this.ngOnInit()
+    })
   }
 
   deleteCabin(id: number){
-
+    this.cabinService.deleteCabin(id).subscribe((resp: any) => {
+      if (resp.message == 'ok') {
+        alert("Cabin deleted!")
+      } else {
+        alert("ERROR!")
+      }
+      this.ngOnInit()
+    })
   }
 
-  createCabin(){
-
+  createCabin(owner: string){
+    this.cabinService.createCabin(owner, this.name, this.location, this.services,
+      this.phoneNumber, this.winterPrice, this.summerPrice).subscribe((resp: any) => {
+      if (resp.message == 'ok') {
+        alert("Cabin updated!")
+      } else {
+        alert("ERROR!")
+      }
+      this.ngOnInit()
+    })
   }
 }

@@ -139,7 +139,7 @@
                 <label class="form-label">Pictures</label>
                 <input type="text" class="form-control" [(ngModel)]="cardNumber" name="cardNumber">
               </div> -->
-              <button (click)="createCabin()" type="button" class="btn btn-success">Create</button>
+              <button (click)="createCabin(user.username)" type="button" class="btn btn-success">Create</button>
             </form>
 
             <form *ngIf="selectedTab === 'json'">
