@@ -50,6 +50,7 @@
               <div *ngIf="error" class="alert alert-danger" role="alert">
                 <span>{{message}}</span>
               </div>
+              <h5 style="font-style: italic; color: #FF0000;">***Design it better***</h5>
               <div class="mb-2">
                 <span class="fw-bold">Cabin ID:</span> {{ cabin.id }}
                 <br>
@@ -69,10 +70,12 @@
                 <br>
                 <span class="fw-bold">Coordinates:</span> {{ cabin.coordinates }}
               </div>
+              <h5 style="font-style: italic; color: #FF0000;">***Adding pictures and map***</h5>
             </form>
 
             <form *ngIf="selectedTab === 'rent'">
               <h3 class="card-title mb-4">Rent Cabin</h3>
+              <h5 style="font-style: italic; color: #FF0000;">***Add step by step instructions here***</h5>
               <div *ngIf="error" class="alert alert-danger" role="alert">
                 <span>{{message}}</span>
               </div>
