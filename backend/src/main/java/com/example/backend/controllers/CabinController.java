@@ -23,7 +23,7 @@ import com.example.backend.models.Cabin;
 @CrossOrigin("http://localhost:4200")
 public class CabinController {
     
-    @GetMapping("/{username}")
+    @GetMapping("/my/{username}")
     public List<Cabin> getMyCabins(@PathVariable String username) {
         return new CabinRepository().getCabinsByOwnerUsername(username);
     }
