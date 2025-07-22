@@ -63,8 +63,8 @@ public class CabinRepository implements CabinRepositoryInterface{
             stmt.setString(4, payload.get("phoneNumber"));
             stmt.setInt(5, Integer.parseInt(payload.get("winterPrice")));
             stmt.setInt(6, Integer.parseInt(payload.get("summerPrice")));
-            stmt.setInt(7, Integer.parseInt(payload.get("id")));
-            stmt.setString(8, payload.get("coordinates"));
+            stmt.setString(7, payload.get("coordinates"));
+            stmt.setInt(8, Integer.parseInt(payload.get("id")));
 
             int rows = stmt.executeUpdate();
             if (rows > 0) {
