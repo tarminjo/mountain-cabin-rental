@@ -93,7 +93,7 @@
                       <td>{{cabin.winterPrice}} RSD</td>
                       <td>{{cabin.summerPrice}} RSD</td>
                       <td style="white-space: nowrap; width: 1%;">
-                        <button class="btn btn-primary btn-sm me-1"
+                        <button class="btn btn-info btn-sm me-1"
                           (click)="enterEditCabin(cabin)">Edit</button>
                         <button class="btn btn-danger btn-sm"
                           (click)="deleteCabin(cabin.id)">Delete</button>
@@ -161,7 +161,7 @@
             <form *ngIf="selectedTab === 'edit'">
               <div class="d-flex justify-content-between align-items-center mb-1">
                 <h3 class="card-title">Edit Cabin: {{selectedCabin.name}}</h3>
-                <button class="btn btn-primary" (click)="selectTab('cabins')">Back to Cabins</button>
+                <button class="btn btn-secondary" (click)="selectTab('cabins')">Back to Cabins</button>
               </div>
               <div *ngIf="error" class="alert alert-danger" role="alert">
                 <span>{{message}}</span>
