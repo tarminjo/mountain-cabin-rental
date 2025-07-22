@@ -1,31 +1,24 @@
 <div class="full-bg">
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg bg-dark navbar-dark shadow-sm py-3">
     <div class="container-fluid">
-      <a class="navbar-brand mb-0 h1">Mountain Cabin Rental</a>
-      <a routerLink="/owner"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-          class="btn btn-outline-light custom-dashboard-button me-2">
-          Profile
+      <a class="navbar-brand fw-bold fs-4 text-light">
+        🏔️ Mountain Cabin Rental
       </a>
-      <a routerLink="/owner-rentals"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-          class="btn btn-outline-light custom-dashboard-button me-2">Reservations
+      <a routerLink="/owner" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+        class="btn btn-outline-light rounded-pill px-4 me-2">
+        Profile
       </a>
-      <a routerLink="/owner-cabins"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-          class="btn btn-outline-light custom-dashboard-button me-2">Cabins
+      <a routerLink="/owner-rentals" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+        class="btn btn-outline-light rounded-pill px-4 me-2">Reservations
       </a>
-      <a routerLink="/owner-statistics"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-          class="btn btn-outline-light custom-dashboard-button">Statistics
+      <a routerLink="/owner-cabins" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+        class="btn btn-outline-light rounded-pill px-4 me-2">Cabins
+      </a>
+      <a routerLink="/owner-statistics" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+        class="btn btn-outline-light rounded-pill px-4">Statistics
       </a>
       <div class="ms-auto">
-        <a (click)="logout()"
-          class="btn btn-outline-light custom-dashboard-button">Logout</a>
+        <a (click)="logout()" class="btn btn-outline-light rounded-pill px-4">Logout</a>
       </div>
     </div>
   </nav>
@@ -34,35 +27,20 @@
     <div class="row justify-content-center">
       <div class="col-12 col-md-3 mb-4">
         <div class="d-flex justify-content-center mb-3">
-          <img
-            [src]="user.profilePic"
-            class="rounded-circle border border-3"
-            style="width: 150px; height: 150px; object-fit: cover;"
-          />
+          <img [src]="user.profilePic" class="rounded-circle border border-3"
+            style="width: 150px; height: 150px; object-fit: cover;" />
         </div>
         <div class="list-group">
-          <button
-            type="button"
-            class="list-group-item list-group-item-action"
-            [class.active]="selectedTab === 'cabins'"
-            (click)="selectTab('cabins')"
-          >
+          <button type="button" class="list-group-item list-group-item-action" [class.active]="selectedTab === 'cabins'"
+            (click)="selectTab('cabins')">
             My Cabins
           </button>
-          <button
-            type="button"
-            class="list-group-item list-group-item-action"
-            [class.active]="selectedTab === 'form'"
-            (click)="selectTab('form')"
-          >
+          <button type="button" class="list-group-item list-group-item-action" [class.active]="selectedTab === 'form'"
+            (click)="selectTab('form')">
             Add Cabin - Form
           </button>
-          <button
-            type="button"
-            class="list-group-item list-group-item-action"
-            [class.active]="selectedTab === 'json'"
-            (click)="selectTab('json')"
-          >
+          <button type="button" class="list-group-item list-group-item-action" [class.active]="selectedTab === 'json'"
+            (click)="selectTab('json')">
             Add Cabin - JSON
           </button>
         </div>
@@ -93,10 +71,8 @@
                       <td>{{cabin.winterPrice}} RSD</td>
                       <td>{{cabin.summerPrice}} RSD</td>
                       <td style="white-space: nowrap; width: 1%;">
-                        <button class="btn btn-info btn-sm me-1"
-                          (click)="enterEditCabin(cabin)">Edit</button>
-                        <button class="btn btn-danger btn-sm"
-                          (click)="deleteCabin(cabin.id)">Delete</button>
+                        <button class="btn btn-info btn-sm me-1" (click)="enterEditCabin(cabin)">Edit</button>
+                        <button class="btn btn-danger btn-sm" (click)="deleteCabin(cabin.id)">Delete</button>
                       </td>
                     </tr>
                   </tbody>
@@ -104,10 +80,10 @@
               </div>
               <ng-template #noCabins>
                 <h4 class="text-center" style="color: red; font-style: italic;">
-                No my cabins...</h4>
+                  No my cabins...</h4>
               </ng-template>
             </form>
-            
+
             <form *ngIf="selectedTab === 'form'">
               <h3 class="card-title mb-4">New Cabin with Form</h3>
               <div *ngIf="error" class="alert alert-danger" role="alert">
@@ -123,7 +99,7 @@
               </div>
               <div class="mb-2">
                 <label class="form-label">Services</label>
-                  <textarea id="services" [(ngModel)]="services" class="form-control" rows="2" name="services"></textarea>
+                <textarea id="services" [(ngModel)]="services" class="form-control" rows="2" name="services"></textarea>
               </div>
               <div class=" row mb-2">
                 <div class="col-6">
@@ -176,7 +152,8 @@
               </div>
               <div class="mb-2">
                 <label class="form-label">Services</label>
-                  <textarea id="services" [(ngModel)]="editServices" class="form-control" rows="2" name="services"></textarea>
+                <textarea id="services" [(ngModel)]="editServices" class="form-control" rows="2"
+                  name="services"></textarea>
               </div>
               <div class=" row mb-2">
                 <div class="col-6">

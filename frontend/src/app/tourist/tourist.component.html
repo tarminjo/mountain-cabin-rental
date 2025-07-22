@@ -1,26 +1,23 @@
 <div class="full-bg">
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg bg-dark navbar-dark shadow-sm py-3">
     <div class="container-fluid">
-      <a class="navbar-brand mb-0 h1">Mountain Cabin Rental</a>
-      <a routerLink="/tourist"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-          class="btn btn-outline-light custom-dashboard-button me-2">
-          Profile
+      <a class="navbar-brand fw-bold fs-4 text-light">
+        🏔️ Mountain Cabin Rental
       </a>
-      <a routerLink="/tourist-cabins"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-          class="btn btn-outline-light custom-dashboard-button me-2">Cabins
+
+      <a routerLink="/tourist" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+        class="btn btn-outline-light rounded-pill px-4 me-2">
+        Profile
       </a>
-      <a routerLink="/tourist-rentals"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-          class="btn btn-outline-light custom-dashboard-button me-2">Reservations
+      <a routerLink="/tourist-cabins" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+        class="btn btn-outline-light rounded-pill px-4 me-2">Cabins
       </a>
-      <div class="ms-auto">
-        <a (click)="logout()"
-          class="btn btn-outline-light custom-dashboard-button">Logout</a>
+      <a routerLink="/tourist-rentals" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+        class="btn btn-outline-light rounded-pill px-4">Reservations
+      </a>
+
+      <div class="ms-auto d-flex align-items-center gap-2">
+        <a (click)="logout()" class="btn btn-outline-light rounded-pill px-4">Logout</a>
       </div>
     </div>
   </nav>
@@ -29,35 +26,20 @@
     <div class="row justify-content-center">
       <div class="col-12 col-md-3 mb-4">
         <div class="d-flex justify-content-center mb-3">
-          <img
-            [src]="user.profilePic"
-            class="rounded-circle border border-3"
-            style="width: 150px; height: 150px; object-fit: cover;"
-          />
+          <img [src]="user.profilePic" class="rounded-circle border border-3"
+            style="width: 150px; height: 150px; object-fit: cover;" />
         </div>
         <div class="list-group">
-          <button
-            type="button"
-            class="list-group-item list-group-item-action"
-            [class.active]="selectedTab === 'details'"
-            (click)="selectTab('details')"
-          >
+          <button type="button" class="list-group-item list-group-item-action"
+            [class.active]="selectedTab === 'details'" (click)="selectTab('details')">
             Account Details
           </button>
-          <button
-            type="button"
-            class="list-group-item list-group-item-action"
-            [class.active]="selectedTab === 'password'"
-            (click)="selectTab('password')"
-          >
+          <button type="button" class="list-group-item list-group-item-action"
+            [class.active]="selectedTab === 'password'" (click)="selectTab('password')">
             Change Password
           </button>
-          <button
-            type="button"
-            class="list-group-item list-group-item-action"
-            [class.active]="selectedTab === 'picture'"
-            (click)="selectTab('picture')"
-          >
+          <button type="button" class="list-group-item list-group-item-action"
+            [class.active]="selectedTab === 'picture'" (click)="selectTab('picture')">
             Update Profile Picture
           </button>
         </div>
@@ -125,8 +107,8 @@
               </div>
               <div class="mb-3">
                 <div class="col-sm-8 mb-3">
-                  <input type="file" class="form-control" id="profilePicture" (change)="onFileSelected($event)" 
-                    accept="image/png, image/jpg"/>
+                  <input type="file" class="form-control" id="profilePicture" (change)="onFileSelected($event)"
+                    accept="image/png, image/jpg" />
                 </div>
                 <button type="button" class="btn btn-success" (click)="uploadProfilePic()">Save</button>
               </div>
