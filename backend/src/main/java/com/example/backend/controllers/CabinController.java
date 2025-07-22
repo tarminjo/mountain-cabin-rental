@@ -18,6 +18,7 @@ import com.example.backend.models.Cabin;
 
 
 
+
 @RestController
 @RequestMapping("/api/cabins")
 @CrossOrigin("http://localhost:4200")
@@ -56,7 +57,7 @@ public class CabinController {
         return response;
     }
 
-    @PostMapping("")
+    @PostMapping
     public Map<String, String> createCabin(@RequestBody Cabin cabin) {
         
         int result = new CabinRepository().createCabin(cabin);
@@ -70,5 +71,9 @@ public class CabinController {
         return response;
     }
     
+    @GetMapping
+    public List<Cabin> getAllCabins() {
+        return new CabinRepository().getAllCabins();
+    }
     
 }

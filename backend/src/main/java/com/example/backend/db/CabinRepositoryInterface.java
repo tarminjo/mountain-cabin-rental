@@ -11,4 +11,5 @@ public interface CabinRepositoryInterface {
     public int updateCabin(Map<String, String> payload);
     public int deleteCabin(int id);
     public int createCabin(Cabin cabin);
+    public List<Cabin> getAllCabins();
 }
