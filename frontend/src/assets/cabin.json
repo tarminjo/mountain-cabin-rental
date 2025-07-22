@@ -1,0 +1,9 @@
+{
+    "name": "Zelengora",
+    "location": "Kragujevac",
+    "phoneNumber": "0651234567",
+    "services": "parking restoran sport",
+    "winterPrice": 1200,
+    "summerPrice": 2000,
+    "coordinates": "44.123456, 20.123456"
+}

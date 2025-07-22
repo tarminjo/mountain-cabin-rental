@@ -57,9 +57,9 @@ public class CabinController {
     }
 
     @PostMapping
-    public Map<String, String> createCabin(@RequestBody Cabin cabin) {
+    public Map<String, String> createCabin(@RequestBody Map<String, String> payload) {
         
-        int result = new CabinRepository().createCabin(cabin);
+        int result = new CabinRepository().createCabin(payload);
 
         Map<String, String> response = new HashMap<>();
         if (result == 1) {

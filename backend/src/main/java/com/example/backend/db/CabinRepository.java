@@ -5,8 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.example.backend.models.Cabin;
 
@@ -95,32 +97,64 @@ public class CabinRepository implements CabinRepositoryInterface{
         return 1;
     }
 
-    public int createCabin(Cabin cabin) {
-        
-        try(Connection conn = DB.source().getConnection();
-            PreparedStatement stmt = conn.prepareStatement(
-                "INSERT INTO cabins (owner, name, location, services, phoneNumber, winterPrice, summerPrice, coordinates) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)")) {
-            
-            stmt.setString(1, cabin.getOwner());
-            stmt.setString(2, cabin.getName());
-            stmt.setString(3, cabin.getLocation());
-            stmt.setString(4, cabin.getServices());
-            stmt.setString(5, cabin.getPhoneNumber());
-            stmt.setInt(6, cabin.getWinterPrice());
-            stmt.setInt(7, cabin.getSummerPrice());
-            stmt.setString(8, cabin.getCoordinates());
+    public int createCabin(Map<String, String> payload) {
+
+        int cabinId = -1;
+
+        try (Connection conn = DB.source().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(
+                 "INSERT INTO cabins (owner, name, location, services, phoneNumber, winterPrice, summerPrice, coordinates) " +
+                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)) {
+
+            stmt.setString(1, payload.get("owner"));
+            stmt.setString(2, payload.get("name"));
+            stmt.setString(3, payload.get("location"));
+            stmt.setString(4, payload.get("services"));
+            stmt.setString(5, payload.get("phoneNumber"));
+            stmt.setInt(6, Integer.parseInt(payload.get("winterPrice")));
+            stmt.setInt(7, Integer.parseInt(payload.get("summerPrice")));
+            stmt.setString(8, payload.get("coordinates"));
 
             int rows = stmt.executeUpdate();
             if (rows > 0) {
-                return 1;
+                ResultSet generatedKeys = stmt.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    cabinId = generatedKeys.getInt(1);
+                }
+            } else {
+                return 0;
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
+            return 0;
         }
 
-        return 0;
+        if (payload.containsKey("imageData")) {
+            String imageDataStr = payload.get("imageData");
+            List<String> picturesList = Arrays.stream(imageDataStr.split(" "))
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .collect(Collectors.toList());
+
+            if (!picturesList.isEmpty() && cabinId != -1) {
+                try (Connection conn = DB.source().getConnection();
+                    PreparedStatement picStmt = conn.prepareStatement(
+                        "INSERT INTO pictures (cabinId, src) VALUES (?, ?)")) {
+
+                    for (String pic : picturesList) {
+                        picStmt.setInt(1, cabinId);
+                        picStmt.setString(2, pic);
+                        picStmt.addBatch();
+                    }
+
+                    picStmt.executeBatch();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return 1;
     }
 
     @Override

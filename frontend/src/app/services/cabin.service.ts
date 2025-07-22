@@ -35,8 +35,10 @@ export class CabinService {
     return this.http.delete(`${this.url}/cabins/` + id)
   }
 
-  createCabin(owner: string, name: string, location: string, services: string,
-    phoneNumber: string, winterPrice: number, summerPrice: number, coordinates: string){
+  createCabin(owner: string, name: string, location: string, services: string, phoneNumber: string, 
+    winterPrice: number, summerPrice: number, coordinates: string, images: string[]){
+
+    const imageData: string = images.join(' ')
     const data = {
       owner: owner,
       name: name,
@@ -45,7 +47,8 @@ export class CabinService {
       winterPrice: winterPrice,
       summerPrice: summerPrice,
       phoneNumber: phoneNumber,
-      coordinates: coordinates
+      coordinates: coordinates,
+      imageData: imageData
     }
     return this.http.post(`${this.url}/cabins`, data)
   }

@@ -10,7 +10,7 @@ public interface CabinRepositoryInterface {
     public List<Cabin> getCabinsByOwnerUsername(String owner);
     public int updateCabin(Map<String, String> payload);
     public int deleteCabin(int id);
-    public int createCabin(Cabin cabin);
+    public int createCabin(Map<String, String> payload);
     public List<Cabin> getAllCabins();
     public List<Cabin> searchCabins(String location, String name);
     public Cabin getCabinById(Integer id);

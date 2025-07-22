@@ -15,7 +15,7 @@ import { Cabin } from '../models/cabin';
   styleUrl: './owner-cabins.component.css'
 })
 export class OwnerCabinsComponent implements OnInit {
-    
+
   constructor(private router: Router, private userService: UserService,
     private cabinService: CabinService
   ) {}
@@ -39,6 +39,9 @@ export class OwnerCabinsComponent implements OnInit {
     this.editWinterPrice = 0
     this.editSummerPrice = 0
     this.editCoordinates = ""
+
+    this.selectedImageFiles = []
+    this.selectedImagePreviews = []
 
     this.userService.getUser(this.username).subscribe((user: User)=>{
           this.user = user
@@ -158,8 +161,29 @@ export class OwnerCabinsComponent implements OnInit {
   }
 
   createCabin(){
-    this.cabinService.createCabin(this.username, this.name, this.location, this.services,
-      this.phoneNumber, this.winterPrice, this.summerPrice, this.coordinates).subscribe((resp: any) => {
+
+    this.error = false
+    this.message = ""
+    if (this.name === "" || this.location === "" || this.services === "" ||
+      this.phoneNumber === "" || this.winterPrice <= 0 || this.summerPrice <= 0 || this.coordinates === "") {
+
+      this.error = true
+      this.message = "All fields must be filled!"
+      return
+    }
+
+    let numberRegex = /^(06)\d{7,8}$|^0\d{8,9}$/
+    if(!numberRegex.test(this.phoneNumber)){
+
+      this.error = true
+      this.message = "Wrong phone number format"
+      return
+    }
+
+    console.log(this.selectedImageFiles)
+
+    this.cabinService.createCabin(this.username, this.name, this.location, this.services, this.phoneNumber, 
+      this.winterPrice, this.summerPrice, this.coordinates, this.selectedImagePreviews).subscribe((resp: any) => {
       if (resp.message == 'ok') {
         alert("Cabin created!")
       } else {
@@ -168,4 +192,66 @@ export class OwnerCabinsComponent implements OnInit {
       this.ngOnInit()
     })
   }
+
+  // variables for profile picture
+  selectedImageFiles: File[] = [];
+  selectedImagePreviews: string[] = []; 
+
+  onFileSelected(event: any): void {
+  this.message = "";
+  this.error = false;
+  this.selectedImageFiles = [];
+  this.selectedImagePreviews = [];
+
+  const files: File[] = Array.from(event.target.files);
+
+  if (files.length === 0) return;
+
+  for (let file of files) {
+    const isValidType = file.type === 'image/jpeg' || file.type === 'image/png';
+    if (!isValidType) {
+      this.error = true;
+      this.message = "Only PNG and JPG files are allowed.";
+      files.pop();
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    reader.onload = () => {
+      this.selectedImageFiles.push(file);
+      this.selectedImagePreviews.push(reader.result as string);
+    };
+  }
+}
+
+removeImage(index: number): void {
+  this.selectedImageFiles.splice(index, 1);
+  this.selectedImagePreviews.splice(index, 1);
+}
+
+onJsonFileSelected(event: any): void {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = (e: any) => {
+    try {
+      const cabinData = JSON.parse(e.target.result);
+
+      this.name = cabinData.name || '';
+      this.location = cabinData.location || '';
+      this.services = cabinData.services || '';
+      this.winterPrice = cabinData.winterPrice || 0;
+      this.summerPrice = cabinData.summerPrice || 0;
+      this.phoneNumber = cabinData.phoneNumber || '';
+      this.coordinates = cabinData.coordinates || '';
+    } catch (error) {
+      this.error = true;
+      this.message = "Invalid JSON file.";
+    }
+  };
+  reader.readAsText(file);
+}
 }
