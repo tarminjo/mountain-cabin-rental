@@ -53,4 +53,14 @@ export class CabinService {
   getAllCabins(): Observable<Cabin[]> {
     return this.http.get<Cabin[]>(`${this.url}/cabins`);
   }
+
+  searchCabins(nameParam: string, locationParam: string) {
+    const data = {
+      name: nameParam,
+      location: locationParam
+    }
+
+    return this.http.post<Cabin[]>(`${this.url}/cabins/search`, data);
+  }
+
 }

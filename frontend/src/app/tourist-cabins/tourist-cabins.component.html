@@ -25,5 +25,86 @@
     </div>
   </nav>
 
-  
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-3 mb-4">
+        <div class="card rounded-4 p-2">
+          <div class="card-body">
+            <h5 class="card-title">Filters</h5>
+            
+            <!-- Name Search -->
+            <div class="mb-3">
+              <label for="nameSearch" class="form-label">Name</label>
+              <input type="text" id="nameSearch" [(ngModel)]="nameParam" class="form-control" placeholder="Search by name" />
+            </div>
+
+            <!-- Location Search -->
+            <div class="mb-4">
+              <label for="locationSearch" class="form-label">Location</label>
+              <input type="text" id="locationSearch" [(ngModel)]="locationParam" class="form-control" placeholder="Search by location" />
+            </div>
+
+            <!-- Name Sort -->
+            <button class="btn me-2 mb-2"
+              [ngClass]="{'btn-primary': activeNameSort === 'asc', 'btn-outline-primary': activeNameSort !== 'asc'}"
+              (click)="toggleNameSort('asc')">Name ↑</button>
+
+            <button class="btn me-2 mb-2"
+              [ngClass]="{'btn-primary': activeNameSort === 'desc', 'btn-outline-primary': activeNameSort !== 'desc'}"
+              (click)="toggleNameSort('desc')">Name ↓</button>
+
+            <!-- Location Sort -->
+            <button class="btn me-2 mb-3"
+              [ngClass]="{'btn-primary': activeLocationSort === 'asc', 'btn-outline-primary': activeLocationSort !== 'asc'}"
+              (click)="toggleLocationSort('asc')">Location ↑</button>
+
+            <button class="btn me-2 mb-3"
+              [ngClass]="{'btn-primary': activeLocationSort === 'desc', 'btn-outline-primary': activeLocationSort !== 'desc'}"
+              (click)="toggleLocationSort('desc')">Location ↓</button>
+
+            <!-- Cancel Button -->
+            <button class="btn btn-secondary me-2" (click)="resetSortAndFilters()">Search</button>
+            <button class="btn btn-secondary" (click)="resetSortAndFilters()">Cancel</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-8 mb-4">
+        <div class="card shadow rounded-4 p-2">
+          <div class="card-body">
+            <form>
+              <div *ngIf="cabins.length > 0; else noCabins">
+                <h3 class="card-title mb-4">List of All Cabins</h3>
+                <table class="table table-hover table-borderless shadow rounded-4 mt-2">
+                  <thead class="table-dark text-center">
+                    <tr>
+                      <th>Name</th>
+                      <th>Location</th>
+                      <th>Phone Number</th>
+                      <th>Winter Price</th>
+                      <th>Summer Price</th>
+                      <th>Avg Rating</th>
+                    </tr>
+                  </thead>
+                  <tbody class="align-middle text-center">
+                    <tr *ngFor="let cabin of cabins">
+                      <td>{{cabin.name}}</td>
+                      <td>{{cabin.location}}</td>
+                      <td>{{cabin.phoneNumber}}</td>
+                      <td>{{cabin.winterPrice}} RSD</td>
+                      <td>{{cabin.summerPrice}} RSD</td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <ng-template #noCabins>
+                <h4 class="text-center" style="color: red; font-style: italic;">
+                No cabins in system...</h4>
+              </ng-template>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

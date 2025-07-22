@@ -32,6 +32,14 @@ export class OwnerCabinsComponent implements OnInit {
     this.error = false
     this.message = ""
 
+    this.editName = ""
+    this.editLocation = ""
+    this.editServices = ""
+    this.editPhoneNumber = ""
+    this.editWinterPrice = 0
+    this.editSummerPrice = 0
+    this.editCoordinates = ""
+
     this.userService.getUser(this.username).subscribe((user: User)=>{
           this.user = user
     })
@@ -47,6 +55,15 @@ export class OwnerCabinsComponent implements OnInit {
   cabins: Cabin [] = []
 
   selectTab(tab: string): void {
+
+    this.editName = ""
+    this.editLocation = ""
+    this.editServices = ""
+    this.editPhoneNumber = ""
+    this.editWinterPrice = 0
+    this.editSummerPrice = 0
+    this.editCoordinates = ""
+
     this.error = false;
     this.message = '';
     this.selectedTab = tab;
