@@ -36,12 +36,8 @@
             Cabin Details
           </button>
           <button type="button" class="list-group-item list-group-item-action"
-            [class.active]="selectedTab === 'password'" (click)="selectTab('password')">
-            Change Password
-          </button>
-          <button type="button" class="list-group-item list-group-item-action"
-            [class.active]="selectedTab === 'picture'" (click)="selectTab('picture')">
-            Update Profile Picture
+            [class.active]="selectedTab === 'rent'" (click)="selectTab('rent')">
+            Rent Cabin
           </button>
         </div>
       </div>
@@ -57,72 +53,31 @@
               <div class="mb-2">
                 <span class="fw-bold">Cabin ID:</span> {{ cabin.id }}
                 <br>
-                <label class="form-label">Name</label>
-                <input type="text" class="form-control" [(ngModel)]="cabin.name" name="name">
-              </div>
-              <div class="mb-2">
-                <label class="form-label">Owner</label>
-                <input type="text" class="form-control" [(ngModel)]="cabin.owner" name="owner">
-              </div>
-              <div class="mb-2">
-                <label class="form-label">Location</label>
-                <input type="text" class="form-control" [(ngModel)]="cabin.location" name="location">
-              </div>
-              <div class="mb-2">
-                <label class="form-label">Phone Number</label>
-                <input type="text" class="form-control" [(ngModel)]="cabin.phoneNumber" name="phoneNumber">
-              </div>
-              <div class="mb-2">
-                <label class="form-label">Services</label>
-                <input type="text" class="form-control" [(ngModel)]="cabin.services" name="services">
-              </div>
-              <div class="mb-2">
-                <label class="form-label">Winter Price</label>
-                <input type="number" class="form-control" [(ngModel)]="cabin.winterPrice" name="winterPrice">
-              </div>
-              <div class="mb-2">
-                <label class="form-label">Summer Price</label>
-                <input type="number" class="form-control" [(ngModel)]="cabin.summerPrice" name="summerPrice">
-              </div>
-              <div class="mb-2">
-                <label class="form-label">Coordinates</label>
-                <input type="text" class="form-control" [(ngModel)]="cabin.coordinates" name="coordinates">
+                <span class="fw-bold">Owner:</span> {{ cabin.owner }}
+                <br>
+                <span class="fw-bold">Name:</span> {{ cabin.name }}
+                <br>
+                <span class="fw-bold">Location:</span> {{ cabin.location }}
+                <br>
+                <span class="fw-bold">Phone:</span> {{ cabin.phoneNumber }}
+                <br>
+                <span class="fw-bold">Services:</span> {{ cabin.services }}
+                <br>
+                <span class="fw-bold">Winter Price:</span> {{ cabin.winterPrice }} RSD
+                <br>
+                <span class="fw-bold">Summer Price:</span> {{ cabin.summerPrice }}
+                <br>
+                <span class="fw-bold">Coordinates:</span> {{ cabin.coordinates }}
               </div>
             </form>
 
-            <!-- <form *ngIf="selectedTab === 'password'">
-              <h3 class="card-title">Change Password</h3>
+            <form *ngIf="selectedTab === 'rent'">
+              <h3 class="card-title mb-4">Rent Cabin</h3>
               <div *ngIf="error" class="alert alert-danger" role="alert">
                 <span>{{message}}</span>
               </div>
-              <div class="mb-3">
-                <label class="form-label">Current Password</label>
-                <input type="password" class="form-control" [(ngModel)]="oldPassword" name="oldPassword">
-              </div>
-              <div class="mb-3">
-                <label class="form-label">New Password</label>
-                <input type="password" class="form-control" [(ngModel)]="newPassword" name="newPassword">
-              </div>
-              <div class="mb-3">
-                <label class="form-label">Confirm Password</label>
-                <input type="password" class="form-control" [(ngModel)]="confirmPassword" name="confirmPassword">
-              </div>
-              <button type="button" class="btn btn-success" (click)="updatePassword()">Save</button>
-            </form> -->
 
-            <!-- <form *ngIf="selectedTab === 'picture'">
-              <h3 class="card-title mb-4">Update Profile Picture</h3>
-              <div *ngIf="error" class="alert alert-danger" role="alert">
-                <span>{{message}}</span>
-              </div>
-              <div class="mb-3">
-                <div class="col-sm-8 mb-3">
-                  <input type="file" class="form-control" id="profilePicture" (change)="onFileSelected($event)"
-                    accept="image/png, image/jpg" />
-                </div>
-                <button type="button" class="btn btn-success" (click)="uploadProfilePic()">Save</button>
-              </div>
-            </form> -->
+            </form>
           </div>
         </div>
       </div>
