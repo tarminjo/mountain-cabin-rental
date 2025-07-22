@@ -83,4 +83,9 @@ public class CabinController {
         return new CabinRepository().searchCabins(location, name);
     }
 
+    @GetMapping("/{id}")
+    public Cabin getCabinById(@PathVariable Integer id) {
+        return new CabinRepository().getCabinById(id);
+    }
+
 }

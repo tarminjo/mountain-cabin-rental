@@ -188,5 +188,34 @@ public class CabinRepository implements CabinRepositoryInterface{
 
         return response;
     }
+
+    public Cabin getCabinById(Integer id) {
+        
+        try(Connection conn = DB.source().getConnection();
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM cabins WHERE id = ?")) {
+
+            stmt.setInt(1, id);
+
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                Cabin cabin = new Cabin();
+                cabin.setId(rs.getInt("id"));
+                cabin.setOwner(rs.getString("owner"));
+                cabin.setName(rs.getString("name"));
+                cabin.setLocation(rs.getString("location"));
+                cabin.setPhoneNumber(rs.getString("phoneNumber"));
+                cabin.setServices(rs.getString("services"));
+                cabin.setWinterPrice(rs.getInt("winterPrice"));
+                cabin.setSummerPrice(rs.getInt("summerPrice"));
+                cabin.setCoordinates(rs.getString("coordinates"));
+
+                return cabin;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
     
 }
