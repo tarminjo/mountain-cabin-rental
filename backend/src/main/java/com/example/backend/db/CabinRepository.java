@@ -31,6 +31,7 @@ public class CabinRepository implements CabinRepositoryInterface{
                 
                 Cabin cabin = new Cabin();
 
+                cabin.setId(rs.getInt("id"));
                 cabin.setOwner(owner);
                 cabin.setName(rs.getString("name"));
                 cabin.setLocation(rs.getString("location"));

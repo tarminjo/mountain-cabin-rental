@@ -1,7 +1,7 @@
 package com.example.backend.models;
 
 public class Cabin {
-    private Long id;
+    private int id;
     private String owner;
     private String name;
     private String location;
@@ -13,7 +13,7 @@ public class Cabin {
     public Cabin() {
     }
 
-    public Cabin(Long id, String owner, String name, String location, 
+    public Cabin(int id, String owner, String name, String location, 
         String phoneNumber, String Services, int winterPrice, int summerPrice) {
         this.id = id;
         this.owner = owner;
@@ -25,11 +25,11 @@ public class Cabin {
         this.summerPrice = summerPrice;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
