@@ -39,6 +39,7 @@ public class CabinRepository implements CabinRepositoryInterface{
                 cabin.setServices(rs.getString("services"));
                 cabin.setWinterPrice(rs.getInt("winterPrice"));
                 cabin.setSummerPrice(rs.getInt("summerPrice"));
+                cabin.setCoordinates(rs.getString("coordinates"));
 
                 response.add(cabin);
             }
@@ -54,7 +55,7 @@ public class CabinRepository implements CabinRepositoryInterface{
         try(Connection conn = DB.source().getConnection();
             PreparedStatement stmt = conn.prepareStatement(
                 "UPDATE cabins SET name = ?, location = ?, services = ?, phoneNumber = ?, " +
-                    "winterPrice = ?, summerPrice = ? WHERE id = ?")) {
+                    "winterPrice = ?, summerPrice = ?, coordinates = ? WHERE id = ?")) {
 
             stmt.setString(1, payload.get("name"));
             stmt.setString(2, payload.get("location"));
@@ -63,6 +64,7 @@ public class CabinRepository implements CabinRepositoryInterface{
             stmt.setInt(5, Integer.parseInt(payload.get("winterPrice")));
             stmt.setInt(6, Integer.parseInt(payload.get("summerPrice")));
             stmt.setInt(7, Integer.parseInt(payload.get("id")));
+            stmt.setString(8, payload.get("coordinates"));
 
             int rows = stmt.executeUpdate();
             if (rows > 0) {
@@ -97,8 +99,8 @@ public class CabinRepository implements CabinRepositoryInterface{
         
         try(Connection conn = DB.source().getConnection();
             PreparedStatement stmt = conn.prepareStatement(
-                "INSERT INTO cabins (owner, name, location, services, phoneNumber, winterPrice, summerPrice) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?)")) {
+                "INSERT INTO cabins (owner, name, location, services, phoneNumber, winterPrice, summerPrice, coordinates) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)")) {
             
             stmt.setString(1, cabin.getOwner());
             stmt.setString(2, cabin.getName());
@@ -107,6 +109,7 @@ public class CabinRepository implements CabinRepositoryInterface{
             stmt.setString(5, cabin.getPhoneNumber());
             stmt.setInt(6, cabin.getWinterPrice());
             stmt.setInt(7, cabin.getSummerPrice());
+            stmt.setString(8, cabin.getCoordinates());
 
             int rows = stmt.executeUpdate();
             if (rows > 0) {
