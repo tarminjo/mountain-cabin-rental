@@ -34,7 +34,7 @@ export class CabinService {
   }
 
   deleteCabin(id: number){
-    return this.http.delete(`${this.url}/cabins?id=${id}`)
+    return this.http.delete(`${this.url}/cabins/` + id)
   }
 
   createCabin(owner: string, name: string, location: string, services: string,

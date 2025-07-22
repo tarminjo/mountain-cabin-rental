@@ -92,7 +92,7 @@ export class OwnerCabinsComponent implements OnInit {
     this.cabinService.createCabin(this.username, this.name, this.location, this.services,
       this.phoneNumber, this.winterPrice, this.summerPrice).subscribe((resp: any) => {
       if (resp.message == 'ok') {
-        alert("Cabin updated!")
+        alert("Cabin created!")
       } else {
         alert("ERROR!")
       }

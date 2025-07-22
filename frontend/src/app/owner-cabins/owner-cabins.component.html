@@ -73,8 +73,9 @@
                       <th>Name</th>
                       <th>Location</th>
                       <th>Phone Number</th>
-                      <th>Winter $</th>
-                      <th>Summer $</th>
+                      <th>Winter Price</th>
+                      <th>Summer Price</th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody class="align-middle text-center">
@@ -82,8 +83,8 @@
                       <td>{{cabin.name}}</td>
                       <td>{{cabin.location}}</td>
                       <td>{{cabin.phoneNumber}}</td>
-                      <td>{{cabin.winterPrice}}</td>
-                      <td>{{cabin.summerPrice}}</td>
+                      <td>{{cabin.winterPrice}} RSD</td>
+                      <td>{{cabin.summerPrice}} RSD</td>
                       <td style="white-space: nowrap; width: 1%;">
                         <button class="btn btn-primary btn-sm me-1"
                           (click)="editCabin(cabin.id)">Edit</button>
