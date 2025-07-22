@@ -20,7 +20,7 @@ export class CabinService {
   }
 
   updateCabin(id: number, name: string, location: string, services: string,
-    phoneNumber: string, winterPrice: number, summerPrice: number) {
+    phoneNumber: string, winterPrice: number, summerPrice: number, coordinates: string) {
     const data = {
       id: id,
       name: name,
@@ -28,7 +28,8 @@ export class CabinService {
       services: services,
       winterPrice: winterPrice,
       summerPrice: summerPrice,
-      phoneNumber: phoneNumber
+      phoneNumber: phoneNumber,
+      coordinates: coordinates
     }
     return this.http.post(`${this.url}/cabins/update`, data)
   }
@@ -38,7 +39,7 @@ export class CabinService {
   }
 
   createCabin(owner: string, name: string, location: string, services: string,
-    phoneNumber: string, winterPrice: number, summerPrice: number){
+    phoneNumber: string, winterPrice: number, summerPrice: number, coordinates: string){
     const data = {
       owner: owner,
       name: name,
@@ -46,7 +47,8 @@ export class CabinService {
       services: services,
       winterPrice: winterPrice,
       summerPrice: summerPrice,
-      phoneNumber: phoneNumber
+      phoneNumber: phoneNumber,
+      coordinates: coordinates
     }
     return this.http.post(`${this.url}/cabins`, data)
   }

@@ -66,7 +66,7 @@
           <div class="card-body">
             <form *ngIf="selectedTab === 'cabins'">
               <div *ngIf="cabins.length > 0; else noCabins">
-                <h3 class="card-title mb-4">List of My Cabin</h3>
+                <h3 class="card-title mb-4">List of My Cabins</h3>
                 <table class="table table-hover table-borderless shadow rounded-4 mt-2">
                   <thead class="table-dark text-center">
                     <tr>
@@ -87,7 +87,7 @@
                       <td>{{cabin.summerPrice}} RSD</td>
                       <td style="white-space: nowrap; width: 1%;">
                         <button class="btn btn-primary btn-sm me-1"
-                          (click)="editCabin(cabin.id)">Edit</button>
+                          (click)="enterEditCabin(cabin)">Edit</button>
                         <button class="btn btn-danger btn-sm"
                           (click)="deleteCabin(cabin.id)">Delete</button>
                       </td>
@@ -140,6 +140,7 @@
                 <label class="form-label">Pictures</label>
                 <input type="text" class="form-control" [(ngModel)]="cardNumber" name="cardNumber">
               </div> -->
+              <h5 style="font-style: italic; color: #FF0000;">***Adding pictures***</h5>
               <button (click)="createCabin()" type="button" class="btn btn-success">Create</button>
             </form>
 
@@ -148,6 +149,47 @@
               <div *ngIf="error" class="alert alert-danger" role="alert">
                 <span>{{message}}</span>
               </div>
+              <h5 style="font-style: italic; color: #FF0000;">***Adding pictures and JSON file logic***</h5>
+            </form>
+            <form *ngIf="selectedTab === 'edit'">
+              <div class="d-flex justify-content-between align-items-center mb-1">
+                <h3 class="card-title">Edit Cabin: {{selectedCabin.name}}</h3>
+                <button class="btn btn-primary" (click)="selectTab('cabins')">Back to Cabins</button>
+              </div>
+              <div *ngIf="error" class="alert alert-danger" role="alert">
+                <span>{{message}}</span>
+              </div>
+              <div class="mb-2">
+                <label class="form-label">Name</label>
+                <input type="text" class="form-control" [(ngModel)]="editName" name="name">
+              </div>
+              <div class="mb-2">
+                <label class="form-label">Location</label>
+                <input type="text" class="form-control" [(ngModel)]="editLocation" name="location">
+              </div>
+              <div class="mb-2">
+                <label class="form-label">Services</label>
+                  <textarea id="services" [(ngModel)]="editServices" class="form-control" rows="2" name="services"></textarea>
+              </div>
+              <div class=" row mb-2">
+                <div class="col-6">
+                  <label class="form-label">Winter Price</label>
+                  <input type="number" class="form-control" [(ngModel)]="editWinterPrice" name="winterPrice">
+                </div>
+                <div class="col-6">
+                  <label class="form-label">Summer Price</label>
+                  <input type="number" class="form-control" [(ngModel)]="editSummerPrice" name="summerPrice">
+                </div>
+              </div>
+              <div class="mb-2">
+                <label class="form-label">Phone Number</label>
+                <input type="text" class="form-control" [(ngModel)]="editPhoneNumber" name="phoneNumber">
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Coordinates</label>
+                <input type="text" class="form-control" [(ngModel)]="editCoordinates" name="coordinates">
+              </div>
+              <button (click)="updateCabin(selectedCabin.id)" type="button" class="btn btn-success me-1">Save</button>
             </form>
           </div>
         </div>

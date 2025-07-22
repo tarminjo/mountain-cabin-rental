@@ -7,5 +7,5 @@ export class Cabin {
     services!: string
     winterPrice!: number
     summerPrice!: number
-    //map - dynamic - add coordinates
+    coordinates!: string
 }
