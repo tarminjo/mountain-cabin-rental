@@ -13,9 +13,6 @@ export class CabinService {
   url = "http://localhost:8081/api"
 
   getMyCabins(username: string): Observable<Cabin[]> {
-    const data = {
-      username: username
-    }
     return this.http.get<Cabin[]>(`${this.url}/cabins/` + username);
   }
 
@@ -51,5 +48,9 @@ export class CabinService {
       coordinates: coordinates
     }
     return this.http.post(`${this.url}/cabins`, data)
+  }
+
+  getAllCabins(): Observable<Cabin[]> {
+    return this.http.get<Cabin[]>(`${this.url}/cabins`);
   }
 }

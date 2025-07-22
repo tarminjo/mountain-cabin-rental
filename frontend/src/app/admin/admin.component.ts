@@ -5,6 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user';
 import { Cabin } from '../models/cabin';
+import { CabinService } from '../services/cabin.service';
 
 @Component({
   selector: 'app-admin',
@@ -15,12 +16,12 @@ import { Cabin } from '../models/cabin';
 })
 export class AdminComponent implements OnInit {
 
-  constructor(private router: Router, private userService: UserService) { }
-  
-    ngOnInit(): void {
-      this.userService.getActiveUsers().subscribe((requests: User[])=>{
-        this.activeUsers = requests
-      })
+  constructor(private router: Router, private userService: UserService, private cabinService: CabinService) { }
+
+  ngOnInit(): void {
+    this.userService.getActiveUsers().subscribe((requests: User[])=>{
+      this.activeUsers = requests
+    })
       this.userService.getAllRequests().subscribe((requests: User[])=>{
         this.registrationRequests = requests
       })
@@ -209,5 +210,11 @@ export class AdminComponent implements OnInit {
         }
       }
     }
+  }
+
+  getAllCabins() {
+    this.cabinService.getAllCabins().subscribe((cabins: Cabin[]) => {
+      this.cabins = cabins;
+    })
   }
 }
