@@ -25,45 +25,52 @@
   <div class="container mt-5">
     <div class="row justify-content-center">
       <div class="col-12 col-md-3 mb-4">
-        <div class="card rounded-4 p-2">
-          <div class="card-body">
-            <h5 class="card-title">Filters</h5>
 
-            <!-- Name Search -->
+        <div class="card rounded-4 shadow-sm p-3 bg-light mb-3">
+          <div class="card-body">
+            <h5 class="card-title text-center mb-3 fw-bold text-primary">🔍 Filters</h5>
+
+            <!-- Search Fields -->
             <div class="mb-3">
-              <label for="nameSearch" class="form-label">Name</label>
+              <label for="nameSearch" class="form-label text-secondary fw-semibold">Name</label>
               <input type="text" id="nameSearch" [(ngModel)]="nameParam" class="form-control"
                 placeholder="Search by name" />
             </div>
 
-            <!-- Location Search -->
             <div class="mb-4">
-              <label for="locationSearch" class="form-label">Location</label>
+              <label for="locationSearch" class="form-label text-secondary fw-semibold">Location</label>
               <input type="text" id="locationSearch" [(ngModel)]="locationParam" class="form-control"
                 placeholder="Search by location" />
             </div>
 
-            <!-- Name Sort -->
-            <button class="btn me-2 mb-2"
-              [ngClass]="{'btn-primary': activeNameSort === 'asc', 'btn-outline-primary': activeNameSort !== 'asc'}"
-              (click)="toggleNameSort('asc')">Name ↑</button>
+            <!-- Sorting Buttons -->
+            <div class="mb-2 text-secondary ps-1">Sort by Name</div>
+            <div class="mb-3">
+              <button class="btn me-2 mb-2"
+                [ngClass]="{'btn-primary': activeNameSort === 'asc', 'btn-outline-primary': activeNameSort !== 'asc'}"
+                (click)="toggleNameSort('asc')">Name ↑</button>
 
-            <button class="btn me-2 mb-2"
-              [ngClass]="{'btn-primary': activeNameSort === 'desc', 'btn-outline-primary': activeNameSort !== 'desc'}"
-              (click)="toggleNameSort('desc')">Name ↓</button>
+              <button class="btn mb-2"
+                [ngClass]="{'btn-primary': activeNameSort === 'desc', 'btn-outline-primary': activeNameSort !== 'desc'}"
+                (click)="toggleNameSort('desc')">Name ↓</button>
+            </div>
 
-            <!-- Location Sort -->
-            <button class="btn me-2 mb-3"
-              [ngClass]="{'btn-primary': activeLocationSort === 'asc', 'btn-outline-primary': activeLocationSort !== 'asc'}"
-              (click)="toggleLocationSort('asc')">Location ↑</button>
+            <div class="mb-2 text-secondary ps-1">Sort by Location</div>
+            <div class="mb-4">
+              <button class="btn me-2 mb-2"
+                [ngClass]="{'btn-primary': activeLocationSort === 'asc', 'btn-outline-primary': activeLocationSort !== 'asc'}"
+                (click)="toggleLocationSort('asc')">Location ↑</button>
 
-            <button class="btn me-2 mb-3"
-              [ngClass]="{'btn-primary': activeLocationSort === 'desc', 'btn-outline-primary': activeLocationSort !== 'desc'}"
-              (click)="toggleLocationSort('desc')">Location ↓</button>
+              <button class="btn mb-2"
+                [ngClass]="{'btn-primary': activeLocationSort === 'desc', 'btn-outline-primary': activeLocationSort !== 'desc'}"
+                (click)="toggleLocationSort('desc')">Location ↓</button>
+            </div>
 
-            <!-- Cancel Button -->
-            <button class="btn btn-secondary me-2" (click)="search()">Search</button>
-            <button class="btn btn-secondary" (click)="resetSortAndFilters()">Cancel</button>
+            <!-- Action Buttons -->
+            <div class="d-flex justify-content-center">
+              <button class="btn btn-success me-2" (click)="search()">Search</button>
+              <button class="btn btn-outline-secondary" (click)="resetSortAndFilters()">Clear</button>
+            </div>
           </div>
         </div>
       </div>

@@ -42,7 +42,7 @@ export class TouristCabinsComponent implements OnInit {
       this.originalCabins = myCabins
     })
   }
-
+  
   error: boolean = false
   message: string = ""
 
