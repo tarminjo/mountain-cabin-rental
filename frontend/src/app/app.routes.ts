@@ -12,18 +12,20 @@ import { OwnerCabinsComponent } from './owner-cabins/owner-cabins.component';
 import { OwnerStatisticsComponent } from './owner-statistics/owner-statistics.component';
 import { TouristCabinsComponent } from './tourist-cabins/tourist-cabins.component';
 import { TouristRentalsComponent } from './tourist-rentals/tourist-rentals.component';
+import { CabinComponent } from './cabin/cabin.component';
 
 export const routes: Routes = [
-    {path: 'login', component: LoginComponent},
-    {path: 'admin-login', component: LoginAdminComponent},
-    {path: '', component: HomePageComponent},
-    {path: 'register', component: RegisterComponent},
-    {path: 'admin', component: AdminComponent},
-    {path: 'owner', component: OwnerComponent},
-    {path: 'tourist', component: TouristComponent},
-    {path: 'owner-rentals', component: OwnerRentalsComponent},
-    {path: 'owner-cabins', component: OwnerCabinsComponent},
-    {path: 'owner-statistics', component: OwnerStatisticsComponent},
-    {path: 'tourist-cabins', component: TouristCabinsComponent},
-    {path: 'tourist-rentals', component: TouristRentalsComponent}
+    { path: 'login', component: LoginComponent },
+    { path: 'admin-login', component: LoginAdminComponent },
+    { path: '', component: HomePageComponent },
+    { path: 'register', component: RegisterComponent },
+    { path: 'admin', component: AdminComponent },
+    { path: 'owner', component: OwnerComponent },
+    { path: 'tourist', component: TouristComponent },
+    { path: 'owner-rentals', component: OwnerRentalsComponent },
+    { path: 'owner-cabins', component: OwnerCabinsComponent },
+    { path: 'owner-statistics', component: OwnerStatisticsComponent },
+    { path: 'tourist-cabins', component: TouristCabinsComponent },
+    { path: 'tourist-rentals', component: TouristRentalsComponent },
+    { path: 'cabin/:id', component: CabinComponent }
 ];

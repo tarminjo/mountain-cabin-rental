@@ -42,7 +42,12 @@ export class TouristCabinsComponent implements OnInit {
       this.originalCabins = myCabins
     })
   }
-  
+
+  viewCabin(id: number) {
+    // TODO: remove selectedCabin from localStorage when returning to cabins
+    this.router.navigate(['/cabin', id]);
+  }
+
   error: boolean = false
   message: string = ""
 

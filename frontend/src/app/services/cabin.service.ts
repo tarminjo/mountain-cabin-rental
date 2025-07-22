@@ -10,10 +10,10 @@ export class CabinService {
 
   constructor(private http: HttpClient) { }
 
-  url = "http://localhost:8081/api"
+  url = "http://localhost:8081/api" 
 
   getMyCabins(username: string): Observable<Cabin[]> {
-    return this.http.get<Cabin[]>(`${this.url}/cabins/` + username);
+    return this.http.get<Cabin[]>(`${this.url}/cabins/my/${username}`);
   }
 
   updateCabin(id: number, name: string, location: string, services: string,
@@ -61,6 +61,10 @@ export class CabinService {
     }
 
     return this.http.get<Cabin[]>(`${this.url}/cabins/search`, { params: data });
+  }
+
+  getCabinById(id: number): Observable<Cabin> {
+    return this.http.get<Cabin>(`${this.url}/cabins/${id}`);
   }
 
 }

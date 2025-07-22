@@ -93,7 +93,10 @@
                   </thead>
                   <tbody class="align-middle text-center">
                     <tr *ngFor="let cabin of cabins">
-                      <td>{{cabin.name}}</td>
+                      <td>
+                        <a (click)="viewCabin(cabin.id)" 
+                          class="clickable-cabin">{{cabin.name}}</a>
+                      </td>
                       <td>{{cabin.location}}</td>
                       <td>{{cabin.phoneNumber}}</td>
                       <td>{{cabin.winterPrice}} RSD</td>

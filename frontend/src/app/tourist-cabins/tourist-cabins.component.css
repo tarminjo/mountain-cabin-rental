@@ -31,3 +31,15 @@
   background-color: #f1f3f5;
   transition: background-color 0.2s ease-in-out;
 }
+
+.clickable-cabin {
+  color: #007bff; /* Bootstrap link color */
+  cursor: pointer;
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.clickable-cabin:hover {
+  color: #043972; /* darker shade on hover */
+  text-decoration: none;
+}
