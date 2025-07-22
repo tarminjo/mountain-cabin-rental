@@ -180,28 +180,25 @@
                 <table class="table table-hover table-borderless shadow rounded-4 mt-2">
                   <thead class="table-dark text-center">
                     <tr>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                      <th></th>
+                      <th>Owner</th>
+                      <th>Name</th>
+                      <th>Location</th>
+                      <th>Phone Number</th>
+                      <th>Winter Price</th>
+                      <th>Summer Price</th>
                       <th></th>
                     </tr>
                   </thead>
                   <tbody class="align-middle text-center">
-                    <tr *ngFor="let request of registrationRequests">
-                      <td>
-                        <img [src]="request.profilePic || 'default.jpg'" class="rounded-circle" style="width: 40px; height: 40px;">
-                      </td>
-                      <td>{{ request.firstname }} {{ request.lastname }}</td>
-                      <td>{{ request.username }}</td>
-                      <td>{{ request.mail }}</td>
-                      <td>{{ request.phoneNumber }}</td>
+                    <tr *ngFor="let cabin of cabins">
+                      <td>{{cabin.owner}}</td>
+                      <td>{{cabin.name}}</td>
+                      <td>{{cabin.location}}</td>
+                      <td>{{cabin.phoneNumber}}</td>
+                      <td>{{cabin.winterPrice}} RSD</td>
+                      <td>{{cabin.summerPrice}} RSD</td>
                       <td style="white-space: nowrap; width: 1%;">
-                        <button class="btn btn-success btn-sm me-1"
-                          (click)="acceptRequest(request.username)">Approve</button>
-                        <button class="btn btn-danger btn-sm"
-                          (click)="declineRequest(request.username)">Reject</button>
+                        <button class="btn btn-primary btn-sm me-1">BLOCK-TODO</button>
                       </td>
                     </tr>
                   </tbody>
@@ -216,8 +213,5 @@
         </div>
       </div>
     </div>
-    <div class="row">
-    </div>
   </div>
-
 </div>
