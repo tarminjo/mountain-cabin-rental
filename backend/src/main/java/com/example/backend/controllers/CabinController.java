@@ -17,8 +17,6 @@ import com.example.backend.db.CabinRepository;
 import com.example.backend.models.Cabin;
 
 
-
-
 @RestController
 @RequestMapping("/api/cabins")
 @CrossOrigin("http://localhost:4200")

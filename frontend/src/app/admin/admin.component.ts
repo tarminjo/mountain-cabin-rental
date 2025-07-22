@@ -24,11 +24,13 @@ export class AdminComponent implements OnInit {
     })
       this.userService.getAllRequests().subscribe((requests: User[])=>{
         this.registrationRequests = requests
+        this.cabinService.getAllCabins().subscribe((cabins: Cabin[]) => {
+          this.cabins = cabins;
+          this.error = false
+          this.message = ""
+          this.selectedTab = "users"
+        })
       })
-
-      this.error = false
-      this.message = ""
-      this.selectedTab = "users"
     }
 
   logout() {
@@ -210,11 +212,5 @@ export class AdminComponent implements OnInit {
         }
       }
     }
-  }
-
-  getAllCabins() {
-    this.cabinService.getAllCabins().subscribe((cabins: Cabin[]) => {
-      this.cabins = cabins;
-    })
   }
 }
