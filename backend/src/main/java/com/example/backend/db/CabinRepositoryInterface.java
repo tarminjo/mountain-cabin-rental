@@ -12,4 +12,5 @@ public interface CabinRepositoryInterface {
     public int deleteCabin(int id);
     public int createCabin(Cabin cabin);
     public List<Cabin> getAllCabins();
+    public List<Cabin> searchCabins(String location, String name);
 }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.backend.db.CabinRepository;
@@ -74,4 +75,12 @@ public class CabinController {
         return new CabinRepository().getAllCabins();
     }
     
+    @GetMapping("/search")
+    public List<Cabin> searchCabins(
+        @RequestParam(required = false) String name,
+        @RequestParam(required = false) String location) {
+
+        return new CabinRepository().searchCabins(location, name);
+    }
+
 }

@@ -34,12 +34,12 @@ export class TouristCabinsComponent implements OnInit {
     this.locationParam = ""
 
     this.userService.getUser(this.username).subscribe((user: User)=>{
-          this.user = user
+      this.user = user
     })
 
     this.cabinService.getAllCabins().subscribe((myCabins: Cabin[])=>{
       this.cabins = myCabins
-      this.originalCabins = [...myCabins];
+      this.originalCabins = myCabins
     })
   }
 
@@ -96,6 +96,12 @@ export class TouristCabinsComponent implements OnInit {
   }
 
   search(){
+
+    if (!this.nameParam && !this.locationParam) {
+      this.cabins = this.originalCabins
+      return;
+    }
+
     this.cabinService.searchCabins(this.nameParam, this.locationParam).subscribe((cabins: Cabin[])=>{
       this.cabins = cabins
     })

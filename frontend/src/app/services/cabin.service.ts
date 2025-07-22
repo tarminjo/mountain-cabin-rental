@@ -60,7 +60,7 @@ export class CabinService {
       location: locationParam
     }
 
-    return this.http.post<Cabin[]>(`${this.url}/cabins/search`, data);
+    return this.http.get<Cabin[]>(`${this.url}/cabins/search`, { params: data });
   }
 
 }
