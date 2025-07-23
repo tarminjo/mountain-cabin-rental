@@ -1,0 +1,39 @@
+.card .list-group-item {
+  background-color: transparent;
+  padding: 0.5rem 0.75rem;
+}
+
+.card .text-secondary {
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.card .form-label {
+  font-weight: 500;
+}
+
+.card .text-secondary {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.card .btn {
+  min-width: 110px;
+}
+
+.table th, .table td {
+  padding: 0.75rem;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f1f3f5;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.full-bg {
+  background-color: #f2f2f2;
+  min-height: 100vh;
+}
+

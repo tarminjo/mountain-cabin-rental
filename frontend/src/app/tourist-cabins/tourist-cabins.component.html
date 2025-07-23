@@ -17,14 +17,14 @@
       </a>
 
       <div class="ms-auto d-flex align-items-center gap-2">
-        <a (click)="logout()" class="btn btn-outline-light rounded-pill px-4">Logout</a>
+        <a (click)="logout()" class="btn btn-outline-danger rounded-pill px-4">Logout</a>
       </div>
     </div>
   </nav>
 
   <div class="container mt-5">
     <div class="row justify-content-center">
-      <div class="col-12 col-md-3 mb-4">
+      <div class="col-12 col-lg-3 mb-4">
 
         <div class="card rounded-4 shadow-sm p-3 bg-light mb-3">
           <div class="card-body">
@@ -75,42 +75,44 @@
         </div>
       </div>
       <div class="col-12 col-md-8 mb-4">
-        <div class="card shadow rounded-4 p-2">
+        <div class="card rounded-4 p-4 bg-light">
           <div class="card-body">
-            <form>
-              <div *ngIf="cabins.length > 0; else noCabins">
-                <h3 class="card-title mb-4">List of All Cabins</h3>
-                <table class="table table-hover table-borderless shadow rounded-4 mt-2">
-                  <thead class="table-dark text-center">
-                    <tr>
+
+            <div *ngIf="cabins.length > 0; else noCabins">
+              <h4 class="card-title text-primary fw-bold text-center mb-4">🏕️ List of All Cabins</h4>
+
+              <div class="table-responsive rounded-4">
+                <table class="table table-hover align-middle table-borderless mb-0">
+                  <thead class="table-primary text-center rounded-top">
+                    <tr class="text-uppercase small fw-semibold">
                       <th>Name</th>
                       <th>Location</th>
-                      <th>Phone Number</th>
+                      <th>Phone</th>
                       <th>Winter Price</th>
                       <th>Summer Price</th>
-                      <th>Avg Rating</th>
                     </tr>
                   </thead>
-                  <tbody class="align-middle text-center">
+                  <tbody class="text-center">
                     <tr *ngFor="let cabin of cabins">
                       <td>
                         <a (click)="viewCabin(cabin.id)" 
                           class="clickable-cabin">{{cabin.name}}</a>
                       </td>
-                      <td>{{cabin.location}}</td>
-                      <td>{{cabin.phoneNumber}}</td>
-                      <td>{{cabin.winterPrice}} RSD</td>
-                      <td>{{cabin.summerPrice}} RSD</td>
-                      <td></td>
+                      <td>{{ cabin.location }}</td>
+                      <td>{{ cabin.phoneNumber }}</td>
+                      <td>{{ cabin.winterPrice }} RSD</td>
+                      <td>{{ cabin.summerPrice }} RSD</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
-              <ng-template #noCabins>
-                <h4 class="text-center" style="color: red; font-style: italic;">
-                  No cabins in system...</h4>
-              </ng-template>
-            </form>
+            </div>
+
+            <ng-template #noCabins>
+              <div class="text-center text-danger mt-4 fst-italic fs-5">
+                No cabins in system...
+              </div>
+            </ng-template>
           </div>
         </div>
       </div>

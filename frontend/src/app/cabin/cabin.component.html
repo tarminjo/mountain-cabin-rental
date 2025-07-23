@@ -17,36 +17,38 @@
       </a>
 
       <div class="ms-auto d-flex align-items-center gap-2">
-        <a (click)="logout()" class="btn btn-outline-light rounded-pill px-4">Logout</a>
+        <a (click)="logout()" class="btn btn-outline-danger rounded-pill px-4">Logout</a>
       </div>
     </div>
   </nav>
 
   <div class="container mt-5">
     <div class="row justify-content-center">
-      <div class="col-12 col-md-3 mb-4">
-        <div class="d-flex justify-content-center">
-          <button type="button" class="btn btn-secondary mb-3" routerLink="/tourist-cabins">
-            Back to Cabins
-          </button>
+      <div class="col-12 col-lg-3 mb-4 d-flex flex-column h-100">
+        <div class="card bg-light rounded-4 mb-1">
+          <div class="list-group list-group-flush rounded-4 overflow-hidden">
+            <button type="button" class="list-group-item list-group-item-action py-3 fw-semibold"
+              [ngClass]="{ 'active bg-primary text-white': selectedTab === 'details' }" 
+              (click)="selectTab('details')">📋 Cabin Details
+            </button>
+            <button type="button" class="list-group-item list-group-item-action py-3 fw-semibold"
+              [ngClass]="{ 'active bg-primary text-white': selectedTab === 'rent' }" (click)="selectTab('rent')">
+              🗝️ Rent Cabin
+            </button>
+          </div>
         </div>
-        <div class="list-group">
-          <button type="button" class="list-group-item list-group-item-action"
-            [class.active]="selectedTab === 'details'" (click)="selectTab('details')">
-            Cabin Details
-          </button>
-          <button type="button" class="list-group-item list-group-item-action"
-            [class.active]="selectedTab === 'rent'" (click)="selectTab('rent')">
-            Rent Cabin
+        <div class="position-sticky bottom-0 mt-auto pt-3 text-center">
+          <button type="button" class="btn btn-outline-dark w-100 rounded-pill" routerLink="/tourist-cabins">
+            ← Back to Cabins
           </button>
         </div>
       </div>
 
-      <div class="col-12 col-md-8">
-        <div class="card shadow rounded-4 p-2 mb-4">
+      <div class="col-12 col-lg-8">
+        <div class="card rounded-4 p-4 bg-light mb-4">
           <div class="card-body">
-            <form *ngIf="selectedTab === 'details'">
-              <h3 class="card-title mb-4">Cabin Details</h3>
+            <div *ngIf="selectedTab === 'details'">
+              <h3 class="card-title text-primary fw-bold text-center mb-4">📋 Cabin Details</h3>
               <div *ngIf="error" class="alert alert-danger" role="alert">
                 <span>{{message}}</span>
               </div>
@@ -77,17 +79,16 @@
                   [coordinates]="[cabin.latitude, cabin.longitude]"></app-map>
               </div>
               <br>
-              <h5 style="font-style: italic; color: #FF0000;">***Adding pictures and map***</h5>
-            </form>
+              <h5 style="font-style: italic; color: #FF0000;">***Add pictures***</h5>
+            </div>
 
-            <form *ngIf="selectedTab === 'rent'">
-              <h3 class="card-title mb-4">Rent Cabin</h3>
-              <h5 style="font-style: italic; color: #FF0000;">***Add step by step instructions here***</h5>
+            <div *ngIf="selectedTab === 'rent'">
+              <h3 class="card-title text-primary fw-bold text-center mb-4">🗝️ Rent Cabin</h3>
               <div *ngIf="error" class="alert alert-danger" role="alert">
                 <span>{{message}}</span>
               </div>
-
-            </form>
+              
+            </div>
           </div>
         </div>
       </div>

@@ -18,117 +18,132 @@
         class="btn btn-outline-light rounded-pill px-4">Statistics
       </a>
       <div class="ms-auto">
-        <a (click)="logout()" class="btn btn-outline-light rounded-pill px-4">Logout</a>
+        <a (click)="logout()" class="btn btn-outline-danger rounded-pill px-4">Logout</a>
       </div>
     </div>
   </nav>
 
   <div class="container mt-5">
     <div class="row justify-content-center">
-      <div class="col-12 col-md-3 mb-4">
-        <div class="d-flex justify-content-center mb-3">
-          <img [src]="user.profilePic" class="rounded-circle border border-3"
-            style="width: 150px; height: 150px; object-fit: cover;" />
+      <div class="col-12 col-lg-3 mb-4 d-flex flex-column h-100">
+        <div class="d-flex justify-content-center mb-4">
+          <div class="border border-3 border rounded-circle p-1 bg-light" style="width: 160px; height: 160px;">
+            <img [src]="user.profilePic" class="rounded-circle w-100 h-100" style="object-fit: cover;" />
+          </div>
         </div>
-        <div class="list-group">
-          <button type="button" class="list-group-item list-group-item-action" [class.active]="selectedTab === 'cabins'"
-            (click)="selectTab('cabins')">
-            My Cabins
-          </button>
-          <button type="button" class="list-group-item list-group-item-action" [class.active]="selectedTab === 'form'"
-            (click)="selectTab('form')">
-            Add Cabin
+        <div class="card bg-light rounded-4">
+          <div class="list-group list-group-flush rounded-4 overflow-hidden">
+            <button type="button" class="list-group-item list-group-item-action py-3 fw-semibold"
+              [ngClass]="{ 'active bg-primary text-white': selectedTab === 'cabins' || selectedTab === 'edit' }" 
+              (click)="selectTab('cabins')">🏕️ My Cabins
+            </button>
+            <button type="button" class="list-group-item list-group-item-action py-3 fw-semibold"
+              [ngClass]="{ 'active bg-primary text-white': selectedTab === 'form' }" (click)="selectTab('form')">
+              🏗️ Add Cabin
+            </button>
+          </div>
+        </div>
+        <div class="position-sticky bottom-0 mt-auto pt-3 text-center" *ngIf="selectedTab == 'edit'">
+          <button type="button" class="btn btn-outline-dark w-100 rounded-pill" (click)="selectTab('cabins')">
+            ← Back to My Cabins
           </button>
         </div>
       </div>
 
-      <div class="col-12 col-md-8 mb-4">
-        <div class="card shadow rounded-4 p-2 mb-4">
+      <div class="col-12 col-lg-9">
+        <div class="card rounded-4 p-4 bg-light">
           <div class="card-body">
-            <form *ngIf="selectedTab === 'cabins'">
+
+            <div *ngIf="selectedTab === 'cabins'">
               <div *ngIf="cabins.length > 0; else noCabins">
-                <h3 class="card-title mb-4">List of My Cabins</h3>
-                <table class="table table-hover table-borderless shadow rounded-4 mt-2">
-                  <thead class="table-dark text-center">
-                    <tr>
-                      <th>Name</th>
-                      <th>Location</th>
-                      <th>Phone Number</th>
-                      <th>Winter Price</th>
-                      <th>Summer Price</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody class="align-middle text-center">
-                    <tr *ngFor="let cabin of cabins">
-                      <td>{{cabin.name}}</td>
-                      <td>{{cabin.location}}</td>
-                      <td>{{cabin.phoneNumber}}</td>
-                      <td>{{cabin.winterPrice}} RSD</td>
-                      <td>{{cabin.summerPrice}} RSD</td>
-                      <td style="white-space: nowrap; width: 1%;">
-                        <button class="btn btn-info btn-sm me-1" (click)="enterEditCabin(cabin)">Edit</button>
-                        <button class="btn btn-danger btn-sm" (click)="deleteCabin(cabin.id)">Delete</button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                <h3 class="card-title text-primary fw-bold text-center mb-4">🏕️ List of My Cabins</h3>
+
+                <div class="table-responsive rounded-4">
+                  <table class="table table-hover align-middle table-borderless mb-0">
+                    <thead class="table-primary text-center rounded-top">
+                      <tr class="text-uppercase small fw-semibold">
+                        <th>Name</th>
+                        <th>Location</th>
+                        <th>Phone</th>
+                        <th>Winter Price</th>
+                        <th>Summer Price</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody class="text-center">
+                      <tr *ngFor="let cabin of cabins">
+                        <td>{{ cabin.name }}</td>
+                        <td>{{ cabin.location }}</td>
+                        <td>{{ cabin.phoneNumber }}</td>
+                        <td>{{ cabin.winterPrice }} RSD</td>
+                        <td>{{ cabin.summerPrice }} RSD</td>
+                        <td style="white-space: nowrap; width: 1%;">
+                          <button class="btn btn-outline-primary btn-sm rounded-pill px-3 shadow-sm me-2" 
+                            (click)="enterEditCabin(cabin)">✏️ Edit</button>
+                          <button class="btn btn-outline-danger btn-sm rounded-pill px-3 shadow-sm" 
+                            (click)="deleteCabin(cabin.id)">🗑️ Delete</button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
               <ng-template #noCabins>
-                <h4 class="text-center" style="color: red; font-style: italic;">
-                  No my cabins...</h4>
+                <div class="text-center text-danger mt-4 fst-italic fs-5">
+                  No cabins in system...
+                </div>
               </ng-template>
-            </form>
+            </div>
 
-            <form *ngIf="selectedTab === 'form'">
-              <h3 class="card-title mb-4">New Cabin with Form</h3>
+            <div *ngIf="selectedTab === 'form'">
+              <h3 class="card-title text-center mb-3 fw-bold text-primary">🏗️ New Cabin with Form</h3>
               <div *ngIf="error" class="alert alert-danger" role="alert">
                 <span>{{message}}</span>
               </div>
               <div class="mb-2">
-                <label class="form-label">Name</label>
+                <label class="form-label text-secondary fw-semibold">Name</label>
                 <input type="text" class="form-control" [(ngModel)]="name" name="name">
               </div>
               <div class="mb-2">
-                <label class="form-label">Location</label>
+                <label class="form-label text-secondary fw-semibold">Location</label>
                 <input type="text" class="form-control" [(ngModel)]="location" name="location">
               </div>
               <div class="mb-2">
-                <label class="form-label">Services</label>
+                <label class="form-label text-secondary fw-semibold">Services</label>
                 <textarea id="services" [(ngModel)]="services" class="form-control" rows="2" name="services"></textarea>
               </div>
               <div class="row mb-2">
                 <div class="col-6">
-                  <label class="form-label">Winter Price</label>
+                  <label class="form-label text-secondary fw-semibold">Winter Price</label>
                   <input type="number" class="form-control" [(ngModel)]="winterPrice" name="winterPrice">
                 </div>
                 <div class="col-6">
-                  <label class="form-label">Summer Price</label>
+                  <label class="form-label text-secondary fw-semibold">Summer Price</label>
                   <input type="number" class="form-control" [(ngModel)]="summerPrice" name="summerPrice">
                 </div>
               </div>
               <div class="mb-2">
-                <label class="form-label">Phone Number</label>
+                <label class="form-label text-secondary fw-semibold">Phone Number</label>
                 <input type="text" class="form-control" [(ngModel)]="phoneNumber" name="phoneNumber">
               </div>
               <div class="row mb-3">
                 <div class="col-6">
-                  <label class="form-label">Latitude</label>
+                  <label class="form-label text-secondary fw-semibold">Latitude</label>
                   <input type="text" class="form-control" [(ngModel)]="latitude" name="latitude">
                 </div>
                 <div class="col-6">
-                  <label class="form-label">Longitude</label>
+                  <label class="form-label text-secondary fw-semibold">Longitude</label>
                   <input type="text" class="form-control" [(ngModel)]="longitude" name="longitude">
                 </div>
               </div>
               <div class=" row mb-4">
                 <div class="col-6">
-                  <label class="form-label">Upload JSON File</label>
+                  <label class="form-label text-secondary fw-semibold">Upload JSON File</label>
                   <input type="file" class="form-control" (change)="onJsonFileSelected($event)"
                     accept="application/json">
                 </div>
                 <div class="col-6">
-                  <label class="form-label">Cabin Images</label>
+                  <label class="form-label text-secondary fw-semibold">Cabin Images</label>
                   <input type="file" class="form-control" (change)="onFileSelected($event)" multiple
                     accept="image/png, image/jpeg">
                 </div>
@@ -145,57 +160,62 @@
                   </button>
                 </div>
               </div>
+              <div class="text-end mt-4">
+                <button (click)="createCabin()" type="button" class="btn btn-success px-4">Create</button>
+              </div>
+            </div>
 
-              <button (click)="createCabin()" type="button" class="btn btn-success">Create</button>
-            </form>
-
-            <form *ngIf="selectedTab === 'edit'">
+            <div *ngIf="selectedTab === 'edit'">
               <div class="d-flex justify-content-between align-items-center mb-1">
-                <h3 class="card-title">Edit Cabin: {{selectedCabin.name}}</h3>
-                <button class="btn btn-secondary" (click)="selectTab('cabins')">Back to Cabins</button>
+                <h3 class="card-title text-center mb-3 fw-bold text-primary">✏️ Edit Cabin: {{selectedCabin.name}}</h3>
               </div>
               <div *ngIf="error" class="alert alert-danger" role="alert">
                 <span>{{message}}</span>
               </div>
               <div class="mb-2">
-                <label class="form-label">Name</label>
+                <label class="form-label text-secondary fw-semibold">Name</label>
                 <input type="text" class="form-control" [(ngModel)]="editName" name="name">
               </div>
               <div class="mb-2">
-                <label class="form-label">Location</label>
+                <label class="form-label text-secondary fw-semibold">Location</label>
                 <input type="text" class="form-control" [(ngModel)]="editLocation" name="location">
               </div>
               <div class="mb-2">
-                <label class="form-label">Services</label>
+                <label class="form-label text-secondary fw-semibold">Services</label>
                 <textarea id="services" [(ngModel)]="editServices" class="form-control" rows="2"
                   name="services"></textarea>
               </div>
               <div class=" row mb-2">
                 <div class="col-6">
-                  <label class="form-label">Winter Price</label>
+                  <label class="form-label text-secondary fw-semibold">Winter Price</label>
                   <input type="number" class="form-control" [(ngModel)]="editWinterPrice" name="winterPrice">
                 </div>
                 <div class="col-6">
-                  <label class="form-label">Summer Price</label>
+                  <label class="form-label text-secondary fw-semibold">Summer Price</label>
                   <input type="number" class="form-control" [(ngModel)]="editSummerPrice" name="summerPrice">
                 </div>
               </div>
               <div class="mb-2">
-                <label class="form-label">Phone Number</label>
+                <label class="form-label text-secondary fw-semibold">Phone Number</label>
                 <input type="text" class="form-control" [(ngModel)]="editPhoneNumber" name="phoneNumber">
               </div>
               <div class=" row mb-3">
                 <div class="col-6">
-                  <label class="form-label">Latitude</label>
+                  <label class="form-label text-secondary fw-semibold">Latitude</label>
                   <input type="text" class="form-control" [(ngModel)]="editLatitude" name="editLatitude">
                 </div>
                 <div class="col-6">
-                  <label class="form-label">Longitude</label>
+                  <label class="form-label text-secondary fw-semibold">Longitude</label>
                   <input type="text" class="form-control" [(ngModel)]="editLongitude" name="editLongitude">
                 </div>
               </div>
-              <button (click)="updateCabin(selectedCabin.id)" type="button" class="btn btn-success me-1">Save</button>
-            </form>
+              <div class="text-end mt-4">
+                <button (click)="updateCabin(selectedCabin.id)" type="button" class="btn btn-success px-4">
+                  Save
+                </button>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>

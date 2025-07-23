@@ -18,12 +18,128 @@
         class="btn btn-outline-light rounded-pill px-4">Statistics
       </a>
       <div class="ms-auto">
-        <a (click)="logout()" class="btn btn-outline-light rounded-pill px-4">Logout</a>
+        <a (click)="logout()" class="btn btn-outline-danger rounded-pill px-4">Logout</a>
       </div>
     </div>
   </nav>
 
   <div class="container mt-5">
+    <div class="row justify-content-center">
+      <!-- Sidebar -->
+      <div class="col-12 col-lg-3 mb-4">
+        <div class="d-flex justify-content-center mb-4">
+          <div class="border border-3 border rounded-circle p-1 bg-light"
+            style="width: 160px; height: 160px;">
+            <img [src]="user.profilePic" class="rounded-circle w-100 h-100" style="object-fit: cover;" />
+          </div>
+        </div>
+
+
+        <div class="card bg-light rounded-4">
+          <div class="list-group list-group-flush rounded-4 overflow-hidden">
+            <button type="button" class="list-group-item list-group-item-action py-3 fw-semibold"
+              [ngClass]="{ 'active bg-primary text-white': selectedTab === 'details' }" (click)="selectTab('details')">
+              👤 Account Details
+            </button>
+            <button type="button" class="list-group-item list-group-item-action py-3 fw-semibold"
+              [ngClass]="{ 'active bg-primary text-white': selectedTab === 'password' }"
+              (click)="selectTab('password')">
+              🔒 Change Password
+            </button>
+            <button type="button" class="list-group-item list-group-item-action py-3 fw-semibold"
+              [ngClass]="{ 'active bg-primary text-white': selectedTab === 'picture' }" (click)="selectTab('picture')">
+              🖼️ Update Profile Picture
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="col-12 col-lg-7">
+        <div class="card rounded-4 p-4 bg-light">
+          <div class="card-body">
+            <!-- Account Details -->
+            <form *ngIf="selectedTab === 'details'">
+              <h3 class="card-title text-center mb-3 fw-bold text-primary">Account Details</h3>
+              <div *ngIf="error" class="alert alert-danger">{{ message }}</div>
+
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label text-secondary fw-semibold">First Name</label>
+                  <input type="text" class="form-control" [(ngModel)]="firstname" name="firstName">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label text-secondary fw-semibold">Last Name</label>
+                  <input type="text" class="form-control" [(ngModel)]="lastname" name="lastName">
+                </div>
+                <div class="col-12">
+                  <label class="form-label text-secondary fw-semibold">Address</label>
+                  <input type="text" class="form-control" [(ngModel)]="address" name="address">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label text-secondary fw-semibold">Phone Number</label>
+                  <input type="text" class="form-control" [(ngModel)]="phoneNumber" name="phoneNumber">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label text-secondary fw-semibold">Mail</label>
+                  <input type="text" class="form-control" [(ngModel)]="mail" name="mail">
+                </div>
+                <div class="col-12">
+                  <label class="form-label text-secondary fw-semibold">Card Number</label>
+                  <input type="text" class="form-control" [(ngModel)]="cardNumber" name="cardNumber">
+                </div>
+              </div>
+
+              <div class="text-end mt-4">
+                <button (click)="updateProfile()" type="button" class="btn btn-success px-4">Save</button>
+              </div>
+            </form>
+
+            <!-- Password Form -->
+            <form *ngIf="selectedTab === 'password'">
+              <h3 class="card-title text-center mb-3 fw-bold text-primary">Change Password</h3>
+              <div *ngIf="error" class="alert alert-danger">{{ message }}</div>
+
+              <div class="mb-3">
+                <label class="form-label text-secondary fw-semibold">Current Password</label>
+                <input type="password" class="form-control" [(ngModel)]="oldPassword" name="oldPassword">
+              </div>
+              <div class="mb-3">
+                <label class="form-label text-secondary fw-semibold">New Password</label>
+                <input type="password" class="form-control" [(ngModel)]="newPassword" name="newPassword">
+              </div>
+              <div class="mb-3">
+                <label class="form-label text-secondary fw-semibold">Confirm Password</label>
+                <input type="password" class="form-control" [(ngModel)]="confirmPassword" name="confirmPassword">
+              </div>
+
+              <div class="text-end">
+                <button type="button" class="btn btn-success px-4" (click)="updatePassword()">Save</button>
+              </div>
+            </form>
+
+            <!-- Picture Upload -->
+            <form *ngIf="selectedTab === 'picture'">
+              <h3 class="card-title text-center mb-3 fw-bold text-primary">Update Profile Picture</h3>
+              <div *ngIf="error" class="alert alert-danger">{{ message }}</div>
+
+              <div class="mb-3">
+                <label class="form-label text-secondary fw-semibold">Choose new image (JPG/PNG)</label>
+                <input type="file" class="form-control" id="profilePicture" (change)="onFileSelected($event)"
+                  accept="image/png, image/jpg" />
+              </div>
+
+              <div class="text-end">
+                <button type="button" class="btn btn-success px-4" (click)="uploadProfilePic()">Save</button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="container mt-5">
     <div class="row justify-content-center">
       <div class="col-12 col-md-3 mb-4">
         <div class="d-flex justify-content-center mb-3">
@@ -133,5 +249,5 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 </div>

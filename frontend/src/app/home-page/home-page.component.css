@@ -31,3 +31,8 @@
   background-color: #f1f3f5;
   transition: background-color 0.2s ease-in-out;
 }
+
+.full-bg {
+  background-color: #f2f2f2;
+  min-height: 100vh;
+}
