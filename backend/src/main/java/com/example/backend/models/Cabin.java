@@ -9,13 +9,14 @@ public class Cabin {
     private String services;
     private int winterPrice;
     private int summerPrice;
-    private String coordinates;
+    private Double lattitude;
+    private Double longitude;
     
     public Cabin() {
     }
 
     public Cabin(int id, String owner, String name, String location, String phoneNumber,
-        String services, int winterPrice, int summerPrice, String coordinates) {
+        String services, int winterPrice, int summerPrice, Double lattitude, Double longitude) {
         
         this.id = id;
         this.owner = owner;
@@ -25,7 +26,8 @@ public class Cabin {
         this.services = services;
         this.winterPrice = winterPrice;
         this.summerPrice = summerPrice;
-        this.coordinates = coordinates;
+        this.lattitude = lattitude;
+        this.longitude = longitude;
     }
 
     public int getId() {
@@ -92,11 +94,20 @@ public class Cabin {
         this.summerPrice = summerPrice;
     }
 
-    public String getCoordinates() {
-        return coordinates;
+    public Double getLattitude() {
+        return lattitude;
     }
 
-    public void setCoordinates(String coordinates) {
-        this.coordinates = coordinates;
+    public void setLattitude(Double lattitude) {
+        this.lattitude = lattitude;
     }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
 }

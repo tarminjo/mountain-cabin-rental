@@ -17,7 +17,7 @@ export class CabinService {
   }
 
   updateCabin(id: number, name: string, location: string, services: string,
-    phoneNumber: string, winterPrice: number, summerPrice: number, coordinates: string) {
+    phoneNumber: string, winterPrice: number, summerPrice: number, latitude: number, longitude: number) {
     const data = {
       id: id,
       name: name,
@@ -26,7 +26,8 @@ export class CabinService {
       winterPrice: winterPrice,
       summerPrice: summerPrice,
       phoneNumber: phoneNumber,
-      coordinates: coordinates
+      latitude: latitude,
+      longitude: longitude
     }
     return this.http.post(`${this.url}/cabins/update`, data)
   }
@@ -36,7 +37,7 @@ export class CabinService {
   }
 
   createCabin(owner: string, name: string, location: string, services: string, phoneNumber: string, 
-    winterPrice: number, summerPrice: number, coordinates: string, images: string[]){
+    winterPrice: number, summerPrice: number, latitude: number, longitude: number, images: string[]){
 
     const imageData: string = images.join(' ')
     const data = {
@@ -47,7 +48,8 @@ export class CabinService {
       winterPrice: winterPrice,
       summerPrice: summerPrice,
       phoneNumber: phoneNumber,
-      coordinates: coordinates,
+      latitude: latitude,
+      longitude: longitude,
       imageData: imageData
     }
     return this.http.post(`${this.url}/cabins`, data)

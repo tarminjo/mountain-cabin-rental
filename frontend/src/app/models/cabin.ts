@@ -7,5 +7,6 @@ export class Cabin {
     services!: string
     winterPrice!: number
     summerPrice!: number
-    coordinates!: string
+    latitude!: number
+    longitude!: number
 }

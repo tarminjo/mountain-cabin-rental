@@ -38,7 +38,8 @@ export class OwnerCabinsComponent implements OnInit {
     this.editPhoneNumber = ""
     this.editWinterPrice = 0
     this.editSummerPrice = 0
-    this.editCoordinates = ""
+    this.editLatitude = 0
+    this.editLongitude = 0
 
     this.selectedImageFiles = []
     this.selectedImagePreviews = []
@@ -65,7 +66,8 @@ export class OwnerCabinsComponent implements OnInit {
     this.editPhoneNumber = ""
     this.editWinterPrice = 0
     this.editSummerPrice = 0
-    this.editCoordinates = ""
+    this.editLatitude = 0
+    this.editLongitude = 0
 
     this.error = false;
     this.message = '';
@@ -84,7 +86,8 @@ export class OwnerCabinsComponent implements OnInit {
   phoneNumber: string = ""
   winterPrice: number = 0
   summerPrice: number = 0
-  coordinates: string = ""
+  latitude: number = 0
+  longitude: number = 0
 
   // variabled for editing cabin
   editName: string = ""
@@ -93,7 +96,8 @@ export class OwnerCabinsComponent implements OnInit {
   editPhoneNumber: string = ""
   editWinterPrice: number = 0
   editSummerPrice: number = 0
-  editCoordinates: string = ""
+  editLatitude: number = 0
+  editLongitude: number = 0
 
   selectedCabin: Cabin = new Cabin;
 
@@ -106,7 +110,8 @@ export class OwnerCabinsComponent implements OnInit {
     this.editPhoneNumber = cabin.phoneNumber;
     this.editWinterPrice = cabin.winterPrice;
     this.editSummerPrice = cabin.summerPrice;
-    this.editCoordinates = cabin.coordinates;
+    this.editLatitude = cabin.latitude;
+    this.editLongitude = cabin.longitude;
 
     this.selectedTab = 'edit'
   }
@@ -119,12 +124,14 @@ export class OwnerCabinsComponent implements OnInit {
     if (this.editName === this.selectedCabin.name && this.editLocation === this.selectedCabin.location &&
       this.editServices === this.selectedCabin.services && this.editPhoneNumber === this.selectedCabin.phoneNumber &&
       this.editWinterPrice === this.selectedCabin.winterPrice && this.editSummerPrice === this.selectedCabin.summerPrice &&
-      this.editCoordinates === this.selectedCabin.coordinates) {
+      this.editLatitude === this.selectedCabin.latitude && this.editLongitude === this.selectedCabin.longitude) {
       return
     }
 
     if (this.editName === "" || this.editLocation === "" || this.editServices === "" ||
-      this.editPhoneNumber === "" || this.editWinterPrice <= 0 || this.editSummerPrice <= 0) {
+      this.editPhoneNumber === "" || this.editWinterPrice == null || this.editSummerPrice == null
+      || this.editLatitude == null || this.editLongitude == null
+    ) {
 
       this.error = true
       this.message = "All fields must be filled!"
@@ -139,7 +146,8 @@ export class OwnerCabinsComponent implements OnInit {
     }
 
     this.cabinService.updateCabin(id, this.editName, this.editLocation, this.editServices,
-      this.editPhoneNumber, this.editWinterPrice, this.editSummerPrice, this.editCoordinates).subscribe((resp: any) => {
+      this.editPhoneNumber, this.editWinterPrice, this.editSummerPrice, this.editLatitude, 
+      this.editLongitude).subscribe((resp: any) => {
       if (resp.message == 'ok') {
       alert("Cabin updated!")
       } else {
@@ -165,7 +173,8 @@ export class OwnerCabinsComponent implements OnInit {
     this.error = false
     this.message = ""
     if (this.name === "" || this.location === "" || this.services === "" ||
-      this.phoneNumber === "" || this.winterPrice <= 0 || this.summerPrice <= 0 || this.coordinates === "") {
+      this.phoneNumber === "" || this.winterPrice <= 0 || this.summerPrice <= 0
+      || this.latitude <= 0 || this.longitude <= 0) {
 
       this.error = true
       this.message = "All fields must be filled!"
@@ -183,7 +192,7 @@ export class OwnerCabinsComponent implements OnInit {
     console.log(this.selectedImageFiles)
 
     this.cabinService.createCabin(this.username, this.name, this.location, this.services, this.phoneNumber, 
-      this.winterPrice, this.summerPrice, this.coordinates, this.selectedImagePreviews).subscribe((resp: any) => {
+      this.winterPrice, this.summerPrice, this.latitude, this.longitude, this.selectedImagePreviews).subscribe((resp: any) => {
       if (resp.message == 'ok') {
         alert("Cabin created!")
       } else {
@@ -246,7 +255,8 @@ onJsonFileSelected(event: any): void {
       this.winterPrice = cabinData.winterPrice || 0;
       this.summerPrice = cabinData.summerPrice || 0;
       this.phoneNumber = cabinData.phoneNumber || '';
-      this.coordinates = cabinData.coordinates || '';
+      this.latitude = cabinData.latitude || 0;
+      this.longitude = cabinData.longitude || 0;
     } catch (error) {
       this.error = true;
       this.message = "Invalid JSON file.";
