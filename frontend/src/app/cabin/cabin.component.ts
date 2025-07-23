@@ -6,11 +6,12 @@ import { Cabin } from '../models/cabin';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { User } from '../models/user';
+import { MapComponent } from '../map/map.component';
 
 @Component({
   selector: 'app-cabin',
   standalone: true,
-  imports: [RouterModule, CommonModule, FormsModule],
+  imports: [RouterModule, CommonModule, FormsModule, MapComponent],
   templateUrl: './cabin.component.html',
   styleUrl: './cabin.component.css'
 })
