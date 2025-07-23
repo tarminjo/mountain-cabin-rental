@@ -27,6 +27,7 @@ export class CabinComponent implements OnInit {
     console.log('Cabin ID:', this.cabinId)
     
     this.selectedTab = 'details';
+    this.selectedStep = 'first';
     this.error = false
     this.message = ''
 
@@ -63,6 +64,79 @@ export class CabinComponent implements OnInit {
     this.error = false
     this.message = ''
     this.selectedTab = tab
+  }
+
+  selectedStep: string = 'first'
+
+  // First step variables
+  startDate: Date | null = null
+  endDate: Date | null = null
+  adults: number = 0
+  children: number = 0
+
+  // Second step variables
+  description: string = ''
+  cardNumber: string = ''
+  calculatedPrice: number = 0
+
+  goToSecondStep(): void {
+
+    this.error = false;
+    this.message = '';
+
+    if (!this.startDate || !this.endDate) {
+      this.error = true;
+      this.message = 'Please select both start and end dates.';
+      return;
+    }
+
+    if (new Date(this.startDate) >= new Date(this.endDate)) {
+      this.error = true;
+      this.message = 'End date must be after start date.';
+      return;
+    }
+
+    this.selectedStep = 'second';
+  }
+
+  submitReservation(): void {
+    this.error = false;
+    this.message = '';
+
+    if (this.adults <= 0) {
+      this.error = true;
+      this.message = 'Number of adults must be greater than 0.';
+      return;
+    }
+
+    if (this.children < 0) {
+      this.error = true;
+      this.message = 'Number of children cannot be negative.';
+      return;
+    }
+
+    const reservationData = {
+      cabinId: this.cabin.id,
+      startDate: this.startDate,
+      endDate: this.endDate,
+      adults: this.adults,
+      children: this.children
+    };
+
+    // Call the service to submit the reservation
+    // Assuming a method exists in cabinService to handle reservations
+    // this.cabinService.reserveCabin(reservationData).subscribe({
+    //   next: (response) => {
+    //     this.message = 'Reservation successful!';
+    //     console.log(response);
+    //     // Optionally, navigate to a confirmation page or reset the form
+    //   },
+    //   error: (err) => {
+    //     this.error = true;
+    //     this.message = 'Reservation failed. Please try again later.';
+    //     console.error(err);
+    //   }
+    // });
   }
 
 }
