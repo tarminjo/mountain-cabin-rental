@@ -1,4 +1,4 @@
-import {  Component, AfterViewInit, Input } from '@angular/core';
+import {  Component, AfterViewInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import * as L from 'leaflet';
 
 @Component({
@@ -6,17 +6,26 @@ import * as L from 'leaflet';
   standalone: true,
   template: `<div id="map" style="height: 300px; width: 100%;"></div>`
 })
-export class MapComponent implements AfterViewInit {
+export class MapComponent implements AfterViewInit, OnChanges {
+
+  @Input() coordinates: [number, number] = [44.7866, 20.4489]
 
   private map!: L.Map;
+  private marker!: L.Marker;
 
   ngAfterViewInit(): void {
     this.initMap();
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['coordinates'] && this.map) {
+      this.updateMarkerAndView();
+    }
+  }
+
   private initMap(): void {
 
-    this.map = L.map('map').setView([44.7866, 20.4489], 13); // Београд
+    this.map = L.map('map').setView(this.coordinates, 13); // Београд
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: 
@@ -30,9 +39,12 @@ export class MapComponent implements AfterViewInit {
       iconAnchor: [0, 40]
     });
 
-    L.marker([44.7866, 20.4489], {icon: customIcon})
-      .addTo(this.map)
-      .openPopup();
+    this.marker = L.marker(this.coordinates, { icon: customIcon }).addTo(this.map);
+  }
+
+  private updateMarkerAndView(): void {
+    this.marker.setLatLng(this.coordinates);
+    this.map.setView(this.coordinates, 14);
   }
 
 }
