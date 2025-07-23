@@ -9,7 +9,7 @@ public class Cabin {
     private String services;
     private int winterPrice;
     private int summerPrice;
-    private Double lattitude;
+    private Double latitude;
     private Double longitude;
     
     public Cabin() {
@@ -26,7 +26,7 @@ public class Cabin {
         this.services = services;
         this.winterPrice = winterPrice;
         this.summerPrice = summerPrice;
-        this.lattitude = lattitude;
+        this.latitude = lattitude;
         this.longitude = longitude;
     }
 
@@ -94,12 +94,12 @@ public class Cabin {
         this.summerPrice = summerPrice;
     }
 
-    public Double getLattitude() {
-        return lattitude;
+    public Double getLatitude() {
+        return latitude;
     }
 
-    public void setLattitude(Double lattitude) {
-        this.lattitude = lattitude;
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
     }
 
     public Double getLongitude() {

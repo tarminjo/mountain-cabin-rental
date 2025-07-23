@@ -41,7 +41,7 @@ public class CabinRepository implements CabinRepositoryInterface{
                 cabin.setServices(rs.getString("services"));
                 cabin.setWinterPrice(rs.getInt("winterPrice"));
                 cabin.setSummerPrice(rs.getInt("summerPrice"));
-                cabin.setLattitude(rs.getDouble("lattitude"));
+                cabin.setLatitude(rs.getDouble("latitude"));
                 cabin.setLongitude(rs.getDouble("longitude"));
 
                 response.add(cabin);
@@ -58,7 +58,7 @@ public class CabinRepository implements CabinRepositoryInterface{
         try(Connection conn = DB.source().getConnection();
             PreparedStatement stmt = conn.prepareStatement(
                 "UPDATE cabins SET name = ?, location = ?, services = ?, phoneNumber = ?, " +
-                    "winterPrice = ?, summerPrice = ?, lattitude = ?, longitude = ? WHERE id = ?")) {
+                    "winterPrice = ?, summerPrice = ?, latitude = ?, longitude = ? WHERE id = ?")) {
 
             stmt.setString(1, payload.get("name"));
             stmt.setString(2, payload.get("location"));
@@ -66,7 +66,7 @@ public class CabinRepository implements CabinRepositoryInterface{
             stmt.setString(4, payload.get("phoneNumber"));
             stmt.setInt(5, Integer.parseInt(payload.get("winterPrice")));
             stmt.setInt(6, Integer.parseInt(payload.get("summerPrice")));
-            stmt.setDouble(7, Double.parseDouble(payload.get("lattitude")));
+            stmt.setDouble(7, Double.parseDouble(payload.get("latitude")));
             stmt.setDouble(8, Double.parseDouble(payload.get("longitude")));
             stmt.setInt(9, Integer.parseInt(payload.get("id")));
 
@@ -105,7 +105,7 @@ public class CabinRepository implements CabinRepositoryInterface{
 
         try (Connection conn = DB.source().getConnection();
              PreparedStatement stmt = conn.prepareStatement(
-                 "INSERT INTO cabins (owner, name, location, services, phoneNumber, winterPrice, summerPrice, lattitude, longitude) " +
+                 "INSERT INTO cabins (owner, name, location, services, phoneNumber, winterPrice, summerPrice, latitude, longitude) " +
                  "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)) {
 
             stmt.setString(1, payload.get("owner"));
@@ -115,7 +115,7 @@ public class CabinRepository implements CabinRepositoryInterface{
             stmt.setString(5, payload.get("phoneNumber"));
             stmt.setInt(6, Integer.parseInt(payload.get("winterPrice")));
             stmt.setInt(7, Integer.parseInt(payload.get("summerPrice")));
-            stmt.setDouble(8, Double.parseDouble(payload.get("lattitude")));
+            stmt.setDouble(8, Double.parseDouble(payload.get("latitude")));
             stmt.setDouble(9, Double.parseDouble(payload.get("longitude")));
 
             int rows = stmt.executeUpdate();
@@ -180,7 +180,7 @@ public class CabinRepository implements CabinRepositoryInterface{
                 cabin.setServices(rs.getString("services"));
                 cabin.setWinterPrice(rs.getInt("winterPrice"));
                 cabin.setSummerPrice(rs.getInt("summerPrice"));
-                cabin.setLattitude(rs.getDouble("lattitude"));
+                cabin.setLatitude(rs.getDouble("latitude"));
                 cabin.setLongitude(rs.getDouble("longitude"));
 
                 response.add(cabin);
@@ -216,7 +216,7 @@ public class CabinRepository implements CabinRepositoryInterface{
                 cabin.setServices(rs.getString("services"));
                 cabin.setWinterPrice(rs.getInt("winterPrice"));
                 cabin.setSummerPrice(rs.getInt("summerPrice"));
-                cabin.setLattitude(rs.getDouble("lattitude"));
+                cabin.setLatitude(rs.getDouble("latitude"));
                 cabin.setLongitude(rs.getDouble("longitude"));
 
                 response.add(cabin);
@@ -246,7 +246,7 @@ public class CabinRepository implements CabinRepositoryInterface{
                 cabin.setServices(rs.getString("services"));
                 cabin.setWinterPrice(rs.getInt("winterPrice"));
                 cabin.setSummerPrice(rs.getInt("summerPrice"));
-                cabin.setLattitude(rs.getDouble("lattitude"));
+                cabin.setLatitude(rs.getDouble("latitude"));
                 cabin.setLongitude(rs.getDouble("longitude"));
 
                 return cabin;
