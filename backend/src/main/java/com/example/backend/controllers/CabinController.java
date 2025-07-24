@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.backend.db.CabinRepository;
+import com.example.backend.db.PictureRepository;
 import com.example.backend.models.Cabin;
 
 
@@ -86,6 +87,11 @@ public class CabinController {
     @GetMapping("/{id}")
     public Cabin getCabinById(@PathVariable Integer id) {
         return new CabinRepository().getCabinById(id);
+    }
+
+    @GetMapping("/pictures/{cabinId}")
+    public List<String> getCabinPictures(@PathVariable Integer cabinId) {
+        return new PictureRepository().getCabinPictures(cabinId);
     }
 
 }

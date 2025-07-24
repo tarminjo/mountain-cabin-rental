@@ -1,16 +1,36 @@
 package com.example.backend.db;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.example.backend.models.Picture;
 
 public class PictureRepository implements PictureRepositoryInterface {
 
-    // Implement methods from PictureRepositoryInterface here
     @Override
-    public List<Picture> getPicturesByCabinId(String cabinId) {
-        // Implementation logic to retrieve pictures by cabin ID
-        return null; // Placeholder return
+    public List<String> getCabinPictures(Integer cabinId) {
+
+        List<String> pictures = new ArrayList<>();
+
+        try (Connection conn = DB.source().getConnection();
+             PreparedStatement stmt = conn.prepareStatement("SELECT src FROM pictures WHERE cabinId = ?")) {
+
+            stmt.setInt(1, cabinId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                pictures.add(rs.getString("src"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return pictures;
     }
 
     @Override
