@@ -1,13 +1,15 @@
 export class Rental{
     id!: number
+    createdAt!: Date
     cabinId!: number
-    userId!: number
+    user!: string
     startDate!: Date
     endDate!: Date
-    childrenNumber!: number
-    adultsNumber!: number
+    adults!: number
+    children!: number
     description!: string
     comment!: string
     rating!: number
     status!: number
+    price!: number
 }

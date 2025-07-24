@@ -1,9 +1,48 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Rental } from '../models/rental';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RentalService {
 
-  constructor() { }
+  url = "http://localhost:8081/api"
+
+  constructor(private http: HttpClient) { }
+
+  createRental(cabinId: number, user: string, startDate: Date, endDate: Date, 
+    adults: number, children: number, description: string, price: number): Observable<Rental> {
+
+      const data = {
+        cabinId: cabinId,
+        createdAt: new Date(),
+        user: user,
+        startDate: startDate,
+        endDate: endDate,
+        adults: adults,
+        children: children,
+        description: description,
+        price: price
+    };
+
+    return this.http.post<Rental>(`${this.url}/rentals`, data);
+  }
+
+  getRentals(): Observable<Rental[]> {
+    return this.http.get<Rental[]>(`${this.url}/rentals`);
+  }
+
+  getRentalById(id: number): Observable<Rental> {
+    return this.http.get<Rental>(`${this.url}/rentals/${id}`);
+  }
+
+  updateRental(id: number, rental: Rental): Observable<Rental> {
+    return this.http.put<Rental>(`${this.url}/rentals/${id}`, rental);
+  }
+
+  deleteRental(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.url}/rentals/${id}`);
+  }
 }

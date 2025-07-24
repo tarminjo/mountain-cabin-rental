@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { User } from '../models/user';
 import { MapComponent } from '../map/map.component';
+import { RentalService } from '../services/rental.service';
 
 @Component({
   selector: 'app-cabin',
@@ -18,13 +19,13 @@ import { MapComponent } from '../map/map.component';
 export class CabinComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private router: Router,
-    private userService: UserService, private cabinService: CabinService) {}
+    private userService: UserService, private cabinService: CabinService,
+    private rentalService: RentalService) {}
 
 
   ngOnInit(): void {
 
     this.cabinId = Number(this.route.snapshot.paramMap.get('id'))
-    console.log('Cabin ID:', this.cabinId)
     
     this.selectedTab = 'details';
     this.selectedStep = 'first';
@@ -165,12 +166,27 @@ export class CabinComponent implements OnInit {
     let masterCardRegex = /^(51|52|53|54|55)\d{14}$/
     let visaRegex = /^(4539|4556|4916|4532|4929|4485|4716)\d{12}$/
 
-    if(!dinersRegex.test(this.cardNumber) && !masterCardRegex.test(this.cardNumber) && !visaRegex.test(this.cardNumber)) {
+    if(!dinersRegex.test(this.cardNumber) && 
+      !masterCardRegex.test(this.cardNumber) && 
+      !visaRegex.test(this.cardNumber)) {
+        
       this.error = true;
       this.message = 'Invalid card number format.';
       return;
     }
 
+    // TODO: ADD RESERVATION SUBMISSION LOGIC
+    this.rentalService.createRental(this.cabinId!, this.user.username, this.startDate!,
+      this.endDate!, this.adults, this.children, this.description, this.calculatedPrice)
+      .subscribe((resp: any) => {
+
+        if(resp.message === 'ok'){
+          // Handle successful rental creation
+        } else {
+          this.error = true;
+          this.message = 'Error while creating rental.';
+        }
+      })
   }
 
 }
