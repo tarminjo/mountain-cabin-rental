@@ -260,4 +260,76 @@ public class UserRepository implements UserRepositoryInterface {
         return 0;
     }
 
+    @Override
+    public List<User> getOwners() {
+
+        List<User> owners = new ArrayList<>();
+        
+        try (Connection conn = DB.source().getConnection();
+             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM users WHERE type = 'owner'")) {
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+
+                User user = new User();
+
+                user.setUsername(rs.getString("username"));
+                user.setPassword(rs.getString("password"));
+                user.setType(rs.getString("type"));
+                user.setFirstname(rs.getString("firstname"));
+                user.setLastname(rs.getString("lastname"));
+                user.setSex(rs.getString("sex"));
+                user.setAddress(rs.getString("address"));
+                user.setPhoneNumber(rs.getString("phoneNumber"));
+                user.setMail(rs.getString("mail"));
+                user.setProfilePic(rs.getString("profilePic"));
+                user.setCardNumber(rs.getString("cardNumber"));
+                user.setStatus(rs.getInt("status"));
+
+                owners.add(user);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return owners;
+    }
+
+    @Override
+    public List<User> getTourists() {
+
+        List<User> tourists = new ArrayList<>();
+
+        try (Connection conn = DB.source().getConnection();
+             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM users WHERE type = 'tourist'")) {
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+
+                User user = new User();
+
+                user.setUsername(rs.getString("username"));
+                user.setPassword(rs.getString("password"));
+                user.setType(rs.getString("type"));
+                user.setFirstname(rs.getString("firstname"));
+                user.setLastname(rs.getString("lastname"));
+                user.setSex(rs.getString("sex"));
+                user.setAddress(rs.getString("address"));
+                user.setPhoneNumber(rs.getString("phoneNumber"));
+                user.setMail(rs.getString("mail"));
+                user.setProfilePic(rs.getString("profilePic"));
+                user.setCardNumber(rs.getString("cardNumber"));
+                user.setStatus(rs.getInt("status"));
+
+                tourists.add(user);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return tourists;
+    }
+
 }

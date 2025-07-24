@@ -14,4 +14,6 @@ public interface UserRepositoryInterface {
     public int updateUserAccountDetails(Map<String, String> payload);
     public int updateUserPassword(Map<String, String> payload);
     public int updateProfilePicture(Map<String, String> payload);
+    public List<User> getOwners();
+    public List<User> getTourists();
 }
