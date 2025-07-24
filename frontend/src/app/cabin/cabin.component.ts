@@ -90,12 +90,58 @@ export class CabinComponent implements OnInit {
       return;
     }
 
-    if (new Date(this.startDate) >= new Date(this.endDate)) {
-      this.error = true;
-      this.message = 'End date must be after start date.';
-      return;
+    if (this.startDate && this.endDate) {
+      const startHour = new Date(this.startDate).getHours();
+      const startMinutes = new Date(this.startDate).getMinutes();
+      const endHour = new Date(this.endDate).getHours();
+      const endMinutes = new Date(this.endDate).getMinutes();
+
+      if (startHour < 14 || (startHour === 14 && startMinutes === 0)) {
+        this.error = true;
+        this.message = 'Check-in is allowed only after 14:00.';
+        return;
+      }
+
+      if (endHour >= 10) {
+        this.error = true;
+        this.message = 'Check-out must be before 10:00.';
+        return;
+      }
+    }
+    
+    // TODO: WILL BE TURNED ONCE DATA POPULATING IS READY
+    // if (new Date(this.startDate) < new Date() || new Date(this.endDate) < new Date()) {
+    //   this.error = true;
+    //   this.message = 'Start and end dates must be in the future.';
+    //   return;
+    // }
+    
+    const summerMonths = [4, 5, 6, 7]; // May (4), June (5), July (6), August (7)
+
+    let summerNights = 0;
+    let nonSummerNights = 0;
+    
+    if (this.startDate && this.endDate) {
+
+      let start = new Date(this.startDate);
+      let end = new Date(this.endDate);
+
+      while (start.getDay() < end.getDay()) {
+        if (summerMonths.includes(start.getMonth())) {
+          summerNights++
+        } else {
+          nonSummerNights++
+        }
+
+        start.setDate(start.getDate() + 1)
+      }
     }
 
+    this.calculatedPrice = 
+      (summerNights * (this.adults + this.children) * this.cabin.summerPrice) +
+      (nonSummerNights * (this.adults + this.children) * this.cabin.winterPrice);
+
+    this.cardNumber = this.user.cardNumber || '';
     this.selectedStep = 'second';
   }
 
@@ -115,28 +161,16 @@ export class CabinComponent implements OnInit {
       return;
     }
 
-    const reservationData = {
-      cabinId: this.cabin.id,
-      startDate: this.startDate,
-      endDate: this.endDate,
-      adults: this.adults,
-      children: this.children
-    };
+    let dinersRegex = /^(300|301|302|303)\d{12}$|^(36|38)\d{13}$/
+    let masterCardRegex = /^(51|52|53|54|55)\d{14}$/
+    let visaRegex = /^(4539|4556|4916|4532|4929|4485|4716)\d{12}$/
 
-    // Call the service to submit the reservation
-    // Assuming a method exists in cabinService to handle reservations
-    // this.cabinService.reserveCabin(reservationData).subscribe({
-    //   next: (response) => {
-    //     this.message = 'Reservation successful!';
-    //     console.log(response);
-    //     // Optionally, navigate to a confirmation page or reset the form
-    //   },
-    //   error: (err) => {
-    //     this.error = true;
-    //     this.message = 'Reservation failed. Please try again later.';
-    //     console.error(err);
-    //   }
-    // });
+    if(!dinersRegex.test(this.cardNumber) && !masterCardRegex.test(this.cardNumber) && !visaRegex.test(this.cardNumber)) {
+      this.error = true;
+      this.message = 'Invalid card number format.';
+      return;
+    }
+
   }
 
 }
