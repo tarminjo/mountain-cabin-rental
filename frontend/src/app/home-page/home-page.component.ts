@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CabinService } from '../services/cabin.service';
 import { Cabin } from '../models/cabin';
+import { RentalService } from '../services/rental.service';
 
 @Component({
   selector: 'app-home-page',
@@ -16,7 +17,7 @@ import { Cabin } from '../models/cabin';
 export class HomePageComponent implements OnInit {
 
   constructor(private router: Router, private userService: UserService,
-    private cabinService: CabinService
+    private cabinService: CabinService, private rentalService: RentalService
   ) {}
 
   username: string = localStorage.getItem("logged") || ""
@@ -29,9 +30,31 @@ export class HomePageComponent implements OnInit {
     this.locationParam = ""
 
     this.cabinService.getAllCabins().subscribe((myCabins: Cabin[])=>{
+      this.totalCabins = myCabins.length
       this.cabins = myCabins
       this.originalCabins = myCabins
     })
+
+    this.userService.getOwners().subscribe((owners) => {
+        this.totalOwners = owners.length;
+    });
+
+    this.userService.getTourists().subscribe((tourists) => {
+      this.totalTourists = tourists.length;
+    });
+
+    this.rentalService.reservationsLast24h().subscribe((reservations: number) => {
+      this.reservedLast24h = reservations
+    });
+
+    this.rentalService.reservationsLast7d().subscribe((reservations: number) => {
+      this.reservedLast7d = reservations
+    });
+
+    this.rentalService.reservationsLast30d().subscribe((reservations: number) => {
+      this.reservedLast30d = reservations
+    });
+
   }
 
   error: boolean = false
@@ -104,6 +127,4 @@ export class HomePageComponent implements OnInit {
   reservedLast24h: number = 0
   reservedLast7d: number = 0
   reservedLast30d: number = 0
-
-  // Method to fetch statistics
 }

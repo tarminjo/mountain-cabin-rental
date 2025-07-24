@@ -100,14 +100,36 @@
                   </div>
                 </ul>
               </div>
+
               <!-- CABIN MAP -->
-              <div class="col-6">
-                <h5 class="mt-4 mb-2">Cabin Map</h5>
+              <div class="col-12">
+                <h5 class="mt-4 mb-2 fw-bold">Cabin Map</h5>
                 <app-map *ngIf="cabin?.latitude && cabin?.longitude" 
                   [coordinates]="[cabin.latitude, cabin.longitude]"></app-map>
               </div>
-              <br>
-              <h5 style="font-style: italic; color: #FF0000;">***Add pictures***</h5>
+
+              <!-- CABIN PICTURES -->
+              <div *ngIf="pictures && pictures.length > 0" class="mt-4">
+                <h5 class="mb-3 fw-bold">Gallery</h5>
+                <div class="d-flex flex-wrap gap-3">
+                  <img *ngFor="let pic of pictures" 
+                      [src]="pic" 
+                      alt="Cabin picture" 
+                      class="rounded shadow-sm"
+                      style="width: 150px; height: 100px; object-fit: cover; cursor: pointer;"
+                      (click)="openImage(pic)" />
+                </div>
+              </div>
+
+              <!-- Fullscreen Image Viewer -->
+              <div *ngIf="isGalleryOpen" class="fullscreen-gallery" (click)="closeGallery()">
+                <div class="gallery-content" (click)="$event.stopPropagation()">
+                  <button class="nav-button left" (click)="prevImage($event)">&#10094;</button>
+                  <img [src]="pictures[currentImageIndex]" alt="Cabin picture full" />
+                  <button class="nav-button right" (click)="nextImage($event)">&#10095;</button>
+                  <button class="close-button" (click)="closeGallery()">&times;</button>
+                </div>
+              </div>
             </div>
 
             <div *ngIf="selectedTab === 'rent'">

@@ -12,6 +12,14 @@ export class UserService {
 
   url = "http://localhost:8081/api"
 
+  getOwners(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.url}/users/owners`);
+  }
+
+  getTourists(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.url}/users/tourists`);
+  }
+
   updateAccountDetails(username: string, firstname: string, lastname: string, 
     address: string, phoneNumber: string, mail: string, cardNumber: string) {
     const data = {

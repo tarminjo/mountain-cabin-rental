@@ -45,4 +45,16 @@ export class RentalService {
     return this.http.delete<void>(`${this.url}/rentals/${id}`);
   }
 
+  reservationsLast24h(): Observable<number> {
+    return this.http.get<number>(`${this.url}/rentals/reservations-last-24-hours`);
+  }
+
+  reservationsLast7d(): Observable<number> {
+    return this.http.get<number>(`${this.url}/rentals/reservations-last-7-days`);
+  }
+
+  reservationsLast30d(): Observable<number> {
+    return this.http.get<number>(`${this.url}/rentals/reservations-last-30-days`);
+  }
+
 }

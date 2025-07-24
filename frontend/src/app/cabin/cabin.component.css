@@ -36,3 +36,81 @@
   background-color: #f2f2f2;
   min-height: 100vh;
 }
+
+img {
+  transition: transform 0.3s ease;
+}
+
+img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+
+.fullscreen-gallery {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050;
+}
+
+.gallery-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  align-items: center;
+}
+
+.gallery-content img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 6px;
+  user-select: none;
+}
+
+.nav-button {
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 3rem;
+  cursor: pointer;
+  padding: 0 1rem;
+  user-select: none;
+  transition: color 0.3s ease;
+}
+
+.nav-button:hover {
+  color: #ddd;
+}
+
+.nav-button.left {
+  margin-right: 1rem;
+}
+
+.nav-button.right {
+  margin-left: 1rem;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 3rem;
+  color: white;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.3s ease;
+}
+
+.close-button:hover {
+  color: #bbb;
+}

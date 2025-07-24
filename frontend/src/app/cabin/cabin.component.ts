@@ -34,6 +34,10 @@ export class CabinComponent implements OnInit {
 
     this.cabinService.getCabinById(this.cabinId).subscribe(cabin => {
       this.cabin = cabin
+      this.cabinService.getCabinPictures(cabin.id).subscribe((pictures) => {
+        this.pictures = pictures;
+        console.log('Cabin Pictures:', this.pictures[0]);
+      });
     })
 
     this.username = localStorage.getItem('logged') || '';
@@ -47,6 +51,8 @@ export class CabinComponent implements OnInit {
 
   user: User = new User()
   username: string = ''
+
+  pictures: string[] = []
 
   logout() {
     localStorage.removeItem('logged')
@@ -174,7 +180,6 @@ export class CabinComponent implements OnInit {
       return;
     }
 
-    // TODO: ADD RESERVATION SUBMISSION LOGIC
     this.rentalService.createRental(this.cabinId!, this.user.username, this.startDate!,
       this.endDate!, this.adults, this.children, this.description, this.calculatedPrice)
       .subscribe((resp: any) => {
@@ -187,6 +192,35 @@ export class CabinComponent implements OnInit {
           this.message = 'Error while creating rental.';
         }
       })
+  }
+
+  isGalleryOpen: boolean = false;
+  currentImageIndex: number = 0;
+
+  // Open gallery and show clicked image
+  openImage(url: string): void {
+    this.currentImageIndex = this.pictures.indexOf(url);
+    if (this.currentImageIndex === -1) this.currentImageIndex = 0;
+    this.isGalleryOpen = true;
+  }
+
+  // Close gallery overlay
+  closeGallery(): void {
+    this.isGalleryOpen = false;
+  }
+
+  // Show previous image (wraps around)
+  prevImage(event: MouseEvent): void {
+    event.stopPropagation(); // Prevent closing gallery
+    if (this.pictures.length === 0) return;
+    this.currentImageIndex = (this.currentImageIndex - 1 + this.pictures.length) % this.pictures.length;
+  }
+
+  // Show next image (wraps around)
+  nextImage(event: MouseEvent): void {
+    event.stopPropagation();
+    if (this.pictures.length === 0) return;
+    this.currentImageIndex = (this.currentImageIndex + 1) % this.pictures.length;
   }
 
 }

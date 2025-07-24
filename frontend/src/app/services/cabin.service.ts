@@ -72,4 +72,8 @@ export class CabinService {
     return this.http.get<Cabin>(`${this.url}/cabins/${id}`);
   }
 
+  getCabinPictures(cabinId: number): Observable<string[]> {
+    return this.http.get<string[]>(`${this.url}/cabins/pictures/${cabinId}`);
+  }
+
 }
