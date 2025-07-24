@@ -32,36 +32,20 @@ public class RentalController {
     }
 
     @GetMapping("/reservations-last-24-hours")
-    public Map<String, Integer> getReservationsLast24Hours() {
+    public int getReservationsLast24Hours() {
 
-        int count = new RentalRepository().reservationsLast24Hours();
-
-        Map<String, Integer> response = new HashMap<>();
-        response.put("count", count);
-
-        return response;
-    }   
+        return new RentalRepository().reservationsLast24Hours();
+    }
 
     @GetMapping("/reservations-last-7-days")
-    public Map<String, Integer> getReservationsLast7Days() {
+    public int getReservationsLast7Days() {
 
-        int count = new RentalRepository().reservationsLast7Days();
-
-        Map<String, Integer> response = new HashMap<>();
-        response.put("count", count);
-
-        return response;
+        return new RentalRepository().reservationsLast7Days();
     }
 
     @GetMapping("/reservations-last-30-days")
-    public Map<String, Integer> getReservationsLast30Days() {
-        
-        int count = new RentalRepository().reservationsLast30Days();
+    public int getReservationsLast30Days() {
 
-        Map<String, Integer> response = new HashMap<>();
-        response.put("count", count);
-
-        return response;
+        return new RentalRepository().reservationsLast30Days();
     }
-
 }
