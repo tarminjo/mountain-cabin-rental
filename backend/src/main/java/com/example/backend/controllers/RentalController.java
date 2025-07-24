@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,4 +30,38 @@ public class RentalController {
         }
         return response;
     }
+
+    @GetMapping("/reservations-last-24-hours")
+    public Map<String, Integer> getReservationsLast24Hours() {
+
+        int count = new RentalRepository().reservationsLast24Hours();
+
+        Map<String, Integer> response = new HashMap<>();
+        response.put("count", count);
+
+        return response;
+    }   
+
+    @GetMapping("/reservations-last-7-days")
+    public Map<String, Integer> getReservationsLast7Days() {
+
+        int count = new RentalRepository().reservationsLast7Days();
+
+        Map<String, Integer> response = new HashMap<>();
+        response.put("count", count);
+
+        return response;
+    }
+
+    @GetMapping("/reservations-last-30-days")
+    public Map<String, Integer> getReservationsLast30Days() {
+        
+        int count = new RentalRepository().reservationsLast30Days();
+
+        Map<String, Integer> response = new HashMap<>();
+        response.put("count", count);
+
+        return response;
+    }
+
 }

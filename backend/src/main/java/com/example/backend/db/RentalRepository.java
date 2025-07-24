@@ -2,6 +2,7 @@ package com.example.backend.db;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -42,6 +43,54 @@ public class RentalRepository implements RentalRepositoryInteraface {
             return 0;
         }
         
+        return 0;
+    }
+
+    public int reservationsLast24Hours() {
+        try (Connection conn = DB.source().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(
+                 "SELECT COUNT(*) FROM rentals WHERE createdAt >= NOW() - INTERVAL 1 DAY")) {
+
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int reservationsLast7Days() {
+        try (Connection conn = DB.source().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(
+                 "SELECT COUNT(*) FROM rentals WHERE createdAt >= NOW() - INTERVAL 7 DAY")) {
+
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int reservationsLast30Days() {
+        try (Connection conn = DB.source().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(
+                 "SELECT COUNT(*) FROM rentals WHERE createdAt >= NOW() - INTERVAL 30 DAY")) {
+
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return 0;
     }
 

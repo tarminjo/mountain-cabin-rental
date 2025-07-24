@@ -266,7 +266,7 @@ public class UserRepository implements UserRepositoryInterface {
         List<User> owners = new ArrayList<>();
         
         try (Connection conn = DB.source().getConnection();
-             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM users WHERE type = 'owner'")) {
+             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM users WHERE type = 'owner' AND status = 1")) {
 
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -302,7 +302,7 @@ public class UserRepository implements UserRepositoryInterface {
         List<User> tourists = new ArrayList<>();
 
         try (Connection conn = DB.source().getConnection();
-             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM users WHERE type = 'tourist'")) {
+             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM users WHERE type = 'tourist' AND status = 1")) {
 
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
