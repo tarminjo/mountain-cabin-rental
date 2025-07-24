@@ -177,6 +177,12 @@
                   </div>
                 </form>
               </div>
+              <div *ngIf="selectedStep === 'finished'" class="text-center">
+                <div class="alert alert-success" role="alert">
+                  <h4 class="text-success">Reservation Successful!</h4>
+                  <p class="text-muted">Thank you for your reservation. We look forward to welcoming you!</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>

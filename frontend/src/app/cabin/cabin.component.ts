@@ -95,7 +95,6 @@ export class CabinComponent implements OnInit {
       const startHour = new Date(this.startDate).getHours();
       const startMinutes = new Date(this.startDate).getMinutes();
       const endHour = new Date(this.endDate).getHours();
-      const endMinutes = new Date(this.endDate).getMinutes();
 
       if (startHour < 14 || (startHour === 14 && startMinutes === 0)) {
         this.error = true;
@@ -180,8 +179,9 @@ export class CabinComponent implements OnInit {
       this.endDate!, this.adults, this.children, this.description, this.calculatedPrice)
       .subscribe((resp: any) => {
 
-        if(resp.message === 'ok'){
-          // Handle successful rental creation
+        if(resp.message === 'ok') {
+          this.error = false;
+          this.selectedStep = 'finished';
         } else {
           this.error = true;
           this.message = 'Error while creating rental.';

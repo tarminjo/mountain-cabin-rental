@@ -17,7 +17,6 @@ export class RentalService {
 
       const data = {
         cabinId: cabinId,
-        createdAt: new Date(),
         user: user,
         startDate: startDate,
         endDate: endDate,
@@ -45,4 +44,5 @@ export class RentalService {
   deleteRental(id: number): Observable<void> {
     return this.http.delete<void>(`${this.url}/rentals/${id}`);
   }
+
 }
