@@ -181,8 +181,8 @@ export class CabinComponent implements OnInit {
     }
 
     this.rentalService.createRental(this.cabinId!, this.user.username, this.startDate!,
-      this.endDate!, this.adults, this.children, this.description, this.calculatedPrice)
-      .subscribe((resp: any) => {
+      this.endDate!, this.adults, this.children, this.description, this.calculatedPrice,
+      this.cabin.name, this.cabin.location).subscribe((resp: any) => {
 
         if(resp.message === 'ok') {
           this.error = false;

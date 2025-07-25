@@ -13,10 +13,13 @@ export class RentalService {
   constructor(private http: HttpClient) { }
 
   createRental(cabinId: number, user: string, startDate: Date, endDate: Date, 
-    adults: number, children: number, description: string, price: number): Observable<Rental> {
+    adults: number, children: number, description: string, price: number,
+    cabinName: string, cabinLocation: string): Observable<Rental> {
 
       const data = {
         cabinId: cabinId,
+        cabinName: cabinName,
+        cabinLocation: cabinLocation,
         user: user,
         startDate: startDate,
         endDate: endDate,
@@ -60,7 +63,7 @@ export class RentalService {
   getActiveRentalsForTourist(username: string): Observable<Rental[]> {
     return this.http.get<Rental[]>(`${this.url}/rentals/active/${username}`);
   }
-  
+
   getArchiveRentalsForTourist(username: string): Observable<Rental[]> {
     return this.http.get<Rental[]>(`${this.url}/rentals/archive/${username}`);
   }
