@@ -94,4 +94,14 @@ public class CabinController {
         return new PictureRepository().getCabinPictures(cabinId);
     }
 
+    @GetMapping("/name/{id}")
+    public String getCabinNameById(@PathVariable Integer id) {
+        return new CabinRepository().getCabinNameById(id);
+    }
+
+    @GetMapping("/location/{id}")
+    public String getCabinLocationById(@PathVariable Integer id) {
+        return new CabinRepository().getCabinLocationById(id);
+    }
+
 }
