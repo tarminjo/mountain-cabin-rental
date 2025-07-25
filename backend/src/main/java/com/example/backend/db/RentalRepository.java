@@ -29,15 +29,15 @@ public class RentalRepository implements RentalRepositoryInteraface {
 
             stmt.setTimestamp(1, Timestamp.valueOf(parseDateToDatabase(formatted)));
             stmt.setInt(2, Integer.parseInt(payload.get("cabinId")));
-            stmt.setString(2, payload.get("cabinName"));
-            stmt.setString(3, payload.get("cabinLocation"));
-            stmt.setString(3, payload.get("user"));
-            stmt.setTimestamp(4, Timestamp.valueOf(parseDateToDatabase(payload.get("startDate"))));
-            stmt.setTimestamp(5, Timestamp.valueOf(parseDateToDatabase(payload.get("endDate"))));
-            stmt.setInt(6, Integer.parseInt(payload.get("adults")));
-            stmt.setInt(7, Integer.parseInt(payload.get("children")));
-            stmt.setString(8, payload.get("description"));
-            stmt.setInt(9, Integer.parseInt(payload.get("price")));
+            stmt.setString(3, payload.get("cabinName"));
+            stmt.setString(4, payload.get("cabinLocation"));
+            stmt.setString(5, payload.get("user"));
+            stmt.setTimestamp(6, Timestamp.valueOf(parseDateToDatabase(payload.get("startDate"))));
+            stmt.setTimestamp(7, Timestamp.valueOf(parseDateToDatabase(payload.get("endDate"))));
+            stmt.setInt(8, Integer.parseInt(payload.get("adults")));
+            stmt.setInt(9, Integer.parseInt(payload.get("children")));
+            stmt.setString(10, payload.get("description"));
+            stmt.setDouble(11, Double.parseDouble(payload.get("price")));
 
             int rows = stmt.executeUpdate();
             if (rows > 0) {
@@ -137,6 +137,8 @@ public class RentalRepository implements RentalRepositoryInteraface {
                 rental.setAdults(rs.getInt("adults"));
                 rental.setChildren(rs.getInt("children"));
                 rental.setDescription(rs.getString("description"));
+                rental.setComment(rs.getString("comment"));
+                rental.setRating(rs.getInt("rating"));
                 rental.setStatus(rs.getInt("status"));
                 rental.setPrice(rs.getInt("price"));
                 
@@ -177,6 +179,8 @@ public class RentalRepository implements RentalRepositoryInteraface {
                 rental.setAdults(rs.getInt("adults"));
                 rental.setChildren(rs.getInt("children"));
                 rental.setDescription(rs.getString("description"));
+                rental.setComment(rs.getString("comment"));
+                rental.setRating(rs.getInt("rating"));
                 rental.setStatus(rs.getInt("status"));
                 rental.setPrice(rs.getInt("price"));
 
