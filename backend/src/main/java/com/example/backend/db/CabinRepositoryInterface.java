@@ -14,6 +14,4 @@ public interface CabinRepositoryInterface {
     public List<Cabin> getAllCabins();
     public List<Cabin> searchCabins(String location, String name);
     public Cabin getCabinById(Integer id);
-    public String getCabinNameById(Integer id);
-    public String getCabinLocationById(Integer id);
 }
