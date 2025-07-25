@@ -6,6 +6,8 @@ public class Rental {
     private int id;
     private Date createdAt;
     private int cabinId;
+    private String cabinName;
+    private String cabinLocation;
     private String user;
     private Date startDate;
     private Date endDate;
@@ -20,12 +22,14 @@ public class Rental {
     public Rental() {
     }
 
-    public Rental(int id, Date createdAt, int cabinId, String user, Date startDate, Date endDate,
+    public Rental(int id, Date createdAt, int cabinId, String cabinName, String cabinLocation, String user, Date startDate, Date endDate,
                   int adults, int children, String description, String comment, int rating, int status, double price) {
         
         this.id = id;
         this.createdAt = createdAt;
         this.cabinId = cabinId;
+        this.cabinName = cabinName;
+        this.cabinLocation = cabinLocation;
         this.user = user;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -60,6 +64,22 @@ public class Rental {
 
     public void setCabinId(int cabinId) {
         this.cabinId = cabinId;
+    }
+
+    public String getCabinName() {
+        return cabinName;
+    }
+    
+    public void setCabinName(String cabinName) {
+        this.cabinName = cabinName;
+    }
+
+    public String getCabinLocation() {
+        return cabinLocation;
+    }
+
+    public void setCabinLocation(String cabinLocation) {
+        this.cabinLocation = cabinLocation;
     }
 
     public String getUser() {

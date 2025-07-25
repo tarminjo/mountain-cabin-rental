@@ -20,8 +20,8 @@ public class RentalRepository implements RentalRepositoryInteraface {
         
         try (Connection conn = DB.source().getConnection();
              PreparedStatement stmt = conn.prepareStatement(
-                 "INSERT INTO rentals (createdAt, cabinId, user, startDate, endDate, adults, children, description, price) " +
-                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
+                 "INSERT INTO rentals (createdAt, cabinId, cabinName, cabinLocation, user, startDate, endDate, adults, children, description, price) " +
+                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
 
             LocalDateTime now = LocalDateTime.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
@@ -29,6 +29,8 @@ public class RentalRepository implements RentalRepositoryInteraface {
 
             stmt.setTimestamp(1, Timestamp.valueOf(parseDateToDatabase(formatted)));
             stmt.setInt(2, Integer.parseInt(payload.get("cabinId")));
+            stmt.setString(2, payload.get("cabinName"));
+            stmt.setString(3, payload.get("cabinLocation"));
             stmt.setString(3, payload.get("user"));
             stmt.setTimestamp(4, Timestamp.valueOf(parseDateToDatabase(payload.get("startDate"))));
             stmt.setTimestamp(5, Timestamp.valueOf(parseDateToDatabase(payload.get("endDate"))));
@@ -127,6 +129,8 @@ public class RentalRepository implements RentalRepositoryInteraface {
                 rental.setId(rs.getInt("id"));
                 rental.setCreatedAt(rs.getTimestamp("createdAt"));
                 rental.setCabinId(rs.getInt("cabinId"));
+                rental.setCabinName(rs.getString("cabinName"));
+                rental.setCabinLocation(rs.getString("cabinLocation"));
                 rental.setUser(rs.getString("user"));
                 rental.setStartDate(rs.getTimestamp("startDate"));
                 rental.setEndDate(rs.getTimestamp("endDate"));
@@ -165,6 +169,8 @@ public class RentalRepository implements RentalRepositoryInteraface {
                 rental.setId(rs.getInt("id"));
                 rental.setCreatedAt(rs.getTimestamp("createdAt"));
                 rental.setCabinId(rs.getInt("cabinId"));
+                rental.setCabinName(rs.getString("cabinName"));
+                rental.setCabinLocation(rs.getString("cabinLocation"));
                 rental.setUser(rs.getString("user"));
                 rental.setStartDate(rs.getTimestamp("startDate"));
                 rental.setEndDate(rs.getTimestamp("endDate"));
