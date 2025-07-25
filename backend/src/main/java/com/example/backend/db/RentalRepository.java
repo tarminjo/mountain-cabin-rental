@@ -217,4 +217,48 @@ public class RentalRepository implements RentalRepositoryInteraface {
 
         return 0;
     }
+
+    @Override
+    public List<Rental> getCabinRentalsWithRatings(String cabinId) {
+
+        List<Rental> rentals = new ArrayList<>();
+        
+        try (Connection conn = DB.source().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(
+                 "SELECT * FROM rentals WHERE cabinId = ?")) {
+
+            stmt.setString(1, cabinId);
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                if(rs.getInt("rating") > 0){
+
+                    Rental rental = new Rental();
+
+                    rental.setId(rs.getInt("id"));
+                    rental.setCreatedAt(rs.getTimestamp("createdAt"));
+                    rental.setCabinId(rs.getInt("cabinId"));
+                    rental.setCabinName(rs.getString("cabinName"));
+                    rental.setCabinLocation(rs.getString("cabinLocation"));
+                    rental.setUser(rs.getString("user"));
+                    rental.setStartDate(rs.getTimestamp("startDate"));
+                    rental.setEndDate(rs.getTimestamp("endDate"));
+                    rental.setAdults(rs.getInt("adults"));
+                    rental.setChildren(rs.getInt("children"));
+                    rental.setDescription(rs.getString("description"));
+                    rental.setComment(rs.getString("comment"));
+                    rental.setRating(rs.getInt("rating"));
+                    rental.setStatus(rs.getInt("status"));
+                    rental.setPrice(rs.getInt("price"));
+
+                    rentals.add(rental);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return rentals;
+    }
+
 }

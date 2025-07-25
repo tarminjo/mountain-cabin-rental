@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.backend.db.RentalRepository;
 import com.example.backend.models.Rental;
 
+
 @RestController
 @RequestMapping("/api/rentals")
 @CrossOrigin("http://localhost:4200")
@@ -75,5 +76,11 @@ public class RentalController {
         }
         return response;
     }
+
+    @GetMapping("/cabin/{cabinId}")
+    public List<Rental> getCabinRentalsWithRatings(@PathVariable String cabinId) {
+        return new RentalRepository().getCabinRentalsWithRatings(cabinId);
+    }
+    
 
 }
