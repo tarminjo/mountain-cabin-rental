@@ -62,7 +62,7 @@ public class RentalController {
         return new RentalRepository().archivedReservations(username);
     }
 
-    @PostMapping("/rating/{id}")
+    @PostMapping("/rating")
     public Map<String, String> addRating(@RequestBody Map<String, String> payload) {
 
         int result = new RentalRepository().addRating(payload);
