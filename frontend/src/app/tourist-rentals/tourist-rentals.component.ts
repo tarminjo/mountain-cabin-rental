@@ -66,4 +66,40 @@ export class TouristRentalsComponent implements OnInit {
     
   }
 
+  selectedRental: Rental = new Rental();
+
+  rateReservation(rental: Rental) {
+    this.selectedTab = 'rate'
+    this.selectedRental = rental
+  }
+
+  submitRating() {
+
+    if (this.ratingForm === 0) {
+      return;
+    }
+
+    this.rentalService.addCommentAndRating(this.selectedRental.id, this.ratingForm, this.commentForm)
+      .subscribe((resp: any) => {
+        if (resp.message === 'ok') {
+          this.error = false;
+          alert('Rating added successfully!');
+          this.selectedTab = 'archive';
+
+          this.ngOnInit();
+        } else {
+          this.error = true;
+          this.message = 'Failed to add rating. Please try again.';
+        }
+    });
+  }
+
+  commentForm: string = ""
+  ratingForm: number = 0
+  stars: number[] = [1, 2, 3, 4, 5]
+
+  setRating(star: number): void {
+    this.ratingForm = star;
+  }
+
 }

@@ -33,14 +33,19 @@
         <div class="card bg-light rounded-4">
           <div class="list-group list-group-flush rounded-4 overflow-hidden">
             <button type="button" class="list-group-item list-group-item-action py-3 fw-semibold"
-              [ngClass]="{ 'active bg-primary text-white': selectedTab === 'active'}" 
-                (click)="selectTab('active')"> 📅 Active Reservations
+              [ngClass]="{ 'active bg-primary text-white': selectedTab === 'active'}" (click)="selectTab('active')"> 📅
+              Active Reservations
             </button>
             <button type="button" class="list-group-item list-group-item-action py-3 fw-semibold"
               [ngClass]="{ 'active bg-primary text-white': selectedTab === 'archive' }" (click)="selectTab('archive')">
-                🗄️ Archive
+              🗄️ Archive
             </button>
           </div>
+        </div>
+        <div *ngIf="selectedTab === 'rate'" class="position-sticky bottom-0 mt-auto pt-3 text-center">
+          <button type="button" class="btn btn-outline-dark w-100 rounded-pill" (click)="selectedTab = 'archive'">
+            ← Back to Reservations
+          </button>
         </div>
       </div>
 
@@ -70,7 +75,7 @@
                         <td>{{ rental.cabinName }}</td>
                         <td>{{ rental.cabinLocation }}</td>
                         <td style="white-space: nowrap; width: 1%;">
-                          <button class="btn btn-outline-danger btn-sm rounded-pill px-3 shadow-sm" 
+                          <button class="btn btn-outline-danger btn-sm rounded-pill px-3 shadow-sm"
                             (click)="cancelReservation(rental.id)">❌ Cancel Reservation</button>
                         </td>
                       </tr>
@@ -86,7 +91,7 @@
             </div>
 
             <div *ngIf="selectedTab === 'archive'">
-              <div *ngIf="activeRentals.length > 0; else noActiveRentals">
+              <div *ngIf="archiveRentals.length > 0; else noArchiveRentals">
                 <h3 class="card-title text-primary fw-bold text-center mb-4">🏕️ List of My Cabins</h3>
 
                 <div class="table-responsive rounded-4">
@@ -94,32 +99,61 @@
                     <thead class="table-primary text-center rounded-top">
                       <tr class="text-uppercase small fw-semibold">
                         <th>Start Date</th>
-                        <th>End Date</th>
                         <th>Cabin Name</th>
-                        <th>Location</th>
+                        <th>Comment</th>
+                        <th>Rating</th>
                         <th></th>
                       </tr>
                     </thead>
                     <tbody class="text-center">
-                      <tr *ngFor="let rental of activeRentals">
+                      <tr *ngFor="let rental of archiveRentals">
                         <td>{{ rental.startDate | date: 'shortDate' }}</td>
-                        <td>{{ rental.endDate | date: 'shortDate' }}</td>
                         <td>{{ rental.cabinName }}</td>
-                        <td>{{ rental.cabinLocation }}</td>
-                        <td style="white-space: nowrap; width: 1%;">
-                          <button class="btn btn-outline-danger btn-sm rounded-pill px-3 shadow-sm" 
-                            (click)="cancelReservation(rental.id)">❌ Cancel Reservation</button>
+                        <td *ngIf="rental.comment; else noComment" style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                          {{ rental.comment }}
+                        </td>
+                        <ng-template #noComment>
+                          <td>-</td>
+                        </ng-template>
+                        <td *ngIf="rental.rating; else noRating">
+                          <span class="star" *ngFor="let star of stars; let i = index"
+                            [ngClass]="{'filled': i < rental.rating}">★
+                          </span>
+                        </td>
+                        <ng-template #noRating>
+                          <td>-</td>
+                        </ng-template>
+                        <td *ngIf="!rental.rating && !rental.comment" style="white-space: nowrap; width: 1%;">
+                          <button class="btn btn-outline-primary btn-sm rounded-pill px-3 shadow-sm"
+                            (click)="rateReservation(rental)">⭐ Rate</button>
                         </td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
               </div>
-              <ng-template #noActiveRentals>
+              <ng-template #noArchiveRentals>
                 <div class="text-center text-danger mt-4 fst-italic fs-5">
-                  No active reservations found...
+                  No archive reservations found...
                 </div>
               </ng-template>
+            </div>
+
+            <div *ngIf="selectedTab === 'rate'">
+              <h3 class="card-title text-primary fw-bold text-center mb-4">Rate this Reservation</h3>
+                <div class="d-flex justify-content-center mb-3">
+                  <div class="star-rating">
+                    <i class="star-rate" *ngFor="let star of stars; let i = index" (click)="setRating(i + 1)"
+                      [ngClass]="{'selected': i < ratingForm}">★</i>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <textarea [(ngModel)]="commentForm" class="form-control" 
+                    placeholder="Enter optional comment..." rows="2"></textarea>
+                </div>
+                <div class="text-end mt-4">
+                  <button type="button" class="btn btn-success px-4" (click)="submitRating()">Add rating</button>
+                </div>
             </div>
           </div>
         </div>

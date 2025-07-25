@@ -68,4 +68,13 @@ export class RentalService {
     return this.http.get<Rental[]>(`${this.url}/rentals/archive/${username}`);
   }
 
+  addCommentAndRating(id: number, ratingValue: number, ratingComment: string) {
+    const data = {
+      id: id,
+      rating: ratingValue,
+      comment: ratingComment
+    };
+    return this.http.post(`${this.url}/rentals/rating`, data);
+  }
+
 }
