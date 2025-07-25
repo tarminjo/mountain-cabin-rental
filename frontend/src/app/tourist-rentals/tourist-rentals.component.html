@@ -143,8 +143,8 @@
               <h3 class="card-title text-primary fw-bold text-center mb-4">Rate this Reservation</h3>
                 <div class="d-flex justify-content-center mb-3">
                   <div class="star-rating">
-                    <i class="star-rate" *ngFor="let star of stars; let i = index" (click)="setRating(i + 1)"
-                      [ngClass]="{'selected': i < ratingForm}">★</i>
+                    <span class="star-rate" *ngFor="let star of stars; let i = index" (click)="setRating(i + 1)"
+                      [ngClass]="{'selected': i < ratingForm}">★</span>
                   </div>
                 </div>
                 <div class="mb-3">

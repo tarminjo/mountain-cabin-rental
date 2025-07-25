@@ -77,4 +77,8 @@ export class RentalService {
     return this.http.post(`${this.url}/rentals/rating`, data);
   }
 
+  getCabinRentalsWithRatings(cabinId: number) {
+    return this.http.get<Rental[]>(`${this.url}/rentals/cabin/${cabinId}`);
+  }
+
 }

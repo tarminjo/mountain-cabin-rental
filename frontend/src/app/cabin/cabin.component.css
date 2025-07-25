@@ -114,3 +114,17 @@ img:hover {
 .close-button:hover {
   color: #bbb;
 }
+
+.star {
+  font-size: 22px;
+  color: #d3d3d3;
+  cursor: pointer;
+}
+
+.star.selected {
+  color: gold;
+}
+
+.star.filled {
+  color: gold;
+}

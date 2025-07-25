@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { CabinService } from '../services/cabin.service';
-import { UserService } from '../services/user.service';
-import { Cabin } from '../models/cabin';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { User } from '../models/user';
+import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MapComponent } from '../map/map.component';
+import { Cabin } from '../models/cabin';
+import { User } from '../models/user';
+import { CabinService } from '../services/cabin.service';
 import { RentalService } from '../services/rental.service';
+import { UserService } from '../services/user.service';
+import { Rental } from '../models/rental';
 
 @Component({
   selector: 'app-cabin',
@@ -43,6 +44,10 @@ export class CabinComponent implements OnInit {
     this.username = localStorage.getItem('logged') || '';
     this.userService.getUser(this.username).subscribe((user) => {
       this.user = user;
+    });
+
+    this.rentalService.getCabinRentalsWithRatings(this.cabinId).subscribe((rentals: Rental[]) => {
+      this.rentals = rentals;
     });
   }
 
@@ -222,5 +227,8 @@ export class CabinComponent implements OnInit {
     if (this.pictures.length === 0) return;
     this.currentImageIndex = (this.currentImageIndex + 1) % this.pictures.length;
   }
+
+  rentals: Rental[] = []
+  stars: number[] = [1, 2, 3, 4, 5]
 
 }

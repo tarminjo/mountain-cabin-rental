@@ -130,6 +130,24 @@
                   <button class="close-button" (click)="closeGallery()">&times;</button>
                 </div>
               </div>
+              <div>
+                <h5 class="mt-4 mb-2 fw-bold">Comments and ratings</h5>
+                <div *ngIf="rentals.length > 0; else noRatings" class="mb-4">
+                  <ul class="list-group">
+                    <li 
+                      class="list-group-item mb-3 border rounded-4 d-flex align-items-center justify-content-between"
+                      *ngFor="let rental of rentals">
+                      <span class="fw-bold me-3">{{ rental.user }}</span>
+                      <span class="flex-grow-1 me-3">{{ rental.comment }}</span>
+                      <span class="star" *ngFor="let star of stars; let i = index"
+                        [ngClass]="{'filled': i < rental.rating}">★</span>
+                    </li>
+                  </ul>
+                </div>
+                <ng-template #noRatings>
+                  <p class="text-muted">No comments or ratings yet.</p>
+                </ng-template>
+              </div>
             </div>
 
             <div *ngIf="selectedTab === 'rent'">
