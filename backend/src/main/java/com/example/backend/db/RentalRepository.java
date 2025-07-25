@@ -193,4 +193,28 @@ public class RentalRepository implements RentalRepositoryInteraface {
 
         return rentals;
     }
+
+    @Override
+    public int addRating(Map<String, String> payload) {
+
+        int rating = Integer.parseInt(payload.get("rating"));
+        String comment = payload.get("comment");
+        int id = Integer.parseInt(payload.get("id"));
+
+        try (Connection conn = DB.source().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(
+                 "UPDATE rentals SET rating = ?, comment = ? WHERE id = ?")) {
+
+            stmt.setInt(1, rating);
+            stmt.setString(2, comment);
+            stmt.setInt(3, id);
+
+            return stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
 }

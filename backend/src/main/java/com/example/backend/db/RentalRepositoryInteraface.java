@@ -13,4 +13,5 @@ public interface RentalRepositoryInteraface {
     public int reservationsLast30Days();
     public List<Rental> activeReservations(String username);
     public List<Rental> archivedReservations(String username);
+    public int addRating(Map<String, String> payload);
 }
