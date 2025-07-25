@@ -57,4 +57,12 @@ export class RentalService {
     return this.http.get<number>(`${this.url}/rentals/reservations-last-30-days`);
   }
 
+  getActiveRentalsForTourist(username: string): Observable<Rental[]> {
+    return this.http.get<Rental[]>(`${this.url}/rentals/active/${username}`);
+  }
+  
+  getArchiveRentalsForTourist(username: string): Observable<Rental[]> {
+    return this.http.get<Rental[]>(`${this.url}/rentals/archive/${username}`);
+  }
+
 }
