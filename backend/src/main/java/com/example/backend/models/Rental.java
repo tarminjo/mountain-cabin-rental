@@ -3,9 +3,9 @@ package com.example.backend.models;
 import java.util.Date;
 
 public class Rental {
-    private Long id;
+    private int id;
     private Date createdAt;
-    private Long cabinId;
+    private int cabinId;
     private String user;
     private Date startDate;
     private Date endDate;
@@ -20,7 +20,7 @@ public class Rental {
     public Rental() {
     }
 
-    public Rental(Long id, Date createdAt, Long cabinId, String user, Date startDate, Date endDate,
+    public Rental(int id, Date createdAt, int cabinId, String user, Date startDate, Date endDate,
                   int adults, int children, String description, String comment, int rating, int status, double price) {
         
         this.id = id;
@@ -38,11 +38,11 @@ public class Rental {
         this.price = price;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -54,11 +54,11 @@ public class Rental {
         this.createdAt = createdAt;
     }
 
-    public Long getCabinId() {
+    public int getCabinId() {
         return cabinId;
     }
 
-    public void setCabinId(Long cabinId) {
+    public void setCabinId(int cabinId) {
         this.cabinId = cabinId;
     }
 

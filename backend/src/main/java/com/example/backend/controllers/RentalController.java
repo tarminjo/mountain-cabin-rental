@@ -1,16 +1,19 @@
 package com.example.backend.controllers;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.backend.db.RentalRepository;
+import com.example.backend.models.Rental;
 
 @RestController
 @RequestMapping("/api/rentals")
@@ -48,4 +51,15 @@ public class RentalController {
 
         return new RentalRepository().reservationsLast30Days();
     }
+
+    @GetMapping("/active/{username}")
+    public List<Rental> getActiveReservations(@PathVariable String username) {
+        return new RentalRepository().activeReservations(username);
+    }
+
+    @GetMapping("/archive/{username}")
+    public List<Rental> getReservationsArchive(@PathVariable String username) {
+        return new RentalRepository().archivedReservations(username);
+    }
+
 }

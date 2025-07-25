@@ -7,7 +7,11 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+
+import com.example.backend.models.Rental;
 
 public class RentalRepository implements RentalRepositoryInteraface {
 
@@ -23,11 +27,11 @@ public class RentalRepository implements RentalRepositoryInteraface {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
             String formatted = now.format(formatter);
 
-            stmt.setTimestamp(1, Timestamp.valueOf(parseDate(formatted)));
+            stmt.setTimestamp(1, Timestamp.valueOf(parseDateToDatabase(formatted)));
             stmt.setInt(2, Integer.parseInt(payload.get("cabinId")));
             stmt.setString(3, payload.get("user"));
-            stmt.setTimestamp(4, Timestamp.valueOf(parseDate(payload.get("startDate"))));
-            stmt.setTimestamp(5, Timestamp.valueOf(parseDate(payload.get("endDate"))));
+            stmt.setTimestamp(4, Timestamp.valueOf(parseDateToDatabase(payload.get("startDate"))));
+            stmt.setTimestamp(5, Timestamp.valueOf(parseDateToDatabase(payload.get("endDate"))));
             stmt.setInt(6, Integer.parseInt(payload.get("adults")));
             stmt.setInt(7, Integer.parseInt(payload.get("children")));
             stmt.setString(8, payload.get("description"));
@@ -46,6 +50,7 @@ public class RentalRepository implements RentalRepositoryInteraface {
         return 0;
     }
 
+    @Override
     public int reservationsLast24Hours() {
         try (Connection conn = DB.source().getConnection();
              PreparedStatement stmt = conn.prepareStatement(
@@ -62,6 +67,7 @@ public class RentalRepository implements RentalRepositoryInteraface {
         return 0;
     }
 
+    @Override
     public int reservationsLast7Days() {
         try (Connection conn = DB.source().getConnection();
              PreparedStatement stmt = conn.prepareStatement(
@@ -78,6 +84,7 @@ public class RentalRepository implements RentalRepositoryInteraface {
         return 0;
     }
 
+    @Override
     public int reservationsLast30Days() {
         try (Connection conn = DB.source().getConnection();
              PreparedStatement stmt = conn.prepareStatement(
@@ -94,9 +101,86 @@ public class RentalRepository implements RentalRepositoryInteraface {
         return 0;
     }
 
-    private LocalDateTime parseDate(String dateStr) {
+    private LocalDateTime parseDateToDatabase(String dateStr) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         return LocalDateTime.parse(dateStr, formatter);
     }
-    
+
+    @Override
+    public List<Rental> activeReservations(String username) {
+
+        List<Rental> rentals = new ArrayList<>();
+
+        try (Connection conn = DB.source().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(
+                 "SELECT * FROM rentals WHERE user = ? AND endDate >= NOW()")) {
+
+            //TODO: Add status logic - cancelled, completed, etc.
+
+            stmt.setString(1, username);
+            
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+
+                Rental rental = new Rental();
+
+                rental.setId(rs.getInt("id"));
+                rental.setCreatedAt(rs.getTimestamp("createdAt"));
+                rental.setCabinId(rs.getInt("cabinId"));
+                rental.setUser(rs.getString("user"));
+                rental.setStartDate(rs.getTimestamp("startDate"));
+                rental.setEndDate(rs.getTimestamp("endDate"));
+                rental.setAdults(rs.getInt("adults"));
+                rental.setChildren(rs.getInt("children"));
+                rental.setDescription(rs.getString("description"));
+                rental.setStatus(rs.getInt("status"));
+                rental.setPrice(rs.getInt("price"));
+                
+                rentals.add(rental);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rentals;
+    }
+
+    @Override
+    public List<Rental> archivedReservations(String username) {
+        List<Rental> rentals = new ArrayList<>();
+
+        try (Connection conn = DB.source().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(
+                 "SELECT * FROM rentals WHERE user = ? AND endDate < NOW()")) {
+
+            //TODO: Add status logic - cancelled, completed, etc.
+
+            stmt.setString(1, username);
+            
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+
+                Rental rental = new Rental();
+
+                rental.setId(rs.getInt("id"));
+                rental.setCreatedAt(rs.getTimestamp("createdAt"));
+                rental.setCabinId(rs.getInt("cabinId"));
+                rental.setUser(rs.getString("user"));
+                rental.setStartDate(rs.getTimestamp("startDate"));
+                rental.setEndDate(rs.getTimestamp("endDate"));
+                rental.setAdults(rs.getInt("adults"));
+                rental.setChildren(rs.getInt("children"));
+                rental.setDescription(rs.getString("description"));
+                rental.setStatus(rs.getInt("status"));
+                rental.setPrice(rs.getInt("price"));
+
+                rentals.add(rental);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return rentals;
+    }
 }
