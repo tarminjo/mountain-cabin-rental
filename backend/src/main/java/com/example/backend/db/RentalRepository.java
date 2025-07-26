@@ -362,4 +362,34 @@ public class RentalRepository implements RentalRepositoryInteraface {
         return rentals;
     }
 
+    @Override
+    public int rejectReservation(int rentalId) {
+        try (Connection conn = DB.source().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(
+                 "UPDATE rentals SET status = 2 WHERE id = ?")) {
+
+            stmt.setInt(1, rentalId);
+            return stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    @Override
+    public int acceptReservation(int rentalId) {
+        try (Connection conn = DB.source().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(
+                 "UPDATE rentals SET status = 1 WHERE id = ?")) {
+
+            stmt.setInt(1, rentalId);
+            return stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
 }

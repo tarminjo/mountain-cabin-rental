@@ -17,4 +17,6 @@ public interface RentalRepositoryInteraface {
     public List<Rental> getCabinRentalsWithRatings(String cabinId);
     public double getCabinAverageRating(String cabinId);
     public List<Rental> activeUnconfirmedReservations(String username);
+    public int rejectReservation(int rentalId);
+    public int acceptReservation(int rentalId);
 }

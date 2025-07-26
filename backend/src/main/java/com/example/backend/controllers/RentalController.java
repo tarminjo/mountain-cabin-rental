@@ -108,4 +108,32 @@ public class RentalController {
         return new RentalRepository().activeUnconfirmedReservations(username);
     }
 
+    @GetMapping("/reject/{rentalId}")
+    public Map<String, String> rejectReservation(@PathVariable int rentalId) {
+
+        int result = new RentalRepository().rejectReservation(rentalId);
+
+        Map<String, String> response = new HashMap<>();
+        if (result == 1) {
+            response.put("message", "ok");
+        } else {
+            response.put("message", "error");
+        }
+        return response;
+    }
+
+    @GetMapping("/accept/{rentalId}")
+    public Map<String, String> acceptReservation(@PathVariable int rentalId) {
+
+        int result = new RentalRepository().acceptReservation(rentalId);
+
+        Map<String, String> response = new HashMap<>();
+        if (result == 1) {
+            response.put("message", "ok");
+        } else {
+            response.put("message", "error");
+        }
+        return response;
+    }
+
 }
