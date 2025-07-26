@@ -19,26 +19,32 @@ export class AdminComponent implements OnInit {
   constructor(private router: Router, private userService: UserService, private cabinService: CabinService) { }
 
   ngOnInit(): void {
-    this.userService.getActiveUsers().subscribe((requests: User[])=>{
-      this.activeUsers = requests
+
+    this.userService.getOwners().subscribe((owners: User[])=>{
+      this.activeOwners = owners
     })
-      this.userService.getAllRequests().subscribe((requests: User[])=>{
-        this.registrationRequests = requests
-        this.cabinService.getAllCabins().subscribe((cabins: Cabin[]) => {
-          this.cabins = cabins;
-          this.error = false
-          this.message = ""
-          this.selectedTab = "users"
-        })
+
+    this.userService.getTourists().subscribe((tourists: User[])=>{
+      this.activeTourists = tourists
+    })
+
+    this.userService.getAllRequests().subscribe((requests: User[])=>{
+      this.registrationRequests = requests
+      this.cabinService.getAllCabins().subscribe((cabins: Cabin[]) => {
+        this.cabins = cabins;
+        this.error = false
+        this.message = ""
+        this.selectedTab = "requests"
       })
-    }
+    })
+  }
 
   logout() {
     localStorage.removeItem('logged');
     this.router.navigate(['/admin-login']);
   }
 
-  selectedTab: string = 'users'
+  selectedTab: string = 'requests'
   error: boolean = false
   message: string = ''
   adminPic: string = 'assets/admin.jpg';
@@ -49,7 +55,8 @@ export class AdminComponent implements OnInit {
     this.selectedTab = tab;
   }
   
-  activeUsers: User[] = []
+  activeOwners: User[] = []
+  activeTourists: User[] = []
   registrationRequests: User[] = []
 
   selectedUser: User = new User;
@@ -64,8 +71,22 @@ export class AdminComponent implements OnInit {
 
   cabins: Cabin [] = []
   
-  editUser(username: string) {
-    this.selectedTab = 'edit';
+  editOwner(username: string) {
+    this.selectedTab = 'editOwner';
+
+    this.userService.getUser(username).subscribe((user: User) => {
+      this.selectedUser = user
+      this.editFirstname = user.firstname
+      this.editLastname = user.lastname
+      this.editAddress = user.address
+      this.editPhoneNumber = user.phoneNumber
+      this.editMail = user.mail
+      this.editCardNumber = user.cardNumber
+    })
+  }
+
+  editTourist(username: string) {
+    this.selectedTab = 'editTourist';
 
     this.userService.getUser(username).subscribe((user: User) => {
       this.selectedUser = user
