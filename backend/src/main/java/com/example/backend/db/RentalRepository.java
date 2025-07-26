@@ -174,7 +174,7 @@ public class RentalRepository implements RentalRepositoryInteraface {
 
         try (Connection conn = DB.source().getConnection();
              PreparedStatement stmt = conn.prepareStatement(
-                 "SELECT * FROM rentals WHERE user = ? AND endDate < NOW() AND status = 2")) {
+                 "SELECT * FROM rentals WHERE user = ? AND endDate < NOW() AND status = 1")) {
 
             //TODO: Add status logic - cancelled, completed, etc.
 
@@ -221,7 +221,7 @@ public class RentalRepository implements RentalRepositoryInteraface {
 
         try (Connection conn = DB.source().getConnection();
              PreparedStatement stmt = conn.prepareStatement(
-                 "UPDATE rentals SET rating = ?, comment = ? WHERE id = ? AND status = 2")) {
+                 "UPDATE rentals SET rating = ?, comment = ? WHERE id = ? AND status = 1")) {
 
             stmt.setInt(1, rating);
             stmt.setString(2, comment);
@@ -370,7 +370,7 @@ public class RentalRepository implements RentalRepositoryInteraface {
 
             stmt.setString(1, payload.get("comment"));
             stmt.setInt(2, Integer.parseInt(payload.get("rentalId")));
-            
+
             return stmt.executeUpdate();
 
         } catch (SQLException e) {
