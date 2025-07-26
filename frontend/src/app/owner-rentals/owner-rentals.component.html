@@ -55,24 +55,33 @@
 
             <div *ngIf="selectedTab === 'active'">
               <div *ngIf="activeUnconfirmedRentals.length > 0; else noActiveUnconfirmedRentals">
-                <h3 class="card-title text-primary fw-bold text-center mb-4">📅 List of Active Reservations</h3>
+                <h3 class="card-title text-primary fw-bold text-center mb-4">🟢 List of Active Reservations</h3>
 
                 <div class="table-responsive rounded-4">
                   <table class="table table-hover align-middle table-borderless mb-0">
                     <thead class="table-primary text-center rounded-top">
                       <tr class="text-uppercase small fw-semibold">
+                        <th>Tourist</th>
                         <th>Start Date</th>
                         <th>End Date</th>
                         <th>Cabin Name</th>
                         <th>Location</th>
+                        <th></th>
                       </tr>
                     </thead>
                     <tbody class="text-center">
                       <tr *ngFor="let rental of activeUnconfirmedRentals">
+                        <td>{{ rental.user }}</td>
                         <td>{{ rental.startDate | date: 'shortDate' }}</td>
                         <td>{{ rental.endDate | date: 'shortDate' }}</td>
                         <td>{{ rental.cabinName }}</td>
                         <td>{{ rental.cabinLocation }}</td>
+                        <td>
+                          <button class="btn btn-outline-success btn-sm rounded-pill px-3 shadow-sm me-2"
+                            (click)="acceptReservation(rental.id)">✅ Accept</button>
+                          <button class="btn btn-outline-danger btn-sm rounded-pill px-3 shadow-sm"
+                            (click)="rejectReservation(rental.id)">❌ Reject</button>
+                        </td>
                       </tr>
                     </tbody>
                   </table>
@@ -86,7 +95,15 @@
             </div>
 
             <div *ngIf="selectedTab === 'calendar'">
-              
+              <div *ngIf="activeUnconfirmedRentals.length > 0; else noActiveUnconfirmedRentals">
+                <h3 class="card-title text-primary fw-bold text-center mb-4">🟢 List of Active Reservations</h3>
+                
+              </div>
+              <ng-template #noActiveUnconfirmedRentals>
+                <div class="text-center text-danger mt-4 fst-italic fs-5">
+                  No active unconfirmed reservations found...
+                </div>
+              </ng-template>
             </div>
           </div>
         </div>

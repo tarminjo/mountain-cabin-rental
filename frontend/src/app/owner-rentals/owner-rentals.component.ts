@@ -56,4 +56,26 @@ export class OwnerRentalsComponent implements OnInit {
     localStorage.removeItem('logged');
     this.router.navigate(['/login']);
   }
+
+  acceptReservation(rentalId: number): void {
+    // this.rentalService.acceptRental(rentalId).subscribe(() => {
+    //   this.message = 'Reservation accepted successfully.';
+    //   this.error = false;
+    //   this.refreshActiveUnconfirmedRentals();
+    // }, () => {
+    //   this.error = true;
+    //   this.message = 'Failed to accept reservation.';
+    // });
+  }
+
+  rejectReservation(rentalId: number): void {
+    // this.rentalService.rejectRental(rentalId).subscribe(() => {
+    //   this.message = 'Reservation rejected successfully.';
+    //   this.error = false;
+    //   this.refreshActiveUnconfirmedRentals();
+    // }, () => {
+    //   this.error = true;
+    //   this.message = 'Failed to reject reservation.';
+    // });
+  }
 }
