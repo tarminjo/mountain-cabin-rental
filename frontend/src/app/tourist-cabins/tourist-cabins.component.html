@@ -90,6 +90,7 @@
                       <th>Phone</th>
                       <th>Winter Price</th>
                       <th>Summer Price</th>
+                      <th>Average Rating</th>
                     </tr>
                   </thead>
                   <tbody class="text-center">
@@ -102,6 +103,21 @@
                       <td>{{ cabin.phoneNumber }}</td>
                       <td>{{ cabin.winterPrice }} RSD</td>
                       <td>{{ cabin.summerPrice }} RSD</td>
+                      <td>
+                        <ng-container *ngIf="avgRatings.has(cabin.id); else loading">
+                          <ng-container *ngIf="avgRatings.get(cabin.id) !== -1; else noRating">
+                            {{ avgRatings.get(cabin.id) }}
+                            <span class="star" *ngFor="let star of stars; let i = index"
+                              [ngClass]="{'filled': i < (avgRatings.get(cabin.id) ?? 0)}">★</span>
+                          </ng-container>
+                        </ng-container>
+                        <ng-template #noRating>
+                          <span class="text-muted fst-italic">Not rated</span>
+                        </ng-template>
+                        <ng-template #loading>
+                          <span class="text-muted fst-italic">Loading...</span>
+                        </ng-template>
+                      </td>
                     </tr>
                   </tbody>
                 </table>

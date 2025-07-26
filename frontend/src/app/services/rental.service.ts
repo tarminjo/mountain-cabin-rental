@@ -81,4 +81,8 @@ export class RentalService {
     return this.http.get<Rental[]>(`${this.url}/rentals/cabin/${cabinId}`);
   }
 
+  getAverageRating(cabinId: number): Observable<number> {
+    return this.http.get<number>(`${this.url}/rentals/average-rating/${cabinId}`);
+  }
+
 }

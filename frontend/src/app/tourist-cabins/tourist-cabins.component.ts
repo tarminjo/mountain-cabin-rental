@@ -6,6 +6,8 @@ import { UserService } from '../services/user.service';
 import { CabinService } from '../services/cabin.service';
 import { User } from '../models/user';
 import { Cabin } from '../models/cabin';
+import { RentalService } from '../services/rental.service';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-tourist-cabins',
@@ -17,13 +19,16 @@ import { Cabin } from '../models/cabin';
 export class TouristCabinsComponent implements OnInit {
 
   constructor(private router: Router, private userService: UserService,
-    private cabinService: CabinService
+    private cabinService: CabinService, private rentalService: RentalService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   user: User = new User;
   username: string = localStorage.getItem("logged") || ""
   cabins: Cabin[] = []
   originalCabins: Cabin[] = []
+  avgRatings: Map<number, number> = new Map();
+  stars: number[] = [1, 2, 3, 4, 5];
 
   ngOnInit(): void {
       
@@ -39,8 +44,10 @@ export class TouristCabinsComponent implements OnInit {
 
     this.cabinService.getAllCabins().subscribe((myCabins: Cabin[])=>{
       this.cabins = myCabins
-      this.originalCabins = myCabins
+      this.originalCabins = myCabins;
+      this.loadAverageRatings(myCabins);
     })
+
   }
 
   viewCabin(id: number) {
@@ -109,7 +116,16 @@ export class TouristCabinsComponent implements OnInit {
 
     this.cabinService.searchCabins(this.nameParam, this.locationParam).subscribe((cabins: Cabin[])=>{
       this.cabins = cabins
+      this.loadAverageRatings(cabins);
     })
+  }
+
+  private loadAverageRatings(cabins: Cabin[]) {
+    cabins.forEach(cabin => {
+      this.rentalService.getAverageRating(cabin.id).subscribe(rating => {
+        this.avgRatings.set(cabin.id, rating);
+      });
+    });
   }
 }
 
