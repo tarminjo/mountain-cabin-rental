@@ -41,7 +41,7 @@ public class RentalRepository implements RentalRepositoryInteraface {
             stmt.setDouble(12, Double.parseDouble(payload.get("price")));
 
             try (PreparedStatement checkStmt = conn.prepareStatement(
-                 "SELECT COUNT(*) FROM rentals WHERE cabinId = ? AND NOT (endDate < ? OR startDate > ?)")) {
+                 "SELECT COUNT(*) FROM rentals WHERE cabinId = ? AND NOT ((? BETWEEN startDate AND endDate) OR (? BETWEEN startDate AND endDate))")) {
 
                 checkStmt.setInt(1, Integer.parseInt(payload.get("cabinId")));
                 checkStmt.setTimestamp(2, Timestamp.valueOf(parseDateToDatabase(payload.get("endDate"))));
