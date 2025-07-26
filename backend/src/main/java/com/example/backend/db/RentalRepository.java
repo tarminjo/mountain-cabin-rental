@@ -261,4 +261,29 @@ public class RentalRepository implements RentalRepositoryInteraface {
         return rentals;
     }
 
+    @Override
+    public double getCabinAverageRating(String cabinId) {
+
+        double averageRating = 0.0;
+
+        try (Connection conn = DB.source().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(
+                 "SELECT AVG(rating) FROM rentals WHERE cabinId = ? and rating > 0")) {
+
+            stmt.setInt(1, Integer.parseInt(cabinId));
+
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                averageRating = rs.getDouble(1);
+                if (rs.wasNull()) {
+                     averageRating = -1;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return averageRating;
+    }
+
 }

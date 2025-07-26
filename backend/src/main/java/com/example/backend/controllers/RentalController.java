@@ -81,6 +81,10 @@ public class RentalController {
     public List<Rental> getCabinRentalsWithRatings(@PathVariable String cabinId) {
         return new RentalRepository().getCabinRentalsWithRatings(cabinId);
     }
-    
+
+    @GetMapping("/average-rating/{cabinId}")
+    public double getCabinAverageRating(@PathVariable String cabinId) {
+        return new RentalRepository().getCabinAverageRating(cabinId);
+    }
 
 }
