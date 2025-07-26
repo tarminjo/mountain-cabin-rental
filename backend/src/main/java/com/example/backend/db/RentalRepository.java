@@ -363,12 +363,14 @@ public class RentalRepository implements RentalRepositoryInteraface {
     }
 
     @Override
-    public int rejectReservation(int rentalId) {
+    public int rejectReservation(Map<String, String> payload) {
         try (Connection conn = DB.source().getConnection();
              PreparedStatement stmt = conn.prepareStatement(
-                 "UPDATE rentals SET status = 2 WHERE id = ?")) {
+                 "UPDATE rentals SET status = 2, ownerComment = ? WHERE id = ?")) {
 
-            stmt.setInt(1, rentalId);
+            stmt.setString(1, payload.get("comment"));
+            stmt.setInt(2, Integer.parseInt(payload.get("rentalId")));
+            
             return stmt.executeUpdate();
 
         } catch (SQLException e) {

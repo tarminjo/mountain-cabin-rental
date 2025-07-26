@@ -108,10 +108,10 @@ public class RentalController {
         return new RentalRepository().activeUnconfirmedReservations(username);
     }
 
-    @GetMapping("/reject/{rentalId}")
-    public Map<String, String> rejectReservation(@PathVariable int rentalId) {
+    @PostMapping("/reject")
+    public Map<String, String> rejectReservation(@RequestBody Map<String, String> payload) {
 
-        int result = new RentalRepository().rejectReservation(rentalId);
+        int result = new RentalRepository().rejectReservation(payload);
 
         Map<String, String> response = new HashMap<>();
         if (result == 1) {
