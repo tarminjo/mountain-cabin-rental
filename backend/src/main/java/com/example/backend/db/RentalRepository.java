@@ -327,7 +327,7 @@ public class RentalRepository implements RentalRepositoryInteraface {
 
         try (Connection conn = DB.source().getConnection();
              PreparedStatement stmt = conn.prepareStatement(
-                 "SELECT * FROM rentals WHERE owner = ? AND startDate >= NOW() AND status = 0")) {
+                 "SELECT * FROM rentals WHERE cabinOwner = ? AND startDate >= NOW() AND status = 0")) {
 
             stmt.setString(1, username);
             
