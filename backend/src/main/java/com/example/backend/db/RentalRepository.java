@@ -21,7 +21,7 @@ public class RentalRepository implements RentalRepositoryInteraface {
         try (Connection conn = DB.source().getConnection();
              PreparedStatement stmt = conn.prepareStatement(
                  "INSERT INTO rentals (createdAt, cabinId, cabinName, cabinLocation, user, startDate, endDate, adults, children, description, price) " +
-                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
+                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
 
             LocalDateTime now = LocalDateTime.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
@@ -37,7 +37,8 @@ public class RentalRepository implements RentalRepositoryInteraface {
             stmt.setInt(8, Integer.parseInt(payload.get("adults")));
             stmt.setInt(9, Integer.parseInt(payload.get("children")));
             stmt.setString(10, payload.get("description"));
-            stmt.setDouble(11, Double.parseDouble(payload.get("price")));
+            stmt.setInt(11, 0); // Status 0 - created by tourist, not yet confirmed by owner
+            stmt.setDouble(12, Double.parseDouble(payload.get("price")));
 
             int rows = stmt.executeUpdate();
             if (rows > 0) {
