@@ -57,7 +57,7 @@ public class RentalRepository implements RentalRepositoryInteraface {
     public int reservationsLast24Hours() {
         try (Connection conn = DB.source().getConnection();
              PreparedStatement stmt = conn.prepareStatement(
-                 "SELECT COUNT(*) FROM rentals WHERE createdAt >= NOW() - INTERVAL 1 DAY")) {
+                 "SELECT COUNT(*) FROM rentals WHERE createdAt >= NOW() - INTERVAL 1 DAY AND (status = 1 OR status = 0)")) {
 
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
@@ -74,7 +74,7 @@ public class RentalRepository implements RentalRepositoryInteraface {
     public int reservationsLast7Days() {
         try (Connection conn = DB.source().getConnection();
              PreparedStatement stmt = conn.prepareStatement(
-                 "SELECT COUNT(*) FROM rentals WHERE createdAt >= NOW() - INTERVAL 7 DAY")) {
+                 "SELECT COUNT(*) FROM rentals WHERE createdAt >= NOW() - INTERVAL 7 DAY AND (status = 1 OR status = 0)")) {
 
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
@@ -91,7 +91,7 @@ public class RentalRepository implements RentalRepositoryInteraface {
     public int reservationsLast30Days() {
         try (Connection conn = DB.source().getConnection();
              PreparedStatement stmt = conn.prepareStatement(
-                 "SELECT COUNT(*) FROM rentals WHERE createdAt >= NOW() - INTERVAL 30 DAY")) {
+                 "SELECT COUNT(*) FROM rentals WHERE createdAt >= NOW() - INTERVAL 30 DAY AND (status = 1 OR status = 0)")) {
 
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
@@ -116,7 +116,7 @@ public class RentalRepository implements RentalRepositoryInteraface {
 
         try (Connection conn = DB.source().getConnection();
              PreparedStatement stmt = conn.prepareStatement(
-                 "SELECT * FROM rentals WHERE user = ? AND endDate >= NOW()")) {
+                 "SELECT * FROM rentals WHERE user = ? AND endDate >= NOW() AND (status = 1 OR status = 0)")) {
 
             //TODO: Add status logic - cancelled, completed, etc.
 
@@ -158,7 +158,7 @@ public class RentalRepository implements RentalRepositoryInteraface {
 
         try (Connection conn = DB.source().getConnection();
              PreparedStatement stmt = conn.prepareStatement(
-                 "SELECT * FROM rentals WHERE user = ? AND endDate < NOW()")) {
+                 "SELECT * FROM rentals WHERE user = ? AND endDate < NOW() AND status = 2")) {
 
             //TODO: Add status logic - cancelled, completed, etc.
 
@@ -204,7 +204,7 @@ public class RentalRepository implements RentalRepositoryInteraface {
 
         try (Connection conn = DB.source().getConnection();
              PreparedStatement stmt = conn.prepareStatement(
-                 "UPDATE rentals SET rating = ?, comment = ? WHERE id = ?")) {
+                 "UPDATE rentals SET rating = ?, comment = ? WHERE id = ? AND status = 2")) {
 
             stmt.setInt(1, rating);
             stmt.setString(2, comment);
