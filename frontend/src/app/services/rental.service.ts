@@ -14,12 +14,13 @@ export class RentalService {
 
   createRental(cabinId: number, user: string, startDate: Date, endDate: Date, 
     adults: number, children: number, description: string, price: number,
-    cabinName: string, cabinLocation: string): Observable<Rental> {
+    cabinName: string, cabinLocation: string, cabinOwner: string): Observable<Rental> {
 
       const data = {
         cabinId: cabinId,
         cabinName: cabinName,
         cabinLocation: cabinLocation,
+        cabinOwner: cabinOwner,
         user: user,
         startDate: startDate,
         endDate: endDate,
@@ -87,6 +88,10 @@ export class RentalService {
 
   cancelRental(id: number) {
     return this.http.get(`${this.url}/rentals/cancel/${id}`);
+  }
+
+  getActiveUnconfirmedRentalsForOwner(username: string) {
+    return this.http.get<Rental[]>(`${this.url}/rentals/active-unconfirmed/${username}`);
   }
 
 }

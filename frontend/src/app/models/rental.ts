@@ -4,6 +4,7 @@ export class Rental{
     cabinId!: number
     cabinName!: string
     cabinLocation!: string
+    cabinOwner!: string
     user!: string
     startDate!: Date
     endDate!: Date
