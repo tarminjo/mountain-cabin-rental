@@ -103,4 +103,9 @@ public class RentalController {
         return response;
     }
 
+    @GetMapping("/active-unconfirmed/{username}")
+    public List<Rental> getActiveUnconfirmedReservations(@PathVariable String username) {
+        return new RentalRepository().activeUnconfirmedReservations(username);
+    }
+
 }
