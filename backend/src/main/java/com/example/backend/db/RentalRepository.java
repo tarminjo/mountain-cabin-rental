@@ -20,7 +20,7 @@ public class RentalRepository implements RentalRepositoryInteraface {
         
         try (Connection conn = DB.source().getConnection();
              PreparedStatement stmt = conn.prepareStatement(
-                 "INSERT INTO rentals (createdAt, cabinId, cabinName, cabinLocation, user, startDate, endDate, adults, children, description, price) " +
+                 "INSERT INTO rentals (createdAt, cabinId, cabinName, cabinLocation, user, startDate, endDate, adults, children, description, status, price) " +
                  "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
 
             LocalDateTime now = LocalDateTime.now();
