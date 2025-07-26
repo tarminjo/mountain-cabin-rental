@@ -89,4 +89,18 @@ public class RentalController {
         return new RentalRepository().getCabinAverageRating(cabinId);
     }
 
+    @GetMapping("/cancel/{id}")
+    public Map<String, String> cancelReservation(@PathVariable int id) {
+
+        int result = new RentalRepository().cancelReservation(id);
+
+        Map<String, String> response = new HashMap<>();
+        if (result == 1) {
+            response.put("message", "ok");
+        } else {
+            response.put("message", "error");
+        }
+        return response;
+    }
+
 }

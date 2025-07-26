@@ -85,4 +85,8 @@ export class RentalService {
     return this.http.get<number>(`${this.url}/rentals/average-rating/${cabinId}`);
   }
 
+  cancelRental(id: number) {
+    return this.http.get(`${this.url}/rentals/cancel/${id}`);
+  }
+
 }

@@ -301,4 +301,19 @@ public class RentalRepository implements RentalRepositoryInteraface {
         return averageRating;
     }
 
+    public int cancelReservation(int id) {
+        try (Connection conn = DB.source().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(
+                 "UPDATE rentals SET status = 3 WHERE id = ?")) {
+
+            stmt.setInt(1, id);
+            return stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
 }

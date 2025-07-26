@@ -67,8 +67,18 @@ export class TouristRentalsComponent implements OnInit {
   activeRentals: Rental [] = []
   archiveRentals: Rental [] = []
 
-  cancelReservation(rentalId: number) {
-    
+  cancelReservation(id: number) {
+
+    this.rentalService.cancelRental(id).subscribe((resp: any) => {
+      if (resp.message === 'ok') {
+        this.error = false;
+        alert('Reservation cancelled successfully!');
+        this.ngOnInit();
+      } else {
+        this.error = true;
+        this.message = 'Failed to cancel reservation. Please try again.';
+      }
+    });
   }
 
   selectedRental: Rental = new Rental();
