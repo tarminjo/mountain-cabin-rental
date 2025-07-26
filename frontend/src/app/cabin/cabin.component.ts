@@ -192,6 +192,9 @@ export class CabinComponent implements OnInit {
         if(resp.message === 'ok') {
           this.error = false;
           this.selectedStep = 'finished';
+        } else if (resp.message === 'taken') {
+          this.error = true;
+          this.message = 'Cabin is already reserved for the selected dates.';
         } else {
           this.error = true;
           this.message = 'Error while creating rental.';

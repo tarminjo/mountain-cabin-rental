@@ -40,9 +40,23 @@ public class RentalRepository implements RentalRepositoryInteraface {
             stmt.setInt(11, 0); // Status 0 - created by tourist, not yet confirmed by owner
             stmt.setDouble(12, Double.parseDouble(payload.get("price")));
 
-            int rows = stmt.executeUpdate();
-            if (rows > 0) {
-                return 1;
+            try (PreparedStatement checkStmt = conn.prepareStatement(
+                 "SELECT COUNT(*) FROM rentals WHERE cabinId = ? AND NOT (endDate < ? OR startDate > ?)")) {
+
+                checkStmt.setInt(1, Integer.parseInt(payload.get("cabinId")));
+                checkStmt.setTimestamp(2, Timestamp.valueOf(parseDateToDatabase(payload.get("endDate"))));
+                checkStmt.setTimestamp(3, Timestamp.valueOf(parseDateToDatabase(payload.get("startDate"))));
+
+                ResultSet rs = checkStmt.executeQuery();
+                if (rs.next() && rs.getInt(1) > 0) {
+                    return -1; // Rental already exists for this cabin in the given date range
+                } else {
+                    int rows = stmt.executeUpdate();
+                    
+                    if (rows > 0) {
+                        return 1;
+                    }
+                }
             }
 
         } catch (SQLException e) {

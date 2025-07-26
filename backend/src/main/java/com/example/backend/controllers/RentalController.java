@@ -29,6 +29,8 @@ public class RentalController {
         Map<String, String> response = new HashMap<>();
         if (result == 1) {
             response.put("message", "ok");
+        } else if (result == -1) {
+            response.put("message", "taken");
         } else {
             response.put("message", "error");
         }
