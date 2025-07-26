@@ -42,6 +42,11 @@ export class TouristRentalsComponent implements OnInit {
 
     this.rentalService.getArchiveRentalsForTourist(this.username).subscribe((archiveRentals: Rental[]) => {
       this.archiveRentals = archiveRentals;
+      this.archiveRentals.sort((a, b) => {
+        const dateA = new Date(a.startDate).getTime();
+        const dateB = new Date(b.startDate).getTime();
+        return dateB - dateA;
+      });
     });
   }
 
