@@ -16,4 +16,5 @@ public interface RentalRepositoryInteraface {
     public int addRating(Map<String, String> payload);
     public List<Rental> getCabinRentalsWithRatings(String cabinId);
     public double getCabinAverageRating(String cabinId);
+    public List<Rental> activeUnconfirmedReservations(String username);
 }

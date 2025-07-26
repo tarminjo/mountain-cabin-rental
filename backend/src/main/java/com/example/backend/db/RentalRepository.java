@@ -20,8 +20,8 @@ public class RentalRepository implements RentalRepositoryInteraface {
         
         try (Connection conn = DB.source().getConnection();
              PreparedStatement stmt = conn.prepareStatement(
-                 "INSERT INTO rentals (createdAt, cabinId, cabinName, cabinLocation, user, startDate, endDate, adults, children, description, status, price) " +
-                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
+                 "INSERT INTO rentals (createdAt, cabinId, cabinName, cabinOwner, cabinLocation, user, startDate, endDate, adults, children, description, status, price) " +
+                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
 
             LocalDateTime now = LocalDateTime.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
@@ -30,15 +30,16 @@ public class RentalRepository implements RentalRepositoryInteraface {
             stmt.setTimestamp(1, Timestamp.valueOf(parseDateToDatabase(formatted)));
             stmt.setInt(2, Integer.parseInt(payload.get("cabinId")));
             stmt.setString(3, payload.get("cabinName"));
-            stmt.setString(4, payload.get("cabinLocation"));
-            stmt.setString(5, payload.get("user"));
-            stmt.setTimestamp(6, Timestamp.valueOf(parseDateToDatabase(payload.get("startDate"))));
-            stmt.setTimestamp(7, Timestamp.valueOf(parseDateToDatabase(payload.get("endDate"))));
-            stmt.setInt(8, Integer.parseInt(payload.get("adults")));
-            stmt.setInt(9, Integer.parseInt(payload.get("children")));
-            stmt.setString(10, payload.get("description"));
-            stmt.setInt(11, 0); // Status 0 - created by tourist, not yet confirmed by owner
-            stmt.setDouble(12, Double.parseDouble(payload.get("price")));
+            stmt.setString(4, payload.get("cabinOwner"));
+            stmt.setString(5, payload.get("cabinLocation"));
+            stmt.setString(6, payload.get("user"));
+            stmt.setTimestamp(7, Timestamp.valueOf(parseDateToDatabase(payload.get("startDate"))));
+            stmt.setTimestamp(8, Timestamp.valueOf(parseDateToDatabase(payload.get("endDate"))));
+            stmt.setInt(9, Integer.parseInt(payload.get("adults")));
+            stmt.setInt(10, Integer.parseInt(payload.get("children")));
+            stmt.setString(11, payload.get("description"));
+            stmt.setInt(12, 0); // Status 0 - created by tourist, not yet confirmed by owner
+            stmt.setDouble(13, Double.parseDouble(payload.get("price")));
 
             try (PreparedStatement checkStmt = conn.prepareStatement(
                  "SELECT COUNT(*) FROM rentals WHERE cabinId = ? AND (status = 0 OR status = 1) AND ((? BETWEEN startDate AND endDate) OR (? BETWEEN startDate AND endDate))")) {
@@ -146,6 +147,7 @@ public class RentalRepository implements RentalRepositoryInteraface {
                 rental.setCabinId(rs.getInt("cabinId"));
                 rental.setCabinName(rs.getString("cabinName"));
                 rental.setCabinLocation(rs.getString("cabinLocation"));
+                rental.setCabinOwner(rs.getString("cabinOwner"));
                 rental.setUser(rs.getString("user"));
                 rental.setStartDate(rs.getTimestamp("startDate"));
                 rental.setEndDate(rs.getTimestamp("endDate"));
@@ -188,6 +190,7 @@ public class RentalRepository implements RentalRepositoryInteraface {
                 rental.setCabinId(rs.getInt("cabinId"));
                 rental.setCabinName(rs.getString("cabinName"));
                 rental.setCabinLocation(rs.getString("cabinLocation"));
+                rental.setCabinOwner(rs.getString("cabinOwner"));
                 rental.setUser(rs.getString("user"));
                 rental.setStartDate(rs.getTimestamp("startDate"));
                 rental.setEndDate(rs.getTimestamp("endDate"));
@@ -255,6 +258,7 @@ public class RentalRepository implements RentalRepositoryInteraface {
                     rental.setCabinId(rs.getInt("cabinId"));
                     rental.setCabinName(rs.getString("cabinName"));
                     rental.setCabinLocation(rs.getString("cabinLocation"));
+                    rental.setCabinOwner(rs.getString("cabinOwner"));
                     rental.setUser(rs.getString("user"));
                     rental.setStartDate(rs.getTimestamp("startDate"));
                     rental.setEndDate(rs.getTimestamp("endDate"));
@@ -316,13 +320,14 @@ public class RentalRepository implements RentalRepositoryInteraface {
         return 0;
     }
 
+    @Override
     public List<Rental> activeUnconfirmedReservations(String username) {
 
         List<Rental> rentals = new ArrayList<>();
 
         try (Connection conn = DB.source().getConnection();
              PreparedStatement stmt = conn.prepareStatement(
-                 "SELECT * FROM rentals WHERE user = ? AND endDate >= NOW() AND status = 0")) {
+                 "SELECT * FROM rentals WHERE owner = ? AND startDate >= NOW() AND status = 0")) {
 
             stmt.setString(1, username);
             
@@ -335,6 +340,7 @@ public class RentalRepository implements RentalRepositoryInteraface {
                 rental.setCreatedAt(rs.getTimestamp("createdAt"));
                 rental.setCabinId(rs.getInt("cabinId"));
                 rental.setCabinName(rs.getString("cabinName"));
+                rental.setCabinOwner(rs.getString("cabinOwner"));
                 rental.setCabinLocation(rs.getString("cabinLocation"));
                 rental.setUser(rs.getString("user"));
                 rental.setStartDate(rs.getTimestamp("startDate"));
