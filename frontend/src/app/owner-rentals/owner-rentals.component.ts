@@ -31,24 +31,21 @@ export class OwnerRentalsComponent implements OnInit {
     this.username = localStorage.getItem('logged') || '';
     this.selectedTab = 'active';
 
-    this.error = false
-    this.message = ""
-
     this.userService.getUser(this.username).subscribe((user: User) => {
       this.user = user;
     });
 
     this.rentalService.getActiveUnconfirmedRentalsForOwner(this.username).subscribe((activeUnconfirmedRentals: Rental[]) => {
       this.activeUnconfirmedRentals = activeUnconfirmedRentals;
+      this.activeUnconfirmedRentals.sort((a, b) => {
+        const dateA = new Date(a.startDate).getTime();
+        const dateB = new Date(b.startDate).getTime();
+        return dateA - dateB;
+      });
     });
   }
 
-  error: boolean = false
-  message: string = ""
-
   selectTab(tab: string): void {
-    this.error = false;
-    this.message = '';
     this.selectedTab = tab;
   }
 
@@ -57,25 +54,46 @@ export class OwnerRentalsComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  acceptReservation(rentalId: number): void {
-    // this.rentalService.acceptRental(rentalId).subscribe(() => {
-    //   this.message = 'Reservation accepted successfully.';
-    //   this.error = false;
-    //   this.refreshActiveUnconfirmedRentals();
-    // }, () => {
-    //   this.error = true;
-    //   this.message = 'Failed to accept reservation.';
-    // });
+  acceptReservation(rentalId: number){
+    this.rentalService.acceptRental(rentalId).subscribe((resp: any) => {
+      if(resp.message === 'ok') {
+        alert('Reservation accepted successfully.');
+        this.ngOnInit();
+      } else {
+        alert('Error occurred while accepting reservation.');
+      }
+    });
   }
 
-  rejectReservation(rentalId: number): void {
-    // this.rentalService.rejectRental(rentalId).subscribe(() => {
-    //   this.message = 'Reservation rejected successfully.';
-    //   this.error = false;
-    //   this.refreshActiveUnconfirmedRentals();
-    // }, () => {
-    //   this.error = true;
-    //   this.message = 'Failed to reject reservation.';
-    // });
+  rejectReservation(rentalId: number){
+    console.log('Submitting reject with comment:', this.rejectComment);
+    this.rentalService.rejectRental(rentalId, this.rejectComment).subscribe((resp: any) => {
+      console.log('Reject response:', resp);
+      if(resp.message === 'ok') {
+        alert('Reservation rejected successfully.');
+        this.ngOnInit();
+        this.closeRejectWindow()
+      } else {
+        alert('Error occurred while rejecting reservation.');
+        this.closeRejectWindow()
+      }
+    });
+  }
+
+  showRejectModal: boolean = false;
+  selectedRejectId: number | null = null;
+  rejectComment: string = '';
+  rejectError: boolean = false;
+
+  openRejectWindow(rentalId: number) {
+    this.selectedRejectId = rentalId;
+    this.rejectComment = '';
+    this.showRejectModal = true;
+  }
+
+  closeRejectWindow() {
+    this.showRejectModal = false;
+    this.selectedRejectId = null;
+    this.rejectComment = '';
   }
 }

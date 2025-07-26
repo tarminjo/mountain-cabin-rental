@@ -80,7 +80,36 @@
                           <button class="btn btn-outline-success btn-sm rounded-pill px-3 shadow-sm me-2"
                             (click)="acceptReservation(rental.id)">✅ Accept</button>
                           <button class="btn btn-outline-danger btn-sm rounded-pill px-3 shadow-sm"
-                            (click)="rejectReservation(rental.id)">❌ Reject</button>
+                            (click)="openRejectWindow(rental.id)">❌ Reject</button>
+
+                            <!-- Reject Reservation Modal -->
+                          <div class="modal fade" tabindex="-1" [ngClass]="{'show d-block': showRejectModal && selectedRejectId === rental.id}" 
+                            [ngStyle]="{'background': showRejectModal && selectedRejectId === rental.id ? 'rgba(0,0,0,0.5)' : ''}" 
+                            *ngIf="showRejectModal && selectedRejectId === rental.id">
+                            <div class="modal-dialog modal-dialog-centered">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title text-danger">Reject Reservation</h5>
+                                  <button type="button" class="btn-close" (click)="closeRejectWindow()" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                  <label for="rejectComment" class="form-label fw-semibold">Please provide a reason for rejection:</label>
+                                  <textarea id="rejectComment" class="form-control" [(ngModel)]="rejectComment" rows="3" required></textarea>
+                                  <div *ngIf="rejectError" class="text-danger mt-2 small">
+                                    {{ rejectError }}
+                                  </div>
+                                </div>
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary rounded-pill" (click)="closeRejectWindow()">Cancel</button>
+                                <button type="button" class="btn btn-danger rounded-pill"
+                                  [disabled]="!rejectComment || rejectComment.trim().length === 0"
+                                  (click)="rejectReservation(rental.id)">
+                                  Reject
+                                </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         </td>
                       </tr>
                     </tbody>
@@ -97,7 +126,7 @@
             <div *ngIf="selectedTab === 'calendar'">
               <div *ngIf="activeUnconfirmedRentals.length > 0; else noActiveUnconfirmedRentals">
                 <h3 class="card-title text-primary fw-bold text-center mb-4">🟢 List of Active Reservations</h3>
-                
+
               </div>
               <ng-template #noActiveUnconfirmedRentals>
                 <div class="text-center text-danger mt-4 fst-italic fs-5">

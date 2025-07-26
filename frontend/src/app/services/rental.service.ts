@@ -94,4 +94,16 @@ export class RentalService {
     return this.http.get<Rental[]>(`${this.url}/rentals/active-unconfirmed/${username}`);
   }
 
+  rejectRental(rentalId: number, rejectComment: string) {
+    const data = {
+      rentalId: rentalId,
+      comment: rejectComment
+    };
+
+    return this.http.post(`${this.url}/rentals/reject`, data);
+  }
+  acceptRental(rentalId: number) {
+    return this.http.get(`${this.url}/rentals/accept/${rentalId}`);
+  }
+
 }
