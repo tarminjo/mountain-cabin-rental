@@ -14,197 +14,213 @@
 
   <div class="container mt-5">
     <div class="row justify-content-center">
-      <div class="col-12 col-md-3 mb-4">
-        <div class="d-flex justify-content-center mb-3">
-          <img
-            [src]="adminPic"
-            class="rounded-circle border border-3"
-            style="width: 150px; height: 150px; object-fit: cover;"
-          />
+      <div class="col-12 col-md-3 mb-4 d-flex flex-column h-100">
+        <div class="d-flex justify-content-center mb-4">
+          <div class="border border-3 border rounded-circle p-1 bg-light" style="width: 160px; height: 160px;">
+            <img [src]="adminPic" class="rounded-circle w-100 h-100" style="object-fit: cover;" />
+          </div>
         </div>
-        <div class="list-group">
-          <button
-            type="button"
-            class="list-group-item list-group-item-action"
-            [class.active]="selectedTab === 'users' || selectedTab === 'edit'"
-            (click)="selectTab('users')"
-          >
-            Active Users
-          </button>
-          <button
-            type="button"
-            class="list-group-item list-group-item-action"
-            [class.active]="selectedTab === 'requests'"
-            (click)="selectTab('requests')"
-          >
-            Registration Requests
-          </button>
-          <button
-            type="button"
-            class="list-group-item list-group-item-action"
-            [class.active]="selectedTab === 'cabins'"
-            (click)="selectTab('cabins')"
-          >
-            All Cabins
+
+        <div class="card bg-light rounded-4">
+          <div class="list-group list-group-flush rounded-4 overflow-hidden">
+            <button type="button" class="list-group-item list-group-item-action py-3 fw-semibold"
+              [ngClass]="{ 'active bg-primary text-white': selectedTab === 'users' || selectedTab === 'edit' }" 
+              (click)="selectTab('users')">
+              🟢 Active Users
+            </button>
+            <button type="button" class="list-group-item list-group-item-action py-3 fw-semibold"
+              [ngClass]="{ 'active bg-primary text-white': selectedTab === 'requests' }" (click)="selectTab('requests')">
+              🟡 Registration Requests
+            </button>
+            <button type="button" class="list-group-item list-group-item-action py-3 fw-semibold"
+              [ngClass]="{ 'active bg-primary text-white': selectedTab === 'cabins' }" (click)="selectTab('cabins')">
+              🏕️ All Cabins
+            </button>
+          </div>
+        </div>
+
+        <div class="position-sticky bottom-0 mt-auto pt-3 text-center" *ngIf="selectedTab == 'edit'">
+          <button type="button" class="btn btn-outline-dark w-100 rounded-pill" (click)="selectTab('users')">
+            ← Back to Active Users
           </button>
         </div>
+
       </div>
-      <div class="col-12 col-md-8 mb-4">
-        <div class="card shadow rounded-4 p-2">
+
+      <div class="col-12 col-lg-9">
+        <div class="card rounded-4 p-4 bg-light">
           <div class="card-body">
-            <form *ngIf="selectedTab === 'users'">
+
+            <div *ngIf="selectedTab === 'users'">
               <div *ngIf="activeUsers.length > 0; else noUsers">
-                <h3 class="card-title mb-4">List of Active Users</h3>
-                <table class="table table-hover table-borderless shadow rounded-4 mt-2">
-                  <thead class="table-dark text-center">
-                    <tr>
-                      <th></th>
-                      <th>Name</th>
-                      <th>Username</th>
-                      <th>Email</th>
-                      <th>Phone</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody class="align-middle text-center">
-                    <tr *ngFor="let user of activeUsers">
-                      <td>
-                        <img [src]="user.profilePic || 'default.jpg'" class="rounded-circle" style="width: 40px; height: 40px;">
-                      </td>
-                      <td>{{ user.firstname }} {{ user.lastname }}</td>
-                      <td>{{ user.username }}</td>
-                      <td>{{ user.mail }}</td>
-                      <td>{{ user.phoneNumber }}</td>
-                      <td style="white-space: nowrap; width: 1%;">
-                        <button class="btn btn-info btn-sm me-1"
-                          (click)="editUser(user.username)">Edit User</button>
-                        <button class="btn btn-danger btn-sm"
-                          (click)="deactivateUser(user.username)">Deactivate</button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                <h3 class="card-title text-primary fw-bold text-center mb-4">🟢 List of Active Users</h3>
+                <div class="table-responsive rounded-4">
+                  <table class="table table-hover align-middle table-borderless mb-0">
+                    <thead class="table-primary text-center rounded-top">
+                      <tr class="text-uppercase small fw-semibold">
+                        <th></th>
+                        <th>Name</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody class="text-center">
+                      <tr *ngFor="let user of activeUsers">
+                        <td>
+                          <img [src]="user.profilePic || 
+                            'default.jpg'" class="rounded-circle" style="width: 30px; height: 30px;">
+                        </td>
+                        <td>{{ user.firstname }} {{ user.lastname }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.mail }}</td>
+                        <td>{{ user.phoneNumber }}</td>
+                        <td style="white-space: nowrap; width: 1%;">
+                          <button class="btn btn-outline-primary btn-sm rounded-pill px-3 shadow-sm me-2"
+                            (click)="editUser(user.username)">✏️ Edit User</button>
+                          <button class="btn btn-outline-danger btn-sm rounded-pill px-3 shadow-sm"
+                            (click)="deactivateUser(user.username)">❌ Deactivate</button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
               <ng-template #noUsers>
-                <h4 class="text-center" style="color: red; font-style: italic;">
-                No active users...</h4>
+                <div class="text-center text-danger mt-4 fst-italic fs-5">
+                  No active users...
+                </div>
               </ng-template>
-            </form>
-            <form *ngIf="selectedTab === 'requests'">
+            </div>
+
+            <div *ngIf="selectedTab === 'requests'">
               <div *ngIf="registrationRequests.length > 0; else noRequests">
-                <h3 class="card-title mb-4">List of Registration Requests</h3>
-                <table class="table table-hover table-borderless shadow rounded-4 mt-2">
-                  <thead class="table-dark text-center">
-                    <tr>
-                      <th></th>
-                      <th>Name</th>
-                      <th>Username</th>
-                      <th>Email</th>
-                      <th>Phone</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody class="align-middle text-center">
-                    <tr *ngFor="let request of registrationRequests">
-                      <td>
-                        <img [src]="request.profilePic || 'default.jpg'" class="rounded-circle" style="width: 40px; height: 40px;">
-                      </td>
-                      <td>{{ request.firstname }} {{ request.lastname }}</td>
-                      <td>{{ request.username }}</td>
-                      <td>{{ request.mail }}</td>
-                      <td>{{ request.phoneNumber }}</td>
-                      <td style="white-space: nowrap; width: 1%;">
-                        <button class="btn btn-success btn-sm me-1"
-                          (click)="acceptRequest(request.username)">Approve</button>
-                        <button class="btn btn-danger btn-sm"
-                          (click)="declineRequest(request.username)">Reject</button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                <h3 class="card-title text-primary fw-bold text-center mb-4">🟡 List of Registration Requests</h3>
+                <div class="table-responsive rounded-4">
+                  <table class="table table-hover align-middle table-borderless mb-0">
+                    <thead class="table-primary text-center rounded-top">
+                      <tr class="text-uppercase small fw-semibold">
+                        <th></th>
+                        <th>Name</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody class="align-middle text-center">
+                      <tr *ngFor="let request of registrationRequests">
+                        <td>
+                          <img [src]="request.profilePic || 'default.jpg'" class="rounded-circle" 
+                            style="width: 30px; height: 30px;">
+                        </td>
+                        <td>{{ request.firstname }} {{ request.lastname }}</td>
+                        <td>{{ request.username }}</td>
+                        <td>{{ request.mail }}</td>
+                        <td>{{ request.phoneNumber }}</td>
+                        <td style="white-space: nowrap; width: 1%;">
+                          <button class="btn btn-outline-success btn-sm rounded-pill px-3 shadow-sm me-2"
+                            (click)="acceptRequest(request.username)">✅ Approve</button>
+                          <button class="btn btn-outline-danger btn-sm rounded-pill px-3 shadow-sm"
+                            (click)="declineRequest(request.username)">❌ Reject</button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
               <ng-template #noRequests>
-                <h4 class="text-center" style="color: red; font-style: italic;">
-                No registration requests...</h4>
+                <h4 class="text-center text-danger mt-4 fst-italic fs-5">
+                No registration requests...
+              </h4>
               </ng-template>
-            </form>
-            <form *ngIf="selectedTab === 'edit'">
+            </div>
+
+            <div *ngIf="selectedTab === 'edit'">
               <div class="d-flex justify-content-between align-items-center mb-1">
                 <h3 class="card-title">Edit User: {{editFirstname}} {{editLastname}}</h3>
-                <button class="btn btn-primary" (click)="selectedTab = 'users'">Back to Users</button>
               </div>
               <div *ngIf="error" class="alert alert-danger" role="alert">
                 <span>{{message}}</span>
               </div>
-              <div class="mb-1">
-                <label class="form-label">First Name</label>
-                <input type="text" class="form-control" [(ngModel)]="editFirstname" name="firstName">
-              </div>
-              <div class="mb-1">
-                <label class="form-label">Last Name</label>
-                <input type="text" class="form-control" [(ngModel)]="editLastname" name="lastName">
-              </div>
-              <div class="mb-1">
-                <label class="form-label">Address</label>
-                <input type="text" class="form-control" [(ngModel)]="editAddress" name="address">
-              </div>
-              <div class="mb-1">
-                <label class="form-label">Phone Number</label>
-                <input type="text" class="form-control" [(ngModel)]="editPhoneNumber" name="address">
-              </div>
-              <div class="mb-1">
-                <label class="form-label">Mail</label>
-                <input type="text" class="form-control" [(ngModel)]="editMail" name="mail">
-              </div>
-              <div class="mb-1">
-                <label class="form-label">Card Number</label>
-                <input type="text" class="form-control" [(ngModel)]="editCardNumber" name="cardNumber">
-              </div>
-              <div class="mb-3">
-                <label class="form-label">Profile Picture</label>
-                <div class="col-sm-4">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label text-secondary fw-semibold">First Name</label>
+                  <input type="text" class="form-control" [(ngModel)]="editFirstname" name="editFirstname">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label text-secondary fw-semibold">Last Name</label>
+                  <input type="text" class="form-control" [(ngModel)]="editLastname" name="editLastname">
+                </div>
+                <div class="col-12">
+                  <label class="form-label text-secondary fw-semibold">Address</label>
+                  <input type="text" class="form-control" [(ngModel)]="editAddress" name="editAddress">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label text-secondary fw-semibold">Phone Number</label>
+                  <input type="text" class="form-control" [(ngModel)]="editPhoneNumber" name="editPhoneNumber">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label text-secondary fw-semibold">Mail</label>
+                  <input type="text" class="form-control" [(ngModel)]="editMail" name="editMail">
+                </div>
+                <div class="col-12">
+                  <label class="form-label text-secondary fw-semibold">Card Number</label>
+                  <input type="text" class="form-control" [(ngModel)]="editCardNumber" name="editCardNumber">
+                </div>
+                <div class="col-12">
+                  <label class="form-label text-secondary fw-semibold">Profile Picture</label>
                   <input type="file" class="form-control" id="profilePicture" (change)="onFileSelected($event)" 
                     accept="image/png, image/jpg"/>
                 </div>
               </div>
-              <button (click)="updateProfile()" type="button" class="btn btn-success me-1">Save</button>
-            </form>
-            <form *ngIf="selectedTab === 'cabins'">
+              <div class="text-end mt-4">
+                <button (click)="updateProfile()" type="button" class="btn btn-success px-4">Save</button>
+              </div>
+            </div>
+
+            <div *ngIf="selectedTab === 'cabins'">
               <div *ngIf="cabins.length > 0; else noCabins">
-                <h3 class="card-title mb-4">List of All Cabins</h3>
-                <table class="table table-hover table-borderless shadow rounded-4 mt-2">
-                  <thead class="table-dark text-center">
-                    <tr>
-                      <th>Owner</th>
-                      <th>Name</th>
-                      <th>Location</th>
-                      <th>Phone Number</th>
-                      <th>Winter Price</th>
-                      <th>Summer Price</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody class="align-middle text-center">
-                    <tr *ngFor="let cabin of cabins">
-                      <td>{{cabin.owner}}</td>
-                      <td>{{cabin.name}}</td>
-                      <td>{{cabin.location}}</td>
-                      <td>{{cabin.phoneNumber}}</td>
-                      <td>{{cabin.winterPrice}} RSD</td>
-                      <td>{{cabin.summerPrice}} RSD</td>
-                      <td style="white-space: nowrap; width: 1%;">
-                        <button class="btn btn-danger btn-sm me-1">BLOCK-TODO</button>
-                        <!-- Blocking only for specific cabins -->
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                <h3 class="card-title text-center mb-4 fw-bold text-primary">🏕️ List of All Cabins</h3>
+                <div class="table-responsive rounded-4">
+                  <table class="table table-hover align-middle table-borderless mb-0">
+                    <thead class="table-primary text-center rounded-top">
+                      <tr class="text-uppercase small fw-semibold">
+                        <th>Owner</th>
+                        <th>Name</th>
+                        <th>Location</th>
+                        <th>Phone Number</th>
+                        <th>Winter Price</th>
+                        <th>Summer Price</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody class="align-middle text-center">
+                      <tr *ngFor="let cabin of cabins">
+                        <td>{{cabin.owner}}</td>
+                        <td>{{cabin.name}}</td>
+                        <td>{{cabin.location}}</td>
+                        <td>{{cabin.phoneNumber}}</td>
+                        <td>{{cabin.winterPrice}} RSD</td>
+                        <td>{{cabin.summerPrice}} RSD</td>
+                        <td style="white-space: nowrap; width: 1%;">
+                          <button class="btn btn-outline-danger btn-sm rounded-pill px-3 shadow-sm">
+                            🔴 Block
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
               <ng-template #noCabins>
-                <h4 class="text-center" style="color: red; font-style: italic;">
-                No cabins in system...</h4>
+                <h4 class="text-center text-danger mt-4 fst-italic fs-5">
+                No cabins in system...
+              </h4>
               </ng-template>
-            </form>
+            </div>
+
           </div>
         </div>
       </div>
